@@ -66,23 +66,24 @@
             { id: 5, title: "PALIER 5", subtitle: "Guider", belts: "Hauts Gradés", color: "from-red-600 to-rose-700", shadow: "shadow-red-200", icon: <Star size={32} /> }
         ];
 
+        // MENU AVEC IMAGES LOCALES (.jpeg dans dossier images/)
         const standardMenu = [
-            { id: 'A', title: 'Le Dojo', icon: <Home size={28}/>, color: 'bg-blue-50 text-blue-600', items: [
+            { id: 'A', title: 'Le Dojo', image: 'images/dojo.jpeg', color: 'text-blue-600', items: [
                 { id: 'salut', label: 'Le Salut' }, { id: 'professeur', label: 'Le Professeur' }, { id: 'partenaires', label: 'Les Partenaires' }, { id: 'judogi', label: 'Le Judogi' }, { id: 'tatami', label: 'Le Tatami' }
             ]},
-            { id: 'B', title: 'Grade', icon: <Award size={28}/>, color: 'bg-amber-50 text-amber-600', items: [
+            { id: 'B', title: 'Grade', image: 'images/grades.jpeg', color: 'text-amber-600', items: [
                 { id: 'ceintures', label: 'Les Ceintures' }, { id: 'connaissance', label: 'Requis' }
             ]},
-            { id: 'C', title: 'Culture', icon: <Globe size={28}/>, color: 'bg-emerald-50 text-emerald-600', items: [
+            { id: 'C', title: 'Culture', image: 'images/culture.jpeg', color: 'text-emerald-600', items: [
                 { id: 'fondateur', label: 'Le Fondateur' }, { id: 'france', label: 'Judo en France' }, { id: 'monde', label: 'Judo dans le Monde' }, { id: 'champions_fr', label: 'Champions Français' }, { id: 'champions_etr', label: 'Champions Étrangers' }
             ]},
-            { id: 'D', title: 'Code Moral', icon: <Heart size={28}/>, color: 'bg-rose-50 text-rose-600', items: [
+            { id: 'D', title: 'Code Moral', image: 'images/codemoral.jpeg', color: 'text-rose-600', items: [
                 { id: 'politesse', label: 'La Politesse' }, { id: 'courage', label: 'Le Courage' }, { id: 'sincerite', label: 'La Sincérité' }, { id: 'honneur', label: "L'Honneur" }, { id: 'modestie', label: 'La Modestie' }, { id: 'respect', label: 'Le Respect' }, { id: 'controle', label: 'Le Contrôle de Soi' }, { id: 'amitie', label: "L'Amitié" }
             ]},
-            { id: 'E', title: 'Techniques', icon: <Zap size={28}/>, color: 'bg-purple-50 text-purple-600', items: [
+            { id: 'E', title: 'Techniques', image: 'images/technique.jpeg', color: 'text-purple-600', items: [
                 { id: 'principes', label: 'Les Principes' }, { id: 'katas', label: 'Les Katas' }, { id: '100tech', label: 'Les 100 Techniques' }
             ]},
-            { id: 'F', title: 'Lexique', icon: <Book size={28}/>, color: 'bg-slate-50 text-slate-600', items: [
+            { id: 'F', title: 'Lexique', image: 'images/lexique.jpeg', color: 'text-slate-600', items: [
                 { id: 'lexique_general', label: 'Vocabulaire' }
             ]}
         ];
@@ -414,7 +415,17 @@
                         magicPhrase: "« Sans Uke, pas de Tori. »",
                         senseiMessage: "Sois un bon Uke, et tu deviendras un excellent Tori."
                     };
-                    if (itemId === 'judogi') return { title: "Le Judogi", text: "Ton armure blanche. Porter le judogi, c'est porter les valeurs du judo. Il doit être blanc (ou bleu en compétition internationale) pour symboliser la pureté de l'intention." };
+                    if (itemId === 'judogi') return {
+                        title: "Le Judogi : Ton Outil",
+                        text: "Au niveau 2, le judogi n'est plus juste un uniforme, c'est ton outil principal. Tu dois connaître ses parties et savoir l'entretenir.",
+                        list: [
+                            { name: "Composition", desc: "Veste (Uwagi) en grain de riz pour la solidité, Pantalon (Zubon) et Ceinture (Obi)." },
+                            { name: "Le Pliage", desc: "Savoir plier son judogi après le cours est un rituel de retour au calme." },
+                            { name: "Respect", desc: "Un judogi sale est un manque de respect pour ton partenaire. Il doit être lavé après chaque cours." }
+                        ],
+                        magicPhrase: "« Un esprit sain dans un judogi propre. »",
+                        senseiMessage: "Ton judogi est le miroir de ton attitude.\nPrends-en soin."
+                    };
                     if (itemId === 'tatami') return { title: "Le Tatami", text: "Le lieu de la vérité. Sur le tatami, on ne peut pas mentir. Si tu n'as pas travaillé, ça se voit. C'est un espace sacré de dépassement de soi." };
                 }
 
@@ -480,7 +491,7 @@
                         senseiMessage: "Ton judogi est ton passeport pour le monde."
                     };
                     if (itemId === 'champions_fr') return {
-                        title: "Nos Médaillés (2020-2024)",
+                        title: "Les champions français actuels (2020-2024)",
                         text: "La France brille au sommet de l'Olympe. Voici nos héros de Tokyo et Paris.",
                         list: [
                             { name: "Les Rois de l'Or", desc: "Teddy Riner (x2), Clarisse Agbegnenou, Équipe de France (x2 !)." },
@@ -491,29 +502,30 @@
                         senseiMessage: "Regarde leurs combats pour t'inspirer."
                     };
                     if (itemId === 'champions_etr') return {
-                        title: "Les Géants du Monde (2020-2026)",
-                        text: "Il n'y a pas que la France ! Le monde regorge de champions exceptionnels.",
+                        title: "Légendes du Japon",
+                        text: "Le Japon est le berceau du Judo. Voici les icônes qui ont marqué l'histoire par leur maîtrise technique et leur esprit.",
                         list: [
-                            { name: "Japon (La Source)", desc: "Hifumi et Uta Abe (frère et sœur en or), Shohei Ono (le style pur), Takanori Nagase (le tacticien)." },
-                            { name: "Géorgie (La Force)", desc: "Lasha Bekauri et Tato Grigalashvili. Un judo physique, explosif et spectaculaire." },
-                            { name: "Le Reste du Monde", desc: "Lukas Krpalek (Rép. Tchèque, double champion olympique dans 2 catégories), Daria Bilodid (Ukraine), Jorge Fonseca (Portugal)." }
+                            { name: "Ryoko Tani", desc: "Surnommée 'Yawara-chan', elle est 7 fois championne du monde et double championne olympique. Une volonté de fer." },
+                            { name: "Yasuhiro Yamashita", desc: "L'invincible. 203 victoires consécutives ! Il a gagné les JO de 1984 malgré une grave blessure. Un exemple de courage." },
+                            { name: "Tadahiro Nomura", desc: "Le plus grand palmarès olympique : Médaille d'Or en 1996, 2000 et 2004 ! Personne n'a jamais fait mieux à part Teddy Riner." },
+                            { name: "Shohei Ono", desc: "Le style pur. Double champion olympique, il ne cherche pas seulement à gagner, mais à gagner avec la manière (Ippon).", video: "GL2ZBjzGQwE" }
                         ],
-                        magicPhrase: "« Le talent n'a pas de frontière. »",
-                        senseiMessage: "On apprend en regardant tous les styles de judo."
+                        magicPhrase: "« Le beau judo est éternel. »",
+                        senseiMessage: "Inspire-toi de leur droiture et de leur technique."
                     };
                 }
 
                 // MENU D : CODE MORAL
                 if (menuId === 'D') {
                     const codes = {
-                        politesse: "C'est la première règle de vie en société. C'est savoir dire bonjour, merci, et respecter les distances.",
-                        courage: "C'est faire ce qui est juste, même quand on a peur. C'est oser attaquer un plus fort que soi.",
-                        sincerite: "C'est être vrai. Ne pas tricher sur la balance, ne pas simuler une blessure, reconnaître quand l'autre a marqué.",
-                        honneur: "C'est être fidèle à sa parole. Si tu t'engages à venir à une compétition par équipe, tu viens.",
-                        modestie: "C'est parler de soi-même sans orgueil. Même champion du monde, on salue tout le monde.",
-                        respect: "Sans respect, aucune confiance ne peut naître. Respect du lieu, du maître, et du partenaire.",
-                        controle: "C'est savoir se taire lorsque monte la colère. Ne pas jeter sa ceinture quand on perd.",
-                        amitie: "C'est le plus pur des sentiments humains. Les amis du judo restent souvent pour la vie."
+                        politesse: "C'est la première règle de vie en société.",
+                        courage: "C'est surmonter sa peur pour agir.",
+                        sincerite: "C'est être vrai dans ses actes et ses paroles.",
+                        honneur: "C'est vivre selon ses principes.",
+                        modestie: "C'est connaître ses limites et respecter les autres.",
+                        respect: "C'est la base de toute relation humaine.",
+                        controle: "C'est la victoire sur soi-même.",
+                        amitie: "C'est partager des moments forts."
                     };
                     return { title: itemId.charAt(0).toUpperCase() + itemId.slice(1), text: codes[itemId], magicPhrase: "« Valeurs pour la vie. »", senseiMessage: "Porte ces valeurs en dehors du dojo." };
                 }
@@ -533,11 +545,11 @@
                     };
                     if (itemId === 'katas') return {
                         title: "Nage-No-Kata",
-                        text: "Les formes de projection. C'est le premier kata qu'on apprend pour la ceinture noire.",
+                        text: "Les formes de projection. C'est le premier kata qu'on apprend.",
                         list: [
-                            { name: "Te-Waza", desc: "Série des techniques de bras (ex: Seoi Nage)." },
-                            { name: "Koshi-Waza", desc: "Série des techniques de hanche (ex: O Goshi)." },
-                            { name: "Ashi-Waza", desc: "Série des techniques de jambe (ex: Uchi Mata)." }
+                            { name: "Te-Waza", desc: "Série des techniques de bras." },
+                            { name: "Koshi-Waza", desc: "Série des techniques de hanche." },
+                            { name: "Ashi-Waza", desc: "Série des techniques de jambe." }
                         ],
                         magicPhrase: "« La forme juste donne l'efficacité. »",
                         senseiMessage: "Le Kata t'apprend les principes fondamentaux."
@@ -546,9 +558,9 @@
                         title: "Les Familles de Techniques",
                         text: "Le judo est classé en grandes familles.",
                         list: [
-                            { name: "Tachi-Waza", desc: "Techniques debout (Mains, Hanches, Jambes)." },
-                            { name: "Ne-Waza", desc: "Techniques au sol (Immobilisations, Étranglements, Clés)." },
-                            { name: "Sutemi-Waza", desc: "Techniques de sacrifice (on tombe pour projeter, comme Tomoe Nage)." }
+                            { name: "Tachi-Waza", desc: "Toutes les techniques debout." },
+                            { name: "Ne-Waza", desc: "Toutes les techniques au sol." },
+                            { name: "Sutemi-Waza", desc: "Techniques de sacrifice (on se jette pour projeter)." }
                         ],
                         magicPhrase: "« Connaître, c'est pouvoir choisir. »",
                         senseiMessage: "Cherche ta technique spéciale (Tokui-Waza)."
@@ -556,7 +568,69 @@
                 }
             }
 
-            // Fallback pour les niveaux non implémentés (autre que Lexique)
+            // --- PALIER 3 (S'APPROPRIER - ADOS / COMPETITEURS) ---
+            if (levelId === 3) {
+                if (menuId === 'A' && itemId === 'judogi') return {
+                    title: "Le Judogi en Compétition",
+                    text: "À ce niveau, ton judogi doit être conforme aux normes. Il n'est plus seulement un vêtement, c'est ton équipement de performance.",
+                    list: [
+                        { name: "Les Normes (Sokuteiki)", desc: "Manches, pantalon, croisement : tout est mesuré au millimètre près pour l'équité en compétition." },
+                        { name: "Blanc ou Bleu ?", desc: "Le blanc est la tradition (pureté). Le bleu a été introduit pour différencier les combattants à la télévision et par les arbitres." },
+                        { name: "Le Nœud (Musubi)", desc: "Il doit être plat et ne jamais se défaire pendant le combat. C'est le symbole de ta détermination qui ne lâche pas." }
+                    ],
+                    magicPhrase: "« Un judogi conforme est la première marque de respect de l'arbitre. »",
+                    senseiMessage: "Si tu dois te rhabiller toutes les 30 secondes,\ntu n'es pas concentré sur ton combat."
+                };
+            }
+
+            // --- PALIER 4 (TRANSMETTRE - CEINTURE NOIRE) ---
+            if (levelId === 4) {
+                // MENU A : LE DOJO
+                if (menuId === 'A' && itemId === 'judogi') return {
+                    title: "Histoire et Exemplarité",
+                    text: "En tant que Ceinture Noire, tu représentes le Judo. Ton judogi porte une histoire technique et culturelle que tu dois transmettre.",
+                    list: [
+                        { name: "L'Invention (1907)", desc: "Jigoro Kano a créé cette tenue pour remplacer les armures lourdes et les kimonos fragiles. Il a inventé le tissu 'Grain de riz'." },
+                        { name: "Le Sashiko", desc: "C'est la technique de tissage spécifique (fils de coton croisés) qui rend la veste presque indéchirable tout en restant souple." },
+                        { name: "L'Exemplarité", desc: "Un enseignant ou une ceinture noire doit toujours être impeccable. Les élèves regardent ta tenue avant d'écouter tes paroles." }
+                    ],
+                    magicPhrase: "« Porter le judogi, c'est endosser l'histoire du Japon. »",
+                    senseiMessage: "Ton grade se voit à ta ceinture,\nmais ta valeur se voit à ton attitude."
+                };
+
+                // MENU C : CULTURE
+                if (menuId === 'C') {
+                    if (itemId === 'fondateur') return {
+                        title: "Jigoro Kano : L'Héritage",
+                        text: "Au niveau Ceinture Noire, il est essentiel de comprendre que Kano n'était pas seulement un maître d'arts martiaux, mais un visionnaire de l'éducation. Il a transformé des techniques guerrières en un système d'éducation physique et morale.",
+                        video: "CThBDwxOZgE", // ID de la vidéo Youtube
+                        list: [
+                            { name: "La Genèse", desc: "Il a synthétisé les écoles de Jujitsu (Tenjin Shin'yō-ryū et Kitō-ryū) pour créer le Kodokan en 1882." },
+                            { name: "L'Internationalisme", desc: "Premier membre asiatique du CIO, il a œuvré toute sa vie pour que le judo devienne un pont entre les nations." },
+                            { name: "La Fin", desc: "Il décède en 1938 sur le bateau Hikawa Maru, rentrant du Caire, après avoir consacré sa vie à l'expansion du judo." }
+                        ],
+                        magicPhrase: "« Le but ultime du Judo est de se perfectionner pour être utile à la société. »",
+                        senseiMessage: "Tu portes désormais une part de cet héritage.\nÀ toi de le transmettre."
+                    };
+                }
+            }
+
+            // --- PALIER 5 (GUIDER - HAUT GRADÉ) ---
+            if (levelId === 5) {
+                if (menuId === 'A' && itemId === 'judogi') return {
+                    title: "Au-delà du Tissu",
+                    text: "Avec la maîtrise, le judogi prend une dimension symbolique profonde. On revient à l'essentiel et à la simplicité.",
+                    list: [
+                        { name: "Kohaku Obi", desc: "La ceinture Rouge et Blanche (6e à 8e Dan). Elle symbolise l'harmonie du Yin et du Yang, et le sacrifice." },
+                        { name: "Le Retour au Blanc", desc: "La ceinture Rouge (9e/10e Dan) est la plus haute, mais on dit qu'à la fin, on redevient ceinture blanche : le cycle est bouclé." },
+                        { name: "Le Linceul", desc: "Traditionnellement, le blanc évoque la pureté, mais aussi le vêtement mortuaire au Japon. On s'entraîne avec le sérieux de la vie et de la mort." }
+                    ],
+                    magicPhrase: "« Sous la ceinture rouge, l'esprit doit redevenir blanc. »",
+                    senseiMessage: "Le tissu s'use avec le temps,\nmais l'esprit se renforce."
+                };
+            }
+
+            // Fallback pour les niveaux non implémentés (autre que Lexique et Judogi P3/4/5)
             return {
                 title: "En construction",
                 text: `Le contenu "${itemId}" pour le Palier ${levelId} sera bientôt disponible.`
@@ -640,7 +714,7 @@
                                     </button>
                                 ))}
                                 <div className="text-center pt-8 pb-4">
-                                    <p className="text-slate-300 text-xs uppercase font-bold tracking-widest">Fédération de Judo</p>
+                                    <p className="text-slate-300 text-xs uppercase font-bold tracking-widest">Fédération Française de Judo</p>
                                 </div>
                             </div>
                         </main>
@@ -672,15 +746,15 @@
                                         className={`bg-white p-5 rounded-[1.5rem] shadow-sm flex flex-col justify-between aspect-square hover:shadow-md transition-all active:scale-95 animate-entry`}
                                         style={{ animationDelay: `${index * 50}ms` }}
                                     >
-                                        <div className="flex justify-between items-start">
-                                            <span className="text-slate-200 font-black text-2xl">{menu.id}</span>
-                                            <div className={`p-3 rounded-full ${menu.color}`}>
-                                                {menu.icon}
+                                        <div className="flex flex-col h-full">
+                                            <div className="flex-1 w-full rounded-xl overflow-hidden mb-3 relative shadow-sm">
+                                                <img src={menu.image} alt={menu.title} className="w-full h-full object-cover" />
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <span className={`text-lg font-bold ${menu.color} leading-tight text-left`}>{menu.title}</span>
+                                                <span className="text-slate-200 font-black text-xl">{menu.id}</span>
                                             </div>
                                         </div>
-                                        <span className="text-lg font-bold text-slate-800 leading-tight text-left">
-                                            {menu.title}
-                                        </span>
                                     </button>
                                 ))}
                             </div>
@@ -754,6 +828,21 @@
                                     </p>
                                 )}
 
+                                {/* AJOUT DU BLOC VIDEO */}
+                                {content.video && (
+                                    <div className="mb-8 rounded-2xl overflow-hidden shadow-lg aspect-video bg-black">
+                                        <iframe 
+                                            width="100%" 
+                                            height="100%" 
+                                            src={`https://www.youtube.com/embed/${content.video}`} 
+                                            title="YouTube video player" 
+                                            frameBorder="0" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                            allowFullScreen
+                                        ></iframe>
+                                    </div>
+                                )}
+
                                 {content.list && (
                                     <ul className="space-y-4 list-none pl-0">
                                         {content.list.map((c, i) => (
@@ -763,6 +852,21 @@
                                                     {c.isNew && <span className="bg-amber-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wide">Nouveau</span>}
                                                 </div>
                                                 <span className={`${c.isNew ? 'text-amber-700' : 'text-slate-500'} font-medium`}>{c.desc}</span>
+                                                
+                                                {/* VIDEO INTEGREE DANS LA LISTE */}
+                                                {c.video && (
+                                                    <div className="mt-4 rounded-2xl overflow-hidden shadow-sm aspect-video bg-black">
+                                                        <iframe 
+                                                            width="100%" 
+                                                            height="100%" 
+                                                            src={`https://www.youtube.com/embed/${c.video}`} 
+                                                            title="YouTube video player" 
+                                                            frameBorder="0" 
+                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                            allowFullScreen
+                                                        ></iframe>
+                                                    </div>
+                                                )}
                                             </li>
                                         ))}
                                     </ul>
