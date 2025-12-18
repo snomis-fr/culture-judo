@@ -629,17 +629,34 @@
 
             // --- PALIER 5 (GUIDER - HAUT GRADÉ) ---
             if (levelId === 5) {
-                if (menuId === 'A' && itemId === 'judogi') return {
-                    title: "Au-delà du Tissu",
-                    text: "Avec la maîtrise, le judogi prend une dimension symbolique profonde. On revient à l'essentiel et à la simplicité.",
-                    list: [
-                        { name: "Kohaku Obi", desc: "La ceinture Rouge et Blanche (6e à 8e Dan). Elle symbolise l'harmonie du Yin et du Yang, et le sacrifice." },
-                        { name: "Le Retour au Blanc", desc: "La ceinture Rouge (9e/10e Dan) est la plus haute, mais on dit qu'à la fin, on redevient ceinture blanche : le cycle est bouclé." },
-                        { name: "Le Linceul", desc: "Traditionnellement, le blanc évoque la pureté, mais aussi le vêtement mortuaire au Japon. On s'entraîne avec le sérieux de la vie et de la mort." }
-                    ],
-                    magicPhrase: "« Sous la ceinture rouge, l'esprit doit redevenir blanc. »",
-                    senseiMessage: "Le tissu s'use avec le temps,\nmais l'esprit se renforce."
-                };
+                if (menuId === 'A' && itemId === 'judogi') {
+                    return {
+                        title: "Au-delà du Tissu",
+                        text: "Avec la maîtrise, le judogi prend une dimension symbolique profonde. On revient à l'essentiel et à la simplicité.",
+                        list: [
+                            { name: "Kohaku Obi", desc: "La ceinture Rouge et Blanche (6e à 8e Dan). Elle symbolise l'harmonie du Yin et du Yang, et le sacrifice." },
+                            { name: "Le Retour au Blanc", desc: "La ceinture Rouge (9e/10e Dan) est la plus haute, mais on dit qu'à la fin, on redevient ceinture blanche : le cycle est bouclé." },
+                            { name: "Le Linceul", desc: "Traditionnellement, le blanc évoque la pureté, mais aussi le vêtement mortuaire au Japon. On s'entraîne avec le sérieux de la vie et de la mort." }
+                        ],
+                        magicPhrase: "« Sous la ceinture rouge, l'esprit doit redevenir blanc. »",
+                        senseiMessage: "Le tissu s'use avec le temps,\nmais l'esprit se renforce."
+                    };
+                }
+
+                if (menuId === 'C') {
+                    if (itemId === 'fondateur') return {
+                        title: "Jigoro Kano : L'Héritage Spirituel",
+                        text: "Au sommet de la progression, la figure de Jigoro Kano ne doit plus être vue seulement comme celle de l'inventeur technique, mais comme celle d'un philosophe humaniste. Ses derniers écrits révèlent une vision où le Judo dépasse le cadre du dojo pour devenir un principe de vie universel pour l'amélioration de l'humanité.",
+                        image: "https://upload.wikimedia.org/wikipedia/commons/2/23/Kano_Jigoro_1.jpg",
+                        list: [
+                            { name: "Seiryoku Zenyo", desc: "Ce n'est pas l'économie d'effort, mais l'utilisation la plus efficace de l'énergie physique et mentale pour un but noble." },
+                            { name: "Jita Kyoei", desc: "L'Entraide et la Prospérité Mutuelle. L'expert ne thésaurise pas le savoir, il le diffuse pour élever le niveau collectif." },
+                            { name: "Le Testament", desc: "En 1938, au Caire, il avertissait déjà contre la dérive purement sportive. Le Judo doit rester une méthode d'éducation." }
+                        ],
+                        magicPhrase: "« Être un seul esprit avec l'univers. »",
+                        senseiMessage: "Tu ne transmets plus seulement des techniques,\ntu transmets des valeurs."
+                    };
+                }
             }
 
             // Fallback pour les niveaux non implémentés (autre que Lexique et Judogi P3/4/5)
@@ -848,6 +865,20 @@
                                     <p className="text-xl text-slate-600 font-medium leading-relaxed mb-8">
                                         {content.text}
                                     </p>
+                                )}
+
+                                {/* AJOUT DU BLOC IMAGE PRINCIPALE */}
+                                {content.image && (
+                                    <div className="mb-8 rounded-2xl overflow-hidden shadow-lg border-4 border-slate-100">
+                                        <img 
+                                            src={content.image} 
+                                            alt="Illustration principale" 
+                                            className="w-full h-auto object-cover sepia-[.2]"
+                                        />
+                                        <div className="bg-slate-900 text-white text-xs p-2 text-center uppercase tracking-widest font-bold">
+                                            Figure Historique
+                                        </div>
+                                    </div>
                                 )}
 
                                 {/* AJOUT DU BLOC VIDEO */}
