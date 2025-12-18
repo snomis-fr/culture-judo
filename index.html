@@ -768,9 +768,14 @@
                 return (
                     <div className="flex flex-col h-full bg-white">
                         <div className="px-6 pt-8 pb-6 bg-slate-50 rounded-b-[2rem] z-10">
-                            <button onClick={goBack} className="flex items-center text-slate-400 hover:text-slate-800 transition-colors mb-4">
-                                <ArrowLeft size={20} className="mr-2"/> <span className="text-sm font-bold uppercase tracking-wide">Retour</span>
-                            </button>
+                            <div className="flex justify-between items-start mb-4">
+                                <button onClick={goBack} className="flex items-center text-slate-400 hover:text-slate-800 transition-colors">
+                                    <ArrowLeft size={20} className="mr-2"/> <span className="text-sm font-bold uppercase tracking-wide">Retour</span>
+                                </button>
+                                <span className="px-3 py-1 bg-white border border-slate-200 rounded-full text-[10px] font-bold text-slate-400 uppercase tracking-widest shadow-sm">
+                                    {selectedLevel.title}
+                                </span>
+                            </div>
                             <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 ${selectedMenu.color.replace('text-', 'bg-').replace('bg-', 'text-white ')}`}>
                                 {selectedMenu.icon}
                             </div>
@@ -814,8 +819,8 @@
                         </div>
                         
                         <main className="flex-1 overflow-y-auto px-8 pb-12 animate-entry no-scrollbar">
-                            <span className="text-red-600 font-bold uppercase tracking-widest text-xs mb-2 block">
-                                {selectedMenu.title}
+                            <span className="font-bold uppercase tracking-widest text-xs mb-2 block">
+                                <span className="text-slate-400">{selectedLevel.title}</span> <span className="text-slate-300 mx-1">•</span> <span className="text-red-600">{selectedMenu.title}</span>
                             </span>
                             <h2 className="text-4xl font-black text-slate-900 mb-8 leading-tight">
                                 {content.title}
