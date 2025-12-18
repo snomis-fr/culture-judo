@@ -66,26 +66,38 @@
             { id: 5, title: "PALIER 5", subtitle: "Guider", belts: "Hauts Gradés", color: "from-red-600 to-rose-700", shadow: "shadow-red-200", icon: <Star size={32} /> }
         ];
 
-        // MENU AVEC IMAGES LOCALES (.jpeg dans dossier images/)
-        const standardMenu = [
-            { id: 'A', title: 'Le Dojo', image: 'images/dojo.jpeg', color: 'text-blue-600', items: [
-                { id: 'salut', label: 'Le Salut' }, { id: 'professeur', label: 'Le Professeur' }, { id: 'partenaires', label: 'Les Partenaires' }, { id: 'judogi', label: 'Le Judogi' }, { id: 'tatami', label: 'Le Tatami' }
-            ]},
-            { id: 'B', title: 'Grade', image: 'images/grades.jpeg', color: 'text-amber-600', items: [
-                { id: 'ceintures', label: 'Les Ceintures' }, { id: 'connaissance', label: 'Requis' }
-            ]},
-            { id: 'C', title: 'Culture', image: 'images/culture.jpeg', color: 'text-emerald-600', items: [
-                { id: 'fondateur', label: 'Le Fondateur' }, { id: 'france', label: 'Judo en France' }, { id: 'monde', label: 'Judo dans le Monde' }, { id: 'champions_fr', label: 'Champions Français' }, { id: 'champions_etr', label: 'Champions Étrangers' }
-            ]},
-            { id: 'D', title: 'Code Moral', image: 'images/codemoral.jpeg', color: 'text-rose-600', items: [
-                { id: 'politesse', label: 'La Politesse' }, { id: 'courage', label: 'Le Courage' }, { id: 'sincerite', label: 'La Sincérité' }, { id: 'honneur', label: "L'Honneur" }, { id: 'modestie', label: 'La Modestie' }, { id: 'respect', label: 'Le Respect' }, { id: 'controle', label: 'Le Contrôle de Soi' }, { id: 'amitie', label: "L'Amitié" }
-            ]},
-            { id: 'E', title: 'Techniques', image: 'images/technique.jpeg', color: 'text-purple-600', items: [
-                { id: 'principes', label: 'Les Principes' }, { id: 'katas', label: 'Les Katas' }, { id: '100tech', label: 'Les 100 Techniques' }
-            ]},
-            { id: 'F', title: 'Lexique', image: 'images/lexique.jpeg', color: 'text-slate-600', items: [
-                { id: 'lexique_general', label: 'Vocabulaire' }
-            ]}
+        // MENU REORGANISÉ EN 2 SECTIONS
+        const menuSections = [
+            {
+                title: "Mon comportement sur le tapis",
+                color: "text-blue-900",
+                items: [
+                    { id: 'A', title: 'Le Dojo', image: 'images/dojo.jpeg', color: 'text-blue-600', items: [
+                        { id: 'salut', label: 'Le Salut' }, { id: 'professeur', label: 'Le Professeur' }, { id: 'partenaires', label: 'Les Partenaires' }, { id: 'judogi', label: 'Le Judogi' }, { id: 'tatami', label: 'Le Tatami' }
+                    ]},
+                    { id: 'D', title: 'Code Moral', image: 'images/codemoral.jpeg', color: 'text-rose-600', items: [
+                        { id: 'politesse', label: 'La Politesse' }, { id: 'courage', label: 'Le Courage' }, { id: 'sincerite', label: 'La Sincérité' }, { id: 'honneur', label: "L'Honneur" }, { id: 'modestie', label: 'La Modestie' }, { id: 'respect', label: 'Le Respect' }, { id: 'controle', label: 'Le Contrôle de Soi' }, { id: 'amitie', label: "L'Amitié" }
+                    ]},
+                    { id: 'B', title: 'Grades', image: 'images/grades.jpeg', color: 'text-amber-600', items: [
+                        { id: 'ceintures', label: 'Les Ceintures' }, { id: 'connaissance', label: 'Requis' }
+                    ]}
+                ]
+            },
+            {
+                title: "Mes connaissances",
+                color: "text-emerald-900",
+                items: [
+                    { id: 'E', title: 'Techniques', image: 'images/technique.jpeg', color: 'text-purple-600', items: [
+                        { id: 'principes', label: 'Les Principes' }, { id: 'katas', label: 'Les Katas' }, { id: '100tech', label: 'Les 100 Techniques' }
+                    ]},
+                    { id: 'C', title: 'Culture', image: 'images/culture.jpeg', color: 'text-emerald-600', items: [
+                        { id: 'fondateur', label: 'Le Fondateur' }, { id: 'france', label: 'Judo en France' }, { id: 'monde', label: 'Judo dans le Monde' }, { id: 'champions_fr', label: 'Champions Français' }, { id: 'champions_etr', label: 'Champions Étrangers' }
+                    ]},
+                    { id: 'F', title: 'Lexique', image: 'images/lexique.jpeg', color: 'text-slate-600', items: [
+                        { id: 'lexique_general', label: 'Vocabulaire' }
+                    ]}
+                ]
+            }
         ];
 
         // --- BASE DE DONNÉES LEXIQUE PROGRESSIVE ---
@@ -722,7 +734,7 @@
                 );
             }
 
-            // --- VUE 2 : MENU (GRID A-F) ---
+            // --- VUE 2 : MENU (SECTIONS) ---
             if (selectedLevel && !selectedMenu) {
                 return (
                     <div className="flex flex-col h-full bg-slate-50">
@@ -734,30 +746,35 @@
                             <p className="text-slate-500 font-medium">{selectedLevel.subtitle}</p>
                         </div>
 
-                        <main className="flex-1 overflow-y-auto px-6 py-8 no-scrollbar">
-                            <div className="grid grid-cols-2 gap-4">
-                                {standardMenu.map((menu, index) => (
-                                    <button 
-                                        key={menu.id}
-                                        onClick={() => {
-                                            setSelectedMenu(menu);
-                                            if (menu.id === 'F') setSelectedItem({ id: 'lexique_direct' });
-                                        }}
-                                        className={`bg-white p-5 rounded-[1.5rem] shadow-sm flex flex-col justify-between aspect-square hover:shadow-md transition-all active:scale-95 animate-entry`}
-                                        style={{ animationDelay: `${index * 50}ms` }}
-                                    >
-                                        <div className="flex flex-col h-full">
-                                            <div className="flex-1 w-full rounded-xl overflow-hidden mb-3 relative shadow-sm aspect-square">
-                                                <img src={menu.image} alt={menu.title} className="w-full h-full object-cover" />
-                                            </div>
-                                            <div className="flex justify-between items-center">
-                                                <span className={`text-lg font-bold ${menu.color} leading-tight text-left`}>{menu.title}</span>
-                                                <span className="text-slate-200 font-black text-xl">{menu.id}</span>
-                                            </div>
-                                        </div>
-                                    </button>
-                                ))}
-                            </div>
+                        <main className="flex-1 overflow-y-auto px-6 py-6 no-scrollbar space-y-8">
+                            {menuSections.map((section, idx) => (
+                                <div key={idx}>
+                                    <h3 className={`font-black text-lg mb-4 tracking-tight uppercase ${section.color}`}>{section.title}</h3>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        {section.items.map((menu, index) => (
+                                            <button 
+                                                key={menu.id}
+                                                onClick={() => {
+                                                    setSelectedMenu(menu);
+                                                    if (menu.id === 'F') setSelectedItem({ id: 'lexique_direct' });
+                                                }}
+                                                className={`bg-white p-5 rounded-[1.5rem] shadow-sm flex flex-col justify-between aspect-square hover:shadow-md transition-all active:scale-95 animate-entry`}
+                                                style={{ animationDelay: `${index * 50}ms` }}
+                                            >
+                                                <div className="flex flex-col h-full">
+                                                    <div className="flex-1 w-full rounded-xl overflow-hidden mb-3 relative shadow-sm aspect-square">
+                                                        <img src={menu.image} alt={menu.title} className="w-full h-full object-cover" />
+                                                    </div>
+                                                    <div className="flex justify-between items-center">
+                                                        <span className={`text-lg font-bold ${menu.color} leading-tight text-left`}>{menu.title}</span>
+                                                        <span className="text-slate-200 font-black text-xl">{menu.id}</span>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
                         </main>
                     </div>
                 );
