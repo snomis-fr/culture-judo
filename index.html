@@ -266,7 +266,7 @@
                         title: "Jigoro Kano",
                         text: "C'est le père du Judo. Il vivait au Japon il y a très longtemps.",
                         list: [
-                            { name: "Un Enfant Petit", desc: "Il était petit et se faisait embêter. Il voulait devenir fort." },
+                            { name: "Un Enfant Petit", desc: "Il était petit et se faisait embêter. Il voulait devenir fort.", image: "images/jigorokanopalier1.jpg" }, // AJOUT IMAGE ICI
                             { name: "L'Invention", desc: "Il a créé le Judo en 1882 pour éduquer les jeunes." },
                             { name: "Son Idée", desc: "Utiliser la force de l'autre plutôt que de s'opposer." }
                         ],
@@ -296,8 +296,8 @@
                         senseiMessage: "Peu importe ton pays ou ta langue,\nsur le tatami, on parle tous Judo."
                     };
                     if (itemId === 'champions_fr') return {
-                        title: "Les champions français actuels (2020-2024)",
-                        text: "La France brille au sommet de l'Olympe. Voici nos héros de Tokyo et Paris.",
+                        title: "Les Champions Français",
+                        text: "La France a des héros incroyables qui ont marqué l'histoire. Voici trois légendes :",
                         list: [
                             { name: "Teddy Riner : Le Roi", desc: "C'est le plus grand judoka de tous les temps ! Il mesure plus de 2 mètres. Pendant 10 ans, personne n'a réussi à le battre. Il a gagné 3 fois les Jeux Olympiques en individuel. C'est un géant !" },
                             { name: "Clarisse Agbegnenou : La Lionne", desc: "À sa naissance, elle était très fragile et les médecins étaient inquiets. Elle s'est battue pour vivre. Aujourd'hui, elle se bat sur le tapis et a tout gagné ! Elle prouve que rien n'est impossible." },
@@ -870,6 +870,13 @@
                                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                                             allowFullScreen
                                                         ></iframe>
+                                                    </div>
+                                                )}
+
+                                                 {/* IMAGE INTEGREE DANS LA LISTE */}
+                                                {c.image && (
+                                                    <div className="mt-4 rounded-2xl overflow-hidden shadow-sm">
+                                                        <img src={c.image} alt={c.name} className="w-full h-auto object-cover" />
                                                     </div>
                                                 )}
                                             </li>
