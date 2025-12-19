@@ -60,32 +60,44 @@
 
         const levels = [
             { id: 1, title: "PALIER 1", subtitle: "Entrer dans la voie", belts: "Blanche → Jaune", color: "from-amber-300 to-orange-400", shadow: "shadow-orange-200", icon: <User size={32} /> },
-            { id: 2, title: "PALIER 2", subtitle: "Comprendre", belts: "Jaune → Verte", color: "from-emerald-400 to-teal-500", shadow: "shadow-emerald-200", icon: <BookOpen size={32} /> },
+            { id: 2, title: "PALIER 2", subtitle: "Comprendre", belts: "Jaune → Orange → Verte", color: "from-emerald-400 to-teal-500", shadow: "shadow-emerald-200", icon: <BookOpen size={32} /> },
             { id: 3, title: "PALIER 3", subtitle: "S’approprier", belts: "Bleue → Marron", color: "from-blue-500 to-indigo-600", shadow: "shadow-blue-200", icon: <User size={32} /> },
             { id: 4, title: "PALIER 4", subtitle: "Transmettre", belts: "Ceinture Noire", color: "from-slate-700 to-slate-900", shadow: "shadow-slate-300", icon: <Users size={32} /> },
             { id: 5, title: "PALIER 5", subtitle: "Guider", belts: "Hauts Gradés", color: "from-red-600 to-rose-700", shadow: "shadow-red-200", icon: <Star size={32} /> }
         ];
 
-        // MENU AVEC IMAGES LOCALES (.jpeg dans dossier images/)
-        const standardMenu = [
-            { id: 'A', title: 'Le Dojo', image: 'images/dojo.jpeg', color: 'text-blue-600', items: [
-                { id: 'salut', label: 'Le Salut' }, { id: 'professeur', label: 'Le Professeur' }, { id: 'partenaires', label: 'Les Partenaires' }, { id: 'judogi', label: 'Le Judogi' }, { id: 'tatami', label: 'Le Tatami' }
-            ]},
-            { id: 'B', title: 'Grade', image: 'images/grades.jpeg', color: 'text-amber-600', items: [
-                { id: 'ceintures', label: 'Les Ceintures' }, { id: 'connaissance', label: 'Requis' }
-            ]},
-            { id: 'C', title: 'Culture', image: 'images/culture.jpeg', color: 'text-emerald-600', items: [
-                { id: 'fondateur', label: 'Le Fondateur' }, { id: 'france', label: 'Judo en France' }, { id: 'monde', label: 'Judo dans le Monde' }, { id: 'champions_fr', label: 'Champions Français' }, { id: 'champions_etr', label: 'Champions Étrangers' }
-            ]},
-            { id: 'D', title: 'Code Moral', image: 'images/codemoral.jpeg', color: 'text-rose-600', items: [
-                { id: 'politesse', label: 'La Politesse' }, { id: 'courage', label: 'Le Courage' }, { id: 'sincerite', label: 'La Sincérité' }, { id: 'honneur', label: "L'Honneur" }, { id: 'modestie', label: 'La Modestie' }, { id: 'respect', label: 'Le Respect' }, { id: 'controle', label: 'Le Contrôle de Soi' }, { id: 'amitie', label: "L'Amitié" }
-            ]},
-            { id: 'E', title: 'Techniques', image: 'images/technique.jpeg', color: 'text-purple-600', items: [
-                { id: 'principes', label: 'Les Principes' }, { id: 'katas', label: 'Les Katas' }, { id: '100tech', label: 'Les 100 Techniques' }
-            ]},
-            { id: 'F', title: 'Lexique', image: 'images/lexique.jpeg', color: 'text-slate-600', items: [
-                { id: 'lexique_general', label: 'Vocabulaire' }
-            ]}
+        // MENU REORGANISÉ EN 2 SECTIONS
+        const menuSections = [
+            {
+                title: "Mon comportement sur le tapis",
+                color: "text-blue-900",
+                items: [
+                    { id: 'A', title: 'Le Dojo', image: 'images/dojo.jpeg', color: 'text-blue-600', items: [
+                        { id: 'salut', label: 'Le Salut' }, { id: 'professeur', label: 'Le Professeur' }, { id: 'partenaires', label: 'Les Partenaires' }, { id: 'judogi', label: 'Le Judogi' }, { id: 'tatami', label: 'Le Tatami' }
+                    ]},
+                    { id: 'D', title: 'Code Moral', image: 'images/codemoral.jpeg', color: 'text-rose-600', items: [
+                        { id: 'politesse', label: 'La Politesse' }, { id: 'courage', label: 'Le Courage' }, { id: 'sincerite', label: 'La Sincérité' }, { id: 'honneur', label: "L'Honneur" }, { id: 'modestie', label: 'La Modestie' }, { id: 'respect', label: 'Le Respect' }, { id: 'controle', label: 'Le Contrôle de Soi' }, { id: 'amitie', label: "L'Amitié" }
+                    ]},
+                    { id: 'B', title: 'Grades', image: 'images/grades.jpeg', color: 'text-amber-600', items: [
+                        { id: 'ceintures', label: 'Les Ceintures' }, { id: 'connaissance', label: 'Requis' }
+                    ]}
+                ]
+            },
+            {
+                title: "Mes connaissances",
+                color: "text-emerald-900",
+                items: [
+                    { id: 'E', title: 'Techniques', image: 'images/technique.jpeg', color: 'text-purple-600', items: [
+                        { id: 'principes', label: 'Les Principes' }, { id: 'katas', label: 'Les Katas' }, { id: '100tech', label: 'Les 100 Techniques' }
+                    ]},
+                    { id: 'C', title: 'Culture', image: 'images/culture.jpeg', color: 'text-emerald-600', items: [
+                        { id: 'fondateur', label: 'Le Fondateur' }, { id: 'france', label: 'Judo en France' }, { id: 'monde', label: 'Judo dans le Monde' }, { id: 'champions_fr', label: 'Champions Français' }, { id: 'champions_etr', label: 'Champions Étrangers' }
+                    ]},
+                    { id: 'F', title: 'Lexique', image: 'images/lexique.jpeg', color: 'text-slate-600', items: [
+                        { id: 'lexique_general', label: 'Vocabulaire' }
+                    ]}
+                ]
+            }
         ];
 
         // --- BASE DE DONNÉES LEXIQUE PROGRESSIVE ---
@@ -182,10 +194,10 @@
                         title: "Le Salut (Rei)", 
                         text: "Le salut est la première chose que l'on apprend. C'est la marque de respect indispensable du judoka.",
                         list: [
-                            { name: "Le Tatami", desc: "On le salue en entrant et en sortant." },
-                            { name: "Le Professeur", desc: "On le salue au début et à la fin de la séance." },
-                            { name: "Le Partenaire", desc: "On le salue avant et après chaque exercice." },
-                            { name: "Les 2 formes", desc: "Debout (Ritsurei) ou à genoux (Zarei)." }
+                            { name: "Le Tatami", desc: "On le salue en entrant et en sortant.", image: "images/saluttatami.JPG" },
+                            { name: "Le Professeur", desc: "On le salue au début et à la fin de la séance.", video: "images/salutprofesseur.MP4" },
+                            { name: "Le Partenaire", desc: "On le salue avant et après chaque exercice.", image: "images/saluttatamigroupe.JPG" },
+                            { name: "Les 2 formes", desc: "Debout (Ritsurei) ou à genoux (Zarei).", videos: ["images/salutdebout.mov", "images/salutgenoux.MP4"] }
                         ],
                         magicPhrase: "« Je salue avant pour dire bonjour, après pour dire merci. »",
                         senseiMessage: "Tu peux perdre un combat.\nMais tu ne dois jamais perdre le respect."
@@ -203,7 +215,7 @@
                     };
                     if (itemId === 'partenaires') return { 
                         title: "Les Copains (Partenaires)", 
-                        text: "Au judo, l'autre n'est pas un ennemi. C'est un ami indispensable.",
+                        text: "Au judo, l'autre n'est pas un encombre. C'est un ami indispensable.",
                         list: [
                             { name: "Indispensable", desc: "Le judo ne se joue pas tout seul. Sans copain, impossible d'apprendre." },
                             { name: "La Confiance", desc: "Il te laisse le projeter. Tu es responsable de lui : aide-le à chuter sans mal." },
@@ -266,7 +278,7 @@
                         title: "Jigoro Kano",
                         text: "C'est le père du Judo. Il vivait au Japon il y a très longtemps.",
                         list: [
-                            { name: "Un Enfant Petit", desc: "Il était petit et se faisait embêter. Il voulait devenir fort." },
+                            { name: "Un Enfant Petit", desc: "Il était petit et se faisait embêter. Il voulait devenir fort.", image: "images/jigorokanopalier1.jpg" }, // AJOUT IMAGE ICI
                             { name: "L'Invention", desc: "Il a créé le Judo en 1882 pour éduquer les jeunes." },
                             { name: "Son Idée", desc: "Utiliser la force de l'autre plutôt que de s'opposer." }
                         ],
@@ -296,8 +308,8 @@
                         senseiMessage: "Peu importe ton pays ou ta langue,\nsur le tatami, on parle tous Judo."
                     };
                     if (itemId === 'champions_fr') return {
-                        title: "Les champions français actuels (2020-2024)",
-                        text: "La France brille au sommet de l'Olympe. Voici nos héros de Tokyo et Paris.",
+                        title: "Les Champions Français",
+                        text: "La France a des héros incroyables qui ont marqué l'histoire. Voici trois légendes :",
                         list: [
                             { name: "Teddy Riner : Le Roi", desc: "C'est le plus grand judoka de tous les temps ! Il mesure plus de 2 mètres. Pendant 10 ans, personne n'a réussi à le battre. Il a gagné 3 fois les Jeux Olympiques en individuel. C'est un géant !" },
                             { name: "Clarisse Agbegnenou : La Lionne", desc: "À sa naissance, elle était très fragile et les médecins étaient inquiets. Elle s'est battue pour vivre. Aujourd'hui, elle se bat sur le tapis et a tout gagné ! Elle prouve que rien n'est impossible." },
@@ -617,17 +629,34 @@
 
             // --- PALIER 5 (GUIDER - HAUT GRADÉ) ---
             if (levelId === 5) {
-                if (menuId === 'A' && itemId === 'judogi') return {
-                    title: "Au-delà du Tissu",
-                    text: "Avec la maîtrise, le judogi prend une dimension symbolique profonde. On revient à l'essentiel et à la simplicité.",
-                    list: [
-                        { name: "Kohaku Obi", desc: "La ceinture Rouge et Blanche (6e à 8e Dan). Elle symbolise l'harmonie du Yin et du Yang, et le sacrifice." },
-                        { name: "Le Retour au Blanc", desc: "La ceinture Rouge (9e/10e Dan) est la plus haute, mais on dit qu'à la fin, on redevient ceinture blanche : le cycle est bouclé." },
-                        { name: "Le Linceul", desc: "Traditionnellement, le blanc évoque la pureté, mais aussi le vêtement mortuaire au Japon. On s'entraîne avec le sérieux de la vie et de la mort." }
-                    ],
-                    magicPhrase: "« Sous la ceinture rouge, l'esprit doit redevenir blanc. »",
-                    senseiMessage: "Le tissu s'use avec le temps,\nmais l'esprit se renforce."
-                };
+                if (menuId === 'A' && itemId === 'judogi') {
+                    return {
+                        title: "Au-delà du Tissu",
+                        text: "Avec la maîtrise, le judogi prend une dimension symbolique profonde. On revient à l'essentiel et à la simplicité.",
+                        list: [
+                            { name: "Kohaku Obi", desc: "La ceinture Rouge et Blanche (6e à 8e Dan). Elle symbolise l'harmonie du Yin et du Yang, et le sacrifice." },
+                            { name: "Le Retour au Blanc", desc: "La ceinture Rouge (9e/10e Dan) est la plus haute, mais on dit qu'à la fin, on redevient ceinture blanche : le cycle est bouclé." },
+                            { name: "Le Linceul", desc: "Traditionnellement, le blanc évoque la pureté, mais aussi le vêtement mortuaire au Japon. On s'entraîne avec le sérieux de la vie et de la mort." }
+                        ],
+                        magicPhrase: "« Sous la ceinture rouge, l'esprit doit redevenir blanc. »",
+                        senseiMessage: "Le tissu s'use avec le temps,\nmais l'esprit se renforce."
+                    };
+                }
+
+                if (menuId === 'C') {
+                    if (itemId === 'fondateur') return {
+                        title: "Jigoro Kano : L'Héritage Spirituel",
+                        text: "Au sommet de la progression, la figure de Jigoro Kano ne doit plus être vue seulement comme celle de l'inventeur technique, mais comme celle d'un philosophe humaniste. Ses derniers écrits révèlent une vision où le Judo dépasse le cadre du dojo pour devenir un principe de vie universel pour l'amélioration de l'humanité.",
+                        image: "https://upload.wikimedia.org/wikipedia/commons/2/23/Kano_Jigoro_1.jpg",
+                        list: [
+                            { name: "Seiryoku Zenyo", desc: "Ce n'est pas l'économie d'effort, mais l'utilisation la plus efficace de l'énergie physique et mentale pour un but noble." },
+                            { name: "Jita Kyoei", desc: "L'Entraide et la Prospérité Mutuelle. L'expert ne thésaurise pas le savoir, il le diffuse pour élever le niveau collectif." },
+                            { name: "Le Testament", desc: "En 1938, au Caire, il avertissait déjà contre la dérive purement sportive. Le Judo doit rester une méthode d'éducation." }
+                        ],
+                        magicPhrase: "« Être un seul esprit avec l'univers. »",
+                        senseiMessage: "Tu ne transmets plus seulement des techniques,\ntu transmets des valeurs."
+                    };
+                }
             }
 
             // Fallback pour les niveaux non implémentés (autre que Lexique et Judogi P3/4/5)
@@ -673,6 +702,12 @@
                 }
                 else if (selectedMenu) setSelectedMenu(null);
                 else if (selectedLevel) setSelectedLevel(null);
+            };
+
+            const isLocalVideo = (path) => {
+                if (!path) return false;
+                const lower = path.toLowerCase();
+                return lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.mov');
             };
 
             // --- VUE 1 : ACCUEIL ---
@@ -722,7 +757,7 @@
                 );
             }
 
-            // --- VUE 2 : MENU (GRID A-F) ---
+            // --- VUE 2 : MENU (SECTIONS) ---
             if (selectedLevel && !selectedMenu) {
                 return (
                     <div className="flex flex-col h-full bg-slate-50">
@@ -734,30 +769,35 @@
                             <p className="text-slate-500 font-medium">{selectedLevel.subtitle}</p>
                         </div>
 
-                        <main className="flex-1 overflow-y-auto px-6 py-8 no-scrollbar">
-                            <div className="grid grid-cols-2 gap-4">
-                                {standardMenu.map((menu, index) => (
-                                    <button 
-                                        key={menu.id}
-                                        onClick={() => {
-                                            setSelectedMenu(menu);
-                                            if (menu.id === 'F') setSelectedItem({ id: 'lexique_direct' });
-                                        }}
-                                        className={`bg-white p-5 rounded-[1.5rem] shadow-sm flex flex-col justify-between aspect-square hover:shadow-md transition-all active:scale-95 animate-entry`}
-                                        style={{ animationDelay: `${index * 50}ms` }}
-                                    >
-                                        <div className="flex flex-col h-full">
-                                            <div className="flex-1 w-full rounded-xl overflow-hidden mb-3 relative shadow-sm aspect-square">
-                                                <img src={menu.image} alt={menu.title} className="w-full h-full object-cover" />
-                                            </div>
-                                            <div className="flex justify-between items-center">
-                                                <span className={`text-lg font-bold ${menu.color} leading-tight text-left`}>{menu.title}</span>
-                                                <span className="text-slate-200 font-black text-xl">{menu.id}</span>
-                                            </div>
-                                        </div>
-                                    </button>
-                                ))}
-                            </div>
+                        <main className="flex-1 overflow-y-auto px-6 py-6 no-scrollbar space-y-8">
+                            {menuSections.map((section, idx) => (
+                                <div key={idx}>
+                                    <h3 className={`font-black text-lg mb-4 tracking-tight uppercase ${section.color}`}>{section.title}</h3>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        {section.items.map((menu, index) => (
+                                            <button 
+                                                key={menu.id}
+                                                onClick={() => {
+                                                    setSelectedMenu(menu);
+                                                    if (menu.id === 'F') setSelectedItem({ id: 'lexique_direct' });
+                                                }}
+                                                className={`bg-white p-5 rounded-[1.5rem] shadow-sm flex flex-col justify-between aspect-square hover:shadow-md transition-all active:scale-95 animate-entry`}
+                                                style={{ animationDelay: `${index * 50}ms` }}
+                                            >
+                                                <div className="flex flex-col h-full">
+                                                    <div className="flex-1 w-full rounded-xl overflow-hidden mb-3 relative shadow-sm aspect-square">
+                                                        <img src={menu.image} alt={menu.title} className="w-full h-full object-cover" />
+                                                    </div>
+                                                    <div className="flex justify-between items-center">
+                                                        <span className={`text-lg font-bold ${menu.color} leading-tight text-left`}>{menu.title}</span>
+                                                        <span className="text-slate-200 font-black text-xl">{menu.id}</span>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
                         </main>
                     </div>
                 );
@@ -833,18 +873,39 @@
                                     </p>
                                 )}
 
+                                {/* AJOUT DU BLOC IMAGE PRINCIPALE */}
+                                {content.image && (
+                                    <div className="mb-8 rounded-2xl overflow-hidden shadow-lg border-4 border-slate-100">
+                                        <img 
+                                            src={content.image} 
+                                            alt="Illustration principale" 
+                                            className="w-full h-auto object-cover sepia-[.2]"
+                                        />
+                                        <div className="bg-slate-900 text-white text-xs p-2 text-center uppercase tracking-widest font-bold">
+                                            Figure Historique
+                                        </div>
+                                    </div>
+                                )}
+
                                 {/* AJOUT DU BLOC VIDEO */}
                                 {content.video && (
                                     <div className="mb-8 rounded-2xl overflow-hidden shadow-lg aspect-video bg-black">
-                                        <iframe 
-                                            width="100%" 
-                                            height="100%" 
-                                            src={`https://www.youtube.com/embed/${content.video}`} 
-                                            title="YouTube video player" 
-                                            frameBorder="0" 
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                            allowFullScreen
-                                        ></iframe>
+                                        {isLocalVideo(content.video) ? (
+                                            <video controls className="w-full h-full">
+                                                <source src={content.video} type={content.video.toLowerCase().endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+                                                Votre navigateur ne supporte pas la lecture de vidéos.
+                                            </video>
+                                        ) : (
+                                            <iframe 
+                                                width="100%" 
+                                                height="100%" 
+                                                src={`https://www.youtube.com/embed/${content.video}`} 
+                                                title="YouTube video player" 
+                                                frameBorder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                allowFullScreen
+                                            ></iframe>
+                                        )}
                                     </div>
                                 )}
 
@@ -858,18 +919,54 @@
                                                 </div>
                                                 <span className={`${c.isNew ? 'text-amber-700' : 'text-slate-500'} font-medium`}>{c.desc}</span>
                                                 
-                                                {/* VIDEO INTEGREE DANS LA LISTE */}
+                                                {/* VIDÉO INTÉGRÉE DANS LA LISTE */}
                                                 {c.video && (
                                                     <div className="mt-4 rounded-2xl overflow-hidden shadow-sm aspect-video bg-black">
-                                                        <iframe 
-                                                            width="100%" 
-                                                            height="100%" 
-                                                            src={`https://www.youtube.com/embed/${c.video}`} 
-                                                            title="YouTube video player" 
-                                                            frameBorder="0" 
-                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                                            allowFullScreen
-                                                        ></iframe>
+                                                        {isLocalVideo(c.video) ? (
+                                                            <video controls className="w-full h-full">
+                                                                <source src={c.video} type={c.video.toLowerCase().endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+                                                                Votre navigateur ne supporte pas la lecture de vidéos.
+                                                            </video>
+                                                        ) : (
+                                                            <iframe 
+                                                                width="100%" 
+                                                                height="100%" 
+                                                                src={`https://www.youtube.com/embed/${c.video}`} 
+                                                                title="YouTube video player" 
+                                                                frameBorder="0" 
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                                allowFullScreen
+                                                            ></iframe>
+                                                        )}
+                                                    </div>
+                                                )}
+
+                                                {/* VIDÉOS MULTIPLES INTÉGRÉES DANS LA LISTE */}
+                                                {c.videos && c.videos.map((v, vIdx) => (
+                                                    <div key={vIdx} className="mt-4 rounded-2xl overflow-hidden shadow-sm aspect-video bg-black">
+                                                        {isLocalVideo(v) ? (
+                                                            <video controls className="w-full h-full">
+                                                                <source src={v} type={v.toLowerCase().endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+                                                                Votre navigateur ne supporte pas la lecture de vidéos.
+                                                            </video>
+                                                        ) : (
+                                                            <iframe 
+                                                                width="100%" 
+                                                                height="100%" 
+                                                                src={`https://www.youtube.com/embed/${v}`} 
+                                                                title="YouTube video player" 
+                                                                frameBorder="0" 
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                                allowFullScreen
+                                                            ></iframe>
+                                                        )}
+                                                    </div>
+                                                ))}
+
+                                                 {/* IMAGE INTEGREE DANS LA LISTE */}
+                                                {c.image && (
+                                                    <div className="mt-4 rounded-2xl overflow-hidden shadow-sm">
+                                                        <img src={c.image} alt={c.name} className="w-full h-auto object-cover" />
                                                     </div>
                                                 )}
                                             </li>
