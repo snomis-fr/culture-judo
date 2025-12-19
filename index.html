@@ -194,10 +194,10 @@
                         title: "Le Salut (Rei)", 
                         text: "Le salut est la première chose que l'on apprend. C'est la marque de respect indispensable du judoka.",
                         list: [
-                            { name: "Le Tatami", desc: "On le salue en entrant et en sortant." },
-                            { name: "Le Professeur", desc: "On le salue au début et à la fin de la séance." },
-                            { name: "Le Partenaire", desc: "On le salue avant et après chaque exercice." },
-                            { name: "Les 2 formes", desc: "Debout (Ritsurei) ou à genoux (Zarei)." }
+                            { name: "Le Tatami", desc: "On le salue en entrant et en sortant.", image: "images/saluttatami.JPG" },
+                            { name: "Le Professeur", desc: "On le salue au début et à la fin de la séance.", video: "images/salutprofesseur.MP4" },
+                            { name: "Le Partenaire", desc: "On le salue avant et après chaque exercice.", image: "images/saluttatamigroupe.JPG" },
+                            { name: "Les 2 formes", desc: "Debout (Ritsurei) ou à genoux (Zarei).", videos: ["images/salutdebout.mov", "images/salutgenoux.MP4"] }
                         ],
                         magicPhrase: "« Je salue avant pour dire bonjour, après pour dire merci. »",
                         senseiMessage: "Tu peux perdre un combat.\nMais tu ne dois jamais perdre le respect."
@@ -704,6 +704,12 @@
                 else if (selectedLevel) setSelectedLevel(null);
             };
 
+            const isLocalVideo = (path) => {
+                if (!path) return false;
+                const lower = path.toLowerCase();
+                return lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.mov');
+            };
+
             // --- VUE 1 : ACCUEIL ---
             if (!selectedLevel) {
                 return (
@@ -884,15 +890,22 @@
                                 {/* AJOUT DU BLOC VIDEO */}
                                 {content.video && (
                                     <div className="mb-8 rounded-2xl overflow-hidden shadow-lg aspect-video bg-black">
-                                        <iframe 
-                                            width="100%" 
-                                            height="100%" 
-                                            src={`https://www.youtube.com/embed/${content.video}`} 
-                                            title="YouTube video player" 
-                                            frameBorder="0" 
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                            allowFullScreen
-                                        ></iframe>
+                                        {isLocalVideo(content.video) ? (
+                                            <video controls className="w-full h-full">
+                                                <source src={content.video} type={content.video.toLowerCase().endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+                                                Votre navigateur ne supporte pas la lecture de vidéos.
+                                            </video>
+                                        ) : (
+                                            <iframe 
+                                                width="100%" 
+                                                height="100%" 
+                                                src={`https://www.youtube.com/embed/${content.video}`} 
+                                                title="YouTube video player" 
+                                                frameBorder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                allowFullScreen
+                                            ></iframe>
+                                        )}
                                     </div>
                                 )}
 
@@ -906,20 +919,49 @@
                                                 </div>
                                                 <span className={`${c.isNew ? 'text-amber-700' : 'text-slate-500'} font-medium`}>{c.desc}</span>
                                                 
-                                                {/* VIDEO INTEGREE DANS LA LISTE */}
+                                                {/* VIDÉO INTÉGRÉE DANS LA LISTE */}
                                                 {c.video && (
                                                     <div className="mt-4 rounded-2xl overflow-hidden shadow-sm aspect-video bg-black">
-                                                        <iframe 
-                                                            width="100%" 
-                                                            height="100%" 
-                                                            src={`https://www.youtube.com/embed/${c.video}`} 
-                                                            title="YouTube video player" 
-                                                            frameBorder="0" 
-                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                                            allowFullScreen
-                                                        ></iframe>
+                                                        {isLocalVideo(c.video) ? (
+                                                            <video controls className="w-full h-full">
+                                                                <source src={c.video} type={c.video.toLowerCase().endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+                                                                Votre navigateur ne supporte pas la lecture de vidéos.
+                                                            </video>
+                                                        ) : (
+                                                            <iframe 
+                                                                width="100%" 
+                                                                height="100%" 
+                                                                src={`https://www.youtube.com/embed/${c.video}`} 
+                                                                title="YouTube video player" 
+                                                                frameBorder="0" 
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                                allowFullScreen
+                                                            ></iframe>
+                                                        )}
                                                     </div>
                                                 )}
+
+                                                {/* VIDÉOS MULTIPLES INTÉGRÉES DANS LA LISTE */}
+                                                {c.videos && c.videos.map((v, vIdx) => (
+                                                    <div key={vIdx} className="mt-4 rounded-2xl overflow-hidden shadow-sm aspect-video bg-black">
+                                                        {isLocalVideo(v) ? (
+                                                            <video controls className="w-full h-full">
+                                                                <source src={v} type={v.toLowerCase().endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+                                                                Votre navigateur ne supporte pas la lecture de vidéos.
+                                                            </video>
+                                                        ) : (
+                                                            <iframe 
+                                                                width="100%" 
+                                                                height="100%" 
+                                                                src={`https://www.youtube.com/embed/${v}`} 
+                                                                title="YouTube video player" 
+                                                                frameBorder="0" 
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                                allowFullScreen
+                                                            ></iframe>
+                                                        )}
+                                                    </div>
+                                                ))}
 
                                                  {/* IMAGE INTEGREE DANS LA LISTE */}
                                                 {c.image && (
