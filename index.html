@@ -57,7 +57,6 @@
         // 1. DONNÉES (STRUCTURE)
         // ==================================================================================
 
-        // Ajout d'une propriété 'theme' pour coordonner les couleurs dynamiquement
         const levels = [
             { id: 1, title: "PALIER 1", subtitle: "Entrer dans la voie", belts: "Blanche → Jaune", color: "from-amber-300 to-orange-400", theme: "amber", shadow: "shadow-orange-200", icon: <User size={32} /> },
             { id: 2, title: "PALIER 2", subtitle: "Comprendre", belts: "Jaune → Orange → Verte", color: "from-emerald-400 to-teal-500", theme: "emerald", shadow: "shadow-emerald-200", icon: <BookOpen size={32} /> },
@@ -76,7 +75,7 @@
                         { id: 'politesse', label: 'La Politesse' }, { id: 'courage', label: 'Le Courage' }, { id: 'sincerite', label: 'La Sincérité' }, { id: 'honneur', label: "L'Honneur" }, { id: 'modestie', label: 'La Modestie' }, { id: 'respect', label: 'Le Respect' }, { id: 'controle', label: 'Le Contrôle de Soi' }, { id: 'amitie', label: "L'Amitié" }
                     ]},
                     { id: 'H', title: "L'hygiène", image: 'images/lexique.jpeg', color: 'text-emerald-600', items: [] },
-                    { id: 'S', title: 'Le salut', image: 'images/salut.jpeg', color: 'text-indigo-600', items: [] }
+                    { id: 'S', title: 'Le salut', image: 'images/lesalut.png', color: 'text-indigo-600', items: [] }
                 ]
             },
             {
@@ -295,7 +294,6 @@
             const [selectedItem, setSelectedItem] = useState(null);
             const [isSpeaking, setIsSpeaking] = useState(false);
 
-            // Aide visuelle pour mapper les thèmes aux couleurs de texte
             const themeTextMap = {
                 amber: 'text-amber-600',
                 emerald: 'text-emerald-600',
