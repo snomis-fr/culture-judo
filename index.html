@@ -51,20 +51,12 @@
         import { 
             User, Users, Star, BookOpen, GraduationCap, Info, MapPin, Menu, X, 
             ArrowRight, ArrowLeft, Home, Award, Globe, Heart, Zap, Book, 
-            ChevronRight, Shield, Smile, DoorOpen, Layout, Volume2, Search, Sparkles,
-            Trophy
+            ChevronRight, Shield, Smile, DoorOpen, Layout, Volume2, Search, Sparkles
         } from 'lucide-react';
 
         // ==================================================================================
         // 1. DONNÉES (STRUCTURE)
         // ==================================================================================
-
-        const ageGroups = [
-            { id: 'baby', label: "Moins de 7 ans", icon: <Smile size={36} />, color: "from-rose-400 to-pink-500", desc: "Éveil Judo" },
-            { id: 'child', label: "De 7 à 13 ans", icon: <Users size={36} />, color: "from-blue-400 to-indigo-500", desc: "Benjamins / Minimes" },
-            { id: 'teen', label: "De 14 à 17 ans", icon: <Zap size={36} />, color: "from-purple-400 to-violet-500", desc: "Cadets / Juniors" },
-            { id: 'adult', label: "Plus de 18 ans", icon: <Trophy size={36} />, color: "from-slate-700 to-slate-900", desc: "Séniors" }
-        ];
 
         const levels = [
             { id: 1, title: "PALIER 1", subtitle: "Entrer dans la voie", belts: "Blanche → Jaune", color: "from-amber-300 to-orange-400", shadow: "shadow-orange-200", icon: <User size={32} /> },
@@ -74,6 +66,7 @@
             { id: 5, title: "PALIER 5", subtitle: "Guider", belts: "Hauts Gradés", color: "from-red-600 to-rose-700", shadow: "shadow-red-200", icon: <Star size={32} /> }
         ];
 
+        // MENU REORGANISÉ EN 2 SECTIONS
         const menuSections = [
             {
                 title: "Mon comportement sur le tapis",
@@ -107,6 +100,7 @@
             }
         ];
 
+        // --- BASE DE DONNÉES LEXIQUE PROGRESSIVE ---
         const lexiconDatabase = {
             1: [
                 { name: "Dojo", desc: "La salle où on étudie la voie (lieu de pratique)." },
@@ -164,7 +158,10 @@
             ]
         };
 
+        // --- CERVEAU DE L'APPLICATION (CONTENU DÉTAILLÉ) ---
         const getContent = (levelId, menuId, itemId) => {
+            
+            // --- GESTION DU LEXIQUE PROGRESSIF (UNIFIÉE) ---
             if (menuId === 'F') {
                 let fullList = [];
                 for (let i = 1; i <= levelId; i++) {
@@ -173,11 +170,16 @@
                             ...word,
                             isNew: i === levelId
                         }));
-                        if (i === levelId) fullList = [...wordsWithStatus, ...fullList];
-                        else fullList = [...fullList, ...wordsWithStatus];
+                        if (i === levelId) {
+                            fullList = [...wordsWithStatus, ...fullList];
+                        } else {
+                            fullList = [...fullList, ...wordsWithStatus];
+                        }
                     }
                 }
+                
                 fullList.sort((a, b) => (a.isNew === b.isNew) ? 0 : a.isNew ? -1 : 1);
+
                 return {
                     title: `Lexique Palier ${levelId}`,
                     text: `Voici le vocabulaire que tu dois maîtriser à ce niveau. Les mots en surbrillance sont les nouveaux !`,
@@ -185,6 +187,7 @@
                 };
             }
 
+            // --- PALIER 1 (ENFANTS / DÉBUTANTS) ---
             if (levelId === 1) {
                 if (menuId === 'A') {
                     if (itemId === 'salut') return { 
@@ -244,6 +247,7 @@
                         senseiMessage: "Le tatami est comme ta deuxième maison.\nAide-nous à le garder propre."
                     };
                 }
+
                 if (menuId === 'B') {
                     if (itemId === 'ceintures') return {
                         title: "Les Couleurs du Progrès",
@@ -268,12 +272,13 @@
                         senseiMessage: "Une ceinture se mérite à chaque entraînement."
                     };
                 }
+
                 if (menuId === 'C') {
                     if (itemId === 'fondateur') return {
                         title: "Jigoro Kano",
                         text: "C'est le père du Judo. Il vivait au Japon il y a très longtemps.",
                         list: [
-                            { name: "Un Enfant Petit", desc: "Il était petit et se faisait embêter. Il voulait devenir fort.", image: "images/jigorokanopalier1.jpg" },
+                            { name: "Un Enfant Petit", desc: "Il était petit et se faisait embêter. Il voulait devenir fort.", image: "images/jigorokanopalier1.jpg" }, // AJOUT IMAGE ICI
                             { name: "L'Invention", desc: "Il a créé le Judo en 1882 pour éduquer les jeunes." },
                             { name: "Son Idée", desc: "Utiliser la force de l'autre plutôt que de s'opposer." }
                         ],
@@ -324,7 +329,9 @@
                         magicPhrase: "« On gagne ensemble, on pleure ensemble. »",
                         senseiMessage: "Le judo est un sport individuel\nqui se vit en famille."
                     };
+                    return { title: itemId, text: "Découvre l'histoire des champions." };
                 }
+
                 if (menuId === 'D') {
                     const codes = {
                         politesse: { t: "La Politesse", d: "C'est le respect d'autrui.", l: [{n:"Bonjour", d:"Dire bonjour en arrivant."}, {n:"Silence", d:"Ne pas couper la parole."}, {n:"Propreté", d:"Arriver propre au dojo."}], m: "« La politesse coûte peu et achète tout. »" },
@@ -345,6 +352,7 @@
                         senseiMessage: "Le code moral est ta force invisible."
                     };
                 }
+
                 if (menuId === 'E') {
                     if (itemId === 'principes') return {
                         title: "Les Principes",
@@ -382,7 +390,9 @@
                 }
             }
 
+            // --- PALIER 2 (COMPRENDRE - 10-14 ANS) ---
             if (levelId === 2) {
+                // MENU A : LE DOJO
                 if (menuId === 'A') {
                     if (itemId === 'salut') return {
                         title: "Le Sens du Salut",
@@ -430,6 +440,8 @@
                     };
                     if (itemId === 'tatami') return { title: "Le Tatami", text: "Le lieu de la vérité. Sur le tatami, on ne peut pas mentir. Si tu n'as pas travaillé, ça se voit. C'est un espace sacré de dépassement de soi." };
                 }
+
+                // MENU B : GRADE
                 if (menuId === 'B') {
                     if (itemId === 'ceintures') return {
                         title: "Vers la Ceinture Verte",
@@ -454,10 +466,12 @@
                         senseiMessage: "Ne cherche pas à être fort, cherche à être juste."
                     };
                 }
+
+                // MENU C : CULTURE (ENRICHI)
                 if (menuId === 'C') {
                     if (itemId === 'fondateur') return {
                         title: "Jigoro Kano : L'Intellectuel",
-                        text: "Jigoro Kano n'était pas seulement un combattant, cétait un génie de l'éducation.",
+                        text: "Jigoro Kano n'était pas seulement un combattant, c'était un génie de l'éducation.",
                         list: [
                             { name: "La Synthèse", desc: "Il a étudié les anciennes écoles de Jujitsu des Samouraïs. Il a gardé le meilleur et enlevé les coups dangereux." },
                             { name: "L'Éducation", desc: "Pour lui, le but n'était pas la guerre, mais former des citoyens utiles à la société." },
@@ -506,12 +520,14 @@
                             { name: "Ryoko Tani", desc: "Surnommée 'Yawara-chan', elle est 7 fois championne du monde et double championne olympique. Une volonté de fer." },
                             { name: "Yasuhiro Yamashita", desc: "L'invincible. 203 victoires consécutives ! Il a gagné les JO de 1984 malgré une grave blessure. Un exemple de courage." },
                             { name: "Tadahiro Nomura", desc: "Le plus grand palmarès olympique : Médaille d'Or en 1996, 2000 et 2004 ! Personne n'a jamais fait mieux à part Teddy Riner." },
-                            { name: "Shohei Ono", desc: "Le style pur. Double champion olympique, il ne cherche pas seulement à gagner, mais à gagner avec la manière (Ippon)." }
+                            { name: "Shohei Ono", desc: "Le style pur. Double champion olympique, il ne cherche pas seulement à gagner, mais à gagner avec la manière (Ippon).", video: "GL2ZBjzGQwE" }
                         ],
                         magicPhrase: "« Le beau judo est éternel. »",
                         senseiMessage: "Inspire-toi de leur droiture et de leur technique."
                     };
                 }
+
+                // MENU D : CODE MORAL
                 if (menuId === 'D') {
                     const codes = {
                         politesse: "C'est la première règle de vie en société.",
@@ -525,6 +541,8 @@
                     };
                     return { title: itemId.charAt(0).toUpperCase() + itemId.slice(1), text: codes[itemId], magicPhrase: "« Valeurs pour la vie. »", senseiMessage: "Porte ces valeurs en dehors du dojo." };
                 }
+
+                // MENU E : TECHNIQUES
                 if (menuId === 'E') {
                     if (itemId === 'principes') return {
                         title: "La Mécanique du Judo",
@@ -562,6 +580,7 @@
                 }
             }
 
+            // --- PALIER 3 (S'APPROPRIER - ADOS / COMPETITEURS) ---
             if (levelId === 3) {
                 if (menuId === 'A' && itemId === 'judogi') return {
                     title: "Le Judogi en Compétition",
@@ -576,7 +595,9 @@
                 };
             }
 
+            // --- PALIER 4 (TRANSMETTRE - CEINTURE NOIRE) ---
             if (levelId === 4) {
+                // MENU A : LE DOJO
                 if (menuId === 'A' && itemId === 'judogi') return {
                     title: "Histoire et Exemplarité",
                     text: "En tant que Ceinture Noire, tu représentes le Judo. Ton judogi porte une histoire technique et culturelle que tu dois transmettre.",
@@ -588,46 +609,57 @@
                     magicPhrase: "« Porter le judogi, c'est endosser l'histoire du Japon. »",
                     senseiMessage: "Ton grade se voit à ta ceinture,\nmais ta valeur se voit à ton attitude."
                 };
-                if (menuId === 'C' && itemId === 'fondateur') return {
-                    title: "Jigoro Kano : L'Héritage",
-                    text: "Au niveau Ceinture Noire, il est essentiel de comprendre que Kano n'était pas seulement un maître d'arts martiaux, mais un visionnaire de l'éducation. Il a transformé des techniques guerrières en un système d'éducation physique et morale.",
-                    video: "CThBDwxOZgE",
-                    list: [
-                        { name: "La Genèse", desc: "Il a synthétisé les écoles de Jujitsu (Tenjin Shin'yō-ryū et Kitō-ryū) pour créer le Kodokan en 1882." },
-                        { name: "L'Internationalisme", desc: "Premier membre asiatique du CIO, il a œuvré toute sa vie pour que le judo devienne un pont entre les nations." },
-                        { name: "La Fin", desc: "Il décède en 1938 sur le bateau Hikawa Maru, rentrant du Caire, après avoir consacré sa vie à l'expansion du judo." }
-                    ],
-                    magicPhrase: "« Le but ultime du Judo est de se perfectionner pour être utile à la société. »",
-                    senseiMessage: "Tu portes désormais une part de cet héritage.\nÀ toi de le transmettre."
-                };
+
+                // MENU C : CULTURE
+                if (menuId === 'C') {
+                    if (itemId === 'fondateur') return {
+                        title: "Jigoro Kano : L'Héritage",
+                        text: "Au niveau Ceinture Noire, il est essentiel de comprendre que Kano n'était pas seulement un maître d'arts martiaux, mais un visionnaire de l'éducation. Il a transformé des techniques guerrières en un système d'éducation physique et morale.",
+                        video: "CThBDwxOZgE", // ID de la vidéo Youtube
+                        list: [
+                            { name: "La Genèse", desc: "Il a synthétisé les écoles de Jujitsu (Tenjin Shin'yō-ryū et Kitō-ryū) pour créer le Kodokan en 1882." },
+                            { name: "L'Internationalisme", desc: "Premier membre asiatique du CIO, il a œuvré toute sa vie pour que le judo devienne un pont entre les nations." },
+                            { name: "La Fin", desc: "Il décède en 1938 sur le bateau Hikawa Maru, rentrant du Caire, après avoir consacré sa vie à l'expansion du judo." }
+                        ],
+                        magicPhrase: "« Le but ultime du Judo est de se perfectionner pour être utile à la société. »",
+                        senseiMessage: "Tu portes désormais une part de cet héritage.\nÀ toi de le transmettre."
+                    };
+                }
             }
 
+            // --- PALIER 5 (GUIDER - HAUT GRADÉ) ---
             if (levelId === 5) {
-                if (menuId === 'A' && itemId === 'judogi') return {
-                    title: "Au-delà du Tissu",
-                    text: "Avec la maîtrise, le judogi prend une dimension symbolique profonde. On revient à l'essentiel et à la simplicité.",
-                    list: [
-                        { name: "Kohaku Obi", desc: "La ceinture Rouge et Blanche (6e à 8e Dan). Elle symbolise l'harmonie du Yin et du Yang, et le sacrifice." },
-                        { name: "Le Retour au Blanc", desc: "La ceinture Rouge (9e/10e Dan) est la plus haute, mais on dit qu'à la fin, on redevient ceinture blanche : le cycle est bouclé." },
-                        { name: "Le Linceul", desc: "Traditionnellement, le blanc évoque la pureté, mais aussi le vêtement mortuaire au Japon. On s'entraîne avec le sérieux de la vie et de la mort." }
-                    ],
-                    magicPhrase: "« Sous la ceinture rouge, l'esprit doit redevenir blanc. »",
-                    senseiMessage: "Le tissu s'use avec le temps,\nmais l'esprit se renforce."
-                };
-                if (menuId === 'C' && itemId === 'fondateur') return {
-                    title: "Jigoro Kano : L'Héritage Spirituel",
-                    text: "Au sommet de la progression, la figure de Jigoro Kano ne doit plus être vue seulement comme celle de l'inventeur technique, mais comme celle d'un philosophe humaniste. Ses derniers écrits révèlent une vision où le Judo dépasse le cadre du dojo pour devenir un principe de vie universel pour l'amélioration de l'humanité.",
-                    image: "https://upload.wikimedia.org/wikipedia/commons/2/23/Kano_Jigoro_1.jpg",
-                    list: [
-                        { name: "Seiryoku Zenyo", desc: "Ce n'est pas l'économie d'effort, mais l'utilisation la plus efficace de l'énergie physique et mentale pour un but noble." },
-                        { name: "Jita Kyoei", desc: "L'Entraide et la Prospérité Mutuelle. L'expert ne thésaurise pas le savoir, il le diffuse pour élever le niveau collectif." },
-                        { name: "Le Testament", desc: "En 1938, au Caire, il avertissait déjà contre la dérive purement sportive. Le Judo doit rester une méthode d'éducation." }
-                    ],
-                    magicPhrase: "« Être un seul esprit avec l'univers. »",
-                    senseiMessage: "Tu ne transmets plus seulement des techniques,\ntu transmets des valeurs."
-                };
+                if (menuId === 'A' && itemId === 'judogi') {
+                    return {
+                        title: "Au-delà du Tissu",
+                        text: "Avec la maîtrise, le judogi prend une dimension symbolique profonde. On revient à l'essentiel et à la simplicité.",
+                        list: [
+                            { name: "Kohaku Obi", desc: "La ceinture Rouge et Blanche (6e à 8e Dan). Elle symbolise l'harmonie du Yin et du Yang, et le sacrifice." },
+                            { name: "Le Retour au Blanc", desc: "La ceinture Rouge (9e/10e Dan) est la plus haute, mais on dit qu'à la fin, on redevient ceinture blanche : le cycle est bouclé." },
+                            { name: "Le Linceul", desc: "Traditionnellement, le blanc évoque la pureté, mais aussi le vêtement mortuaire au Japon. On s'entraîne avec le sérieux de la vie et de la mort." }
+                        ],
+                        magicPhrase: "« Sous la ceinture rouge, l'esprit doit redevenir blanc. »",
+                        senseiMessage: "Le tissu s'use avec le temps,\nmais l'esprit se renforce."
+                    };
+                }
+
+                if (menuId === 'C') {
+                    if (itemId === 'fondateur') return {
+                        title: "Jigoro Kano : L'Héritage Spirituel",
+                        text: "Au sommet de la progression, la figure de Jigoro Kano ne doit plus être vue seulement comme celle de l'inventeur technique, mais comme celle d'un philosophe humaniste. Ses derniers écrits révèlent une vision où le Judo dépasse le cadre du dojo pour devenir un principe de vie universel pour l'amélioration de l'humanité.",
+                        image: "https://upload.wikimedia.org/wikipedia/commons/2/23/Kano_Jigoro_1.jpg",
+                        list: [
+                            { name: "Seiryoku Zenyo", desc: "Ce n'est pas l'économie d'effort, mais l'utilisation la plus efficace de l'énergie physique et mentale pour un but noble." },
+                            { name: "Jita Kyoei", desc: "L'Entraide et la Prospérité Mutuelle. L'expert ne thésaurise pas le savoir, il le diffuse pour élever le niveau collectif." },
+                            { name: "Le Testament", desc: "En 1938, au Caire, il avertissait déjà contre la dérive purement sportive. Le Judo doit rester une méthode d'éducation." }
+                        ],
+                        magicPhrase: "« Être un seul esprit avec l'univers. »",
+                        senseiMessage: "Tu ne transmets plus seulement des techniques,\ntu transmets des valeurs."
+                    };
+                }
             }
 
+            // Fallback pour les niveaux non implémentés (autre que Lexique et Judogi P3/4/5)
             return {
                 title: "En construction",
                 text: `Le contenu "${itemId}" pour le Palier ${levelId} sera bientôt disponible.`
@@ -639,7 +671,6 @@
         // ==================================================================================
 
         const App = () => {
-            const [selectedAge, setSelectedAge] = useState(null);
             const [selectedLevel, setSelectedLevel] = useState(null);
             const [selectedMenu, setSelectedMenu] = useState(null);
             const [selectedItem, setSelectedItem] = useState(null);
@@ -664,11 +695,13 @@
                 window.speechSynthesis.cancel();
                 if (selectedItem) {
                     setSelectedItem(null);
-                    if (selectedMenu && selectedMenu.id === 'F') setSelectedMenu(null);
+                    // Si on est dans le Lexique (F), on remonte directement au Palier (Vue 2) car on a sauté l'étape sous-menu
+                    if (selectedMenu && selectedMenu.id === 'F') {
+                        setSelectedMenu(null);
+                    }
                 }
                 else if (selectedMenu) setSelectedMenu(null);
                 else if (selectedLevel) setSelectedLevel(null);
-                else if (selectedAge) setSelectedAge(null);
             };
 
             const isLocalVideo = (path) => {
@@ -677,251 +710,296 @@
                 return lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.mov');
             };
 
-            const renderVideoElement = (videoPath) => {
-                if (!videoPath) return null;
-                const type = videoPath.toLowerCase().endsWith('.mov') ? 'video/quicktime' : 'video/mp4';
+            // --- VUE 1 : ACCUEIL ---
+            if (!selectedLevel) {
                 return (
-                    <div className="mt-4 rounded-2xl overflow-hidden shadow-sm aspect-video bg-black">
-                        {isLocalVideo(videoPath) ? (
-                            <video controls className="w-full h-full">
-                                <source src={videoPath} type={type} />
-                                Votre navigateur ne supporte pas la lecture de vidéos.
-                            </video>
-                        ) : (
-                            <iframe 
-                                width="100%" height="100%" 
-                                src={`https://www.youtube.com/embed/${videoPath}`} 
-                                title="Video player" frameBorder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowFullScreen
-                            ></iframe>
-                        )}
-                    </div>
-                );
-            };
+                    <div className="flex flex-col h-full bg-white">
+                        <header className="px-6 pt-8 pb-4 flex justify-between items-center bg-white sticky top-0 z-10">
+                            <div>
+                                <h1 className="text-3xl font-black text-slate-900 tracking-tighter">JUDO<span className="text-red-600">CULTURE</span></h1>
+                                <p className="text-slate-400 text-sm font-medium">Votre compagnon de progression</p>
+                            </div>
+                            <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-600">
+                                <Menu size={20} />
+                            </div>
+                        </header>
 
-            // VUE 0 : CHOIX DE L'AGE
-            if (!selectedAge) return (
-                <div className="flex flex-col h-full bg-white animate-entry">
-                    <header className="px-6 pt-12 pb-8 text-center">
-                        <h1 className="text-3xl font-black text-slate-900 tracking-tighter mb-2">BIENVENUE SUR <span className="text-red-600">JUDOCULTURE</span></h1>
-                        <p className="text-slate-500 font-medium uppercase tracking-widest text-sm">Quel âge as-tu ?</p>
-                    </header>
-                    <main className="flex-1 overflow-y-auto px-6 pb-12 no-scrollbar">
-                        <div className="grid grid-cols-1 gap-4">
-                            {ageGroups.map((group, index) => (
-                                <button 
-                                    key={group.id} 
-                                    onClick={() => setSelectedAge(group)}
-                                    className={`w-full group relative overflow-hidden rounded-[2rem] p-6 text-left transition-all duration-300 active:scale-95 shadow-sm border border-slate-100 flex items-center justify-between`}
-                                    style={{ animationDelay: `${index * 100}ms` }}
-                                >
-                                    <div className={`absolute inset-0 bg-gradient-to-br ${group.color} opacity-0 group-hover:opacity-5 transition-opacity`}></div>
-                                    <div className="flex items-center gap-6">
-                                        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${group.color} text-white flex items-center justify-center shadow-lg`}>
-                                            {group.icon}
-                                        </div>
-                                        <div>
-                                            <h2 className="text-xl font-black text-slate-900 leading-none mb-1">{group.label}</h2>
-                                            <p className="text-slate-400 font-bold text-xs uppercase tracking-widest">{group.desc}</p>
-                                        </div>
-                                    </div>
-                                    <ChevronRight className="text-slate-200 group-hover:text-slate-900 transition-colors" size={24} />
-                                </button>
-                            ))}
-                        </div>
-                    </main>
-                </div>
-            );
-
-            // VUE 1 : ACCUEIL PALIERS
-            if (selectedAge && !selectedLevel) return (
-                <div className="flex flex-col h-full bg-white animate-entry">
-                    <header className="px-6 pt-10 pb-6 bg-white sticky top-0 z-10">
-                        <button onClick={goBack} className="flex items-center text-slate-400 hover:text-slate-800 transition-colors mb-4 font-bold text-xs uppercase tracking-widest">
-                            <ArrowLeft size={16} className="mr-2"/> Changer d'âge
-                        </button>
-                        <div>
-                            <h1 className="text-3xl font-black text-slate-900 tracking-tighter">JUDO<span className="text-red-600">CULTURE</span></h1>
-                            <p className="text-slate-400 text-sm font-medium uppercase tracking-widest">Choisis ton Palier</p>
-                        </div>
-                    </header>
-                    <main className="flex-1 overflow-y-auto px-6 pb-12 no-scrollbar">
-                        <div className="space-y-6 mt-4">
-                            {levels.map((level, index) => (
-                                <button 
-                                    key={level.id} 
-                                    onClick={() => setSelectedLevel(level)}
-                                    className={`w-full group relative overflow-hidden rounded-[2.5rem] p-6 text-left transition-all duration-300 active:scale-95 animate-entry`}
-                                    style={{ animationDelay: `${index * 100}ms` }}
-                                >
-                                    <div className={`absolute inset-0 bg-gradient-to-br ${level.color} opacity-90 transition-opacity group-hover:opacity-100`}></div>
-                                    <div className="relative z-10 flex justify-between items-center text-white">
-                                        <div>
-                                            <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-widest mb-2 border border-white/10">
-                                                {level.belts}
-                                            </span>
-                                            <h2 className="text-3xl font-black italic uppercase leading-none mb-1">{level.title}</h2>
-                                            <p className="font-medium text-white/90">{level.subtitle}</p>
-                                        </div>
-                                        <div className="bg-white/20 p-3 rounded-2xl backdrop-blur-sm border border-white/10">
-                                            {level.icon}
-                                        </div>
-                                    </div>
-                                </button>
-                            ))}
-                        </div>
-                    </main>
-                </div>
-            );
-
-            // VUE 2 : MENU (RESTAURATION DES IMAGES DE CHAPITRES)
-            if (selectedLevel && !selectedMenu) return (
-                <div className="flex flex-col h-full bg-slate-50 animate-entry">
-                    <div className="px-6 pt-10 pb-8 bg-white rounded-b-[3rem] shadow-sm z-10">
-                        <button onClick={goBack} className="flex items-center text-slate-400 hover:text-slate-800 transition-colors mb-6 font-bold text-xs uppercase tracking-[0.2em]">
-                            <ArrowLeft size={16} className="mr-2"/> Retour
-                        </button>
-                        <h2 className="text-4xl font-black text-slate-900 leading-none mb-2">{selectedLevel.title}</h2>
-                        <p className="text-slate-500 font-medium">{selectedLevel.subtitle}</p>
-                    </div>
-                    <main className="flex-1 overflow-y-auto px-6 py-6 no-scrollbar space-y-8">
-                        {menuSections.map((section, idx) => (
-                            <div key={idx}>
-                                <h3 className={`font-black text-lg mb-4 tracking-tight uppercase ${section.color}`}>{section.title}</h3>
-                                <div className="grid grid-cols-2 gap-4">
-                                    {section.items.map((menu, index) => (
-                                        <button 
-                                            key={menu.id}
-                                            onClick={() => {
-                                                setSelectedMenu(menu);
-                                                if (menu.id === 'F') setSelectedItem({ id: 'lexique_direct' });
-                                            }}
-                                            className="bg-white p-5 rounded-[1.5rem] shadow-sm flex flex-col justify-between aspect-square hover:shadow-md transition-all active:scale-95 animate-entry"
-                                            style={{ animationDelay: `${index * 50}ms` }}
-                                        >
-                                            <div className="flex flex-col h-full">
-                                                <div className="flex-1 w-full rounded-xl overflow-hidden mb-3 relative shadow-sm aspect-square">
-                                                    <img src={menu.image} alt={menu.title} className="w-full h-full object-cover" />
-                                                </div>
-                                                <div className="flex justify-between items-center">
-                                                    <span className={`text-lg font-bold ${menu.color} leading-tight text-left`}>{menu.title}</span>
-                                                    <span className="text-slate-200 font-black text-xl">{menu.id}</span>
-                                                </div>
+                        <main className="flex-1 overflow-y-auto px-6 pb-12 no-scrollbar">
+                            <div className="space-y-6 mt-4">
+                                {levels.map((level, index) => (
+                                    <button 
+                                        key={level.id} 
+                                        onClick={() => setSelectedLevel(level)}
+                                        className={`w-full group relative overflow-hidden rounded-[2rem] p-6 text-left transition-all duration-300 active:scale-95 animate-entry`}
+                                        style={{ animationDelay: `${index * 100}ms` }}
+                                    >
+                                        <div className={`absolute inset-0 bg-gradient-to-br ${level.color} opacity-90 transition-opacity group-hover:opacity-100`}></div>
+                                        <div className="relative z-10 flex justify-between items-center text-white">
+                                            <div>
+                                                <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-widest mb-2 border border-white/10">
+                                                    {level.belts}
+                                                </span>
+                                                <h2 className="text-3xl font-black italic uppercase leading-none mb-1">{level.title}</h2>
+                                                <p className="font-medium text-white/90">{level.subtitle}</p>
                                             </div>
-                                        </button>
-                                    ))}
+                                            <div className="bg-white/20 p-3 rounded-2xl backdrop-blur-sm border border-white/10">
+                                                {level.icon}
+                                            </div>
+                                        </div>
+                                    </button>
+                                ))}
+                                <div className="text-center pt-8 pb-4">
+                                    <p className="text-slate-300 text-xs uppercase font-bold tracking-widest">Fédération Française de Judo</p>
                                 </div>
                             </div>
-                        ))}
-                    </main>
-                </div>
-            );
+                        </main>
+                    </div>
+                );
+            }
 
-            // VUE 3 : SOUS-MENU
-            if (selectedMenu && !selectedItem) return (
-                <div className="flex flex-col h-full bg-white animate-entry">
-                    <header className="px-6 pt-10 pb-8 bg-slate-50 rounded-b-[3rem]">
-                        <div className="flex justify-between items-start mb-6">
-                            <button onClick={goBack} className="flex items-center text-slate-400 hover:text-slate-800 transition-colors font-bold text-xs uppercase tracking-widest">
-                                <ArrowLeft size={16} className="mr-2"/> Retour
+            // --- VUE 2 : MENU (SECTIONS) ---
+            if (selectedLevel && !selectedMenu) {
+                return (
+                    <div className="flex flex-col h-full bg-slate-50">
+                        <div className="px-6 pt-8 pb-6 bg-white rounded-b-[2rem] shadow-sm z-10">
+                            <button onClick={goBack} className="flex items-center text-slate-400 hover:text-slate-800 transition-colors mb-4">
+                                <ArrowLeft size={20} className="mr-2"/> <span className="text-sm font-bold uppercase tracking-wide">Retour</span>
                             </button>
-                            <span className="px-3 py-1 bg-white border border-slate-200 rounded-full text-[10px] font-bold text-slate-400 uppercase tracking-widest shadow-sm">
-                                {selectedLevel.title}
-                            </span>
+                            <h2 className="text-4xl font-black text-slate-900 leading-none mb-1">{selectedLevel.title}</h2>
+                            <p className="text-slate-500 font-medium">{selectedLevel.subtitle}</p>
                         </div>
-                        <h2 className="text-3xl font-black text-slate-900 leading-tight">{selectedMenu.title}</h2>
-                    </header>
-                    <main className="flex-1 overflow-y-auto px-6 py-8 no-scrollbar">
-                        <div className="space-y-3">
-                            {selectedMenu.items.map((item, index) => (
-                                <button 
-                                    key={item.id}
-                                    onClick={() => setSelectedItem(item)}
-                                    className="w-full p-6 rounded-[2rem] bg-white border border-slate-100 flex items-center justify-between group active:bg-slate-50 transition-colors animate-entry shadow-sm"
-                                    style={{ animationDelay: `${index * 50}ms` }}
-                                >
-                                    <span className="font-bold text-slate-700 text-lg">{item.label}</span>
-                                    <div className="w-10 h-10 rounded-full bg-slate-50 text-slate-300 flex items-center justify-center group-hover:bg-red-50 group-hover:text-red-500 transition-all">
-                                        <ChevronRight size={20}/>
-                                    </div>
-                                </button>
-                            ))}
-                        </div>
-                    </main>
-                </div>
-            );
 
-            // VUE 4 : CONTENU (RESTAURATION MÉDIAS)
+                        <main className="flex-1 overflow-y-auto px-6 py-6 no-scrollbar space-y-8">
+                            {menuSections.map((section, idx) => (
+                                <div key={idx}>
+                                    <h3 className={`font-black text-lg mb-4 tracking-tight uppercase ${section.color}`}>{section.title}</h3>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        {section.items.map((menu, index) => (
+                                            <button 
+                                                key={menu.id}
+                                                onClick={() => {
+                                                    setSelectedMenu(menu);
+                                                    if (menu.id === 'F') setSelectedItem({ id: 'lexique_direct' });
+                                                }}
+                                                className={`bg-white p-5 rounded-[1.5rem] shadow-sm flex flex-col justify-between aspect-square hover:shadow-md transition-all active:scale-95 animate-entry`}
+                                                style={{ animationDelay: `${index * 50}ms` }}
+                                            >
+                                                <div className="flex flex-col h-full">
+                                                    <div className="flex-1 w-full rounded-xl overflow-hidden mb-3 relative shadow-sm aspect-square">
+                                                        <img src={menu.image} alt={menu.title} className="w-full h-full object-cover" />
+                                                    </div>
+                                                    <div className="flex justify-between items-center">
+                                                        <span className={`text-lg font-bold ${menu.color} leading-tight text-left`}>{menu.title}</span>
+                                                        <span className="text-slate-200 font-black text-xl">{menu.id}</span>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </main>
+                    </div>
+                );
+            }
+
+            // --- VUE 3 : SOUS-MENU (LISTE) ---
+            if (selectedMenu && !selectedItem) {
+                return (
+                    <div className="flex flex-col h-full bg-white">
+                        <div className="px-6 pt-8 pb-6 bg-slate-50 rounded-b-[2rem] z-10">
+                            <div className="flex justify-between items-start mb-4">
+                                <button onClick={goBack} className="flex items-center text-slate-400 hover:text-slate-800 transition-colors">
+                                    <ArrowLeft size={20} className="mr-2"/> <span className="text-sm font-bold uppercase tracking-wide">Retour</span>
+                                </button>
+                                <span className="px-3 py-1 bg-white border border-slate-200 rounded-full text-[10px] font-bold text-slate-400 uppercase tracking-widest shadow-sm">
+                                    {selectedLevel.title}
+                                </span>
+                            </div>
+                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 ${selectedMenu.color.replace('text-', 'bg-').replace('bg-', 'text-white ')}`}>
+                                {selectedMenu.icon}
+                            </div>
+                            <h2 className="text-3xl font-black text-slate-900">{selectedMenu.title}</h2>
+                        </div>
+
+                        <main className="flex-1 overflow-y-auto px-6 py-8 no-scrollbar">
+                            <div className="space-y-3">
+                                {selectedMenu.items.map((item, index) => (
+                                    <button 
+                                        key={item.id}
+                                        onClick={() => setSelectedItem(item)}
+                                        className="w-full p-5 rounded-2xl bg-slate-50 flex items-center justify-between group active:bg-slate-100 transition-colors animate-entry"
+                                        style={{ animationDelay: `${index * 50}ms` }}
+                                    >
+                                        <span className="font-bold text-slate-700 text-lg">{item.label}</span>
+                                        <div className="w-8 h-8 rounded-full bg-white text-slate-300 flex items-center justify-center group-hover:text-slate-800 transition-colors">
+                                            <ChevronRight size={20}/>
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+                        </main>
+                    </div>
+                );
+            }
+
+            // --- VUE 4 : CONTENU FINAL ---
             if (selectedItem) {
                 const content = getContent(selectedLevel.id, selectedMenu.id, selectedItem.id);
+                
                 return (
-                    <div className="flex flex-col h-full bg-white animate-entry">
-                        <header className="px-6 pt-10 pb-4 flex justify-between items-center bg-white sticky top-0 z-20">
-                            <button onClick={goBack} className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900">
-                                <ArrowLeft size={20}/>
+                    <div className="flex flex-col h-full bg-white">
+                        <div className="px-6 pt-8 pb-4 flex justify-between items-center bg-white sticky top-0 z-20">
+                            <button onClick={goBack} className="p-2 -ml-2 rounded-full hover:bg-slate-50 text-slate-800">
+                                <ArrowLeft size={28}/>
                             </button>
-                            <button onClick={() => toggleSpeech(content.text)} className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${isSpeaking ? 'bg-red-600 text-white animate-pulse' : 'bg-slate-50 text-slate-400'}`}>
-                                <Volume2 size={20}/>
+                            <button onClick={() => toggleSpeech(content.text)} className={`p-3 rounded-full transition-all ${isSpeaking ? 'bg-amber-100 text-amber-600 scale-110' : 'bg-slate-100 text-slate-400'}`}>
+                                <Volume2 size={24}/>
                             </button>
-                        </header>
+                        </div>
                         
-                        <main className="flex-1 overflow-y-auto px-8 pb-16 animate-entry no-scrollbar">
-                            <div className="flex items-center gap-2 mb-4">
-                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{selectedLevel.title}</span>
-                                <div className="w-1 h-1 bg-slate-300 rounded-full"></div>
-                                <span className="text-[10px] font-bold text-red-600 uppercase tracking-widest">{selectedMenu.title}</span>
-                            </div>
-
-                            <h2 className="text-4xl font-black text-slate-900 mb-8 leading-tight">{content.title}</h2>
+                        <main className="flex-1 overflow-y-auto px-8 pb-12 animate-entry no-scrollbar">
+                            <span className="font-bold uppercase tracking-widest text-xs mb-2 block">
+                                <span className="text-slate-400">{selectedLevel.title}</span> <span className="text-slate-300 mx-1">•</span> <span className="text-red-600">{selectedMenu.title}</span>
+                            </span>
+                            <h2 className="text-4xl font-black text-slate-900 mb-8 leading-tight">
+                                {content.title}
+                            </h2>
                             
-                            <div className="space-y-8">
-                                {content.text && <p className="text-xl text-slate-600 font-medium leading-relaxed">{content.text}</p>}
+                            <div className="prose prose-lg prose-slate">
+                                {content.text && (
+                                    <p className="text-xl text-slate-600 font-medium leading-relaxed mb-8">
+                                        {content.text}
+                                    </p>
+                                )}
+
+                                {/* AJOUT DU BLOC IMAGE PRINCIPALE */}
+                                {content.image && (
+                                    <div className="mb-8 rounded-2xl overflow-hidden shadow-lg border-4 border-slate-100">
+                                        <img 
+                                            src={content.image} 
+                                            alt="Illustration principale" 
+                                            className="w-full h-auto object-cover sepia-[.2]"
+                                        />
+                                        <div className="bg-slate-900 text-white text-xs p-2 text-center uppercase tracking-widest font-bold">
+                                            Figure Historique
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* AJOUT DU BLOC VIDEO */}
+                                {content.video && (
+                                    <div className="mb-8 rounded-2xl overflow-hidden shadow-lg aspect-video bg-black">
+                                        {isLocalVideo(content.video) ? (
+                                            <video controls className="w-full h-full">
+                                                <source src={content.video} type={content.video.toLowerCase().endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+                                                Votre navigateur ne supporte pas la lecture de vidéos.
+                                            </video>
+                                        ) : (
+                                            <iframe 
+                                                width="100%" 
+                                                height="100%" 
+                                                src={`https://www.youtube.com/embed/${content.video}`} 
+                                                title="YouTube video player" 
+                                                frameBorder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                allowFullScreen
+                                            ></iframe>
+                                        )}
+                                    </div>
+                                )}
 
                                 {content.list && (
-                                    <ul className="space-y-4">
+                                    <ul className="space-y-4 list-none pl-0">
                                         {content.list.map((c, i) => (
-                                            <li key={i} className={`p-6 rounded-[2rem] border ${c.isNew ? 'bg-amber-50 border-amber-200' : 'bg-slate-50 border-slate-50'}`}>
-                                                <div className="flex items-center justify-between mb-2">
-                                                    <span className={`font-black text-xl ${c.isNew ? 'text-amber-900' : 'text-slate-900'}`}>{c.name}</span>
-                                                    {c.isNew && <span className="bg-amber-500 text-white text-[8px] font-black px-2 py-1 rounded-full uppercase tracking-widest">Nouveau</span>}
+                                            <li key={i} className={`p-6 rounded-3xl border ${c.isNew ? 'bg-amber-50 border-amber-200' : 'bg-slate-50 border-slate-100'}`}>
+                                                <div className="flex items-center justify-between mb-1">
+                                                    <span className={`font-black text-xl block ${c.isNew ? 'text-amber-900' : 'text-slate-900'}`}>{c.name}</span>
+                                                    {c.isNew && <span className="bg-amber-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wide">Nouveau</span>}
                                                 </div>
-                                                <p className={`${c.isNew ? 'text-amber-700' : 'text-slate-500'} font-medium`}>{c.desc}</p>
+                                                <span className={`${c.isNew ? 'text-amber-700' : 'text-slate-500'} font-medium`}>{c.desc}</span>
                                                 
-                                                {/* MÉDIAS DANS LA LISTE */}
-                                                <div className="mt-4">
-                                                    {c.video && renderVideoElement(c.video)}
-                                                    {c.videos && c.videos.map((v, idx) => (
-                                                        <div key={idx}>{renderVideoElement(v)}</div>
-                                                    ))}
-                                                    {c.image && (
-                                                        <div className="mt-4 rounded-2xl overflow-hidden shadow-sm">
-                                                            <img src={c.image} alt={c.name} className="w-full h-auto object-cover" />
-                                                        </div>
-                                                    )}
-                                                </div>
+                                                {/* VIDÉO INTÉGRÉE DANS LA LISTE */}
+                                                {c.video && (
+                                                    <div className="mt-4 rounded-2xl overflow-hidden shadow-sm aspect-video bg-black">
+                                                        {isLocalVideo(c.video) ? (
+                                                            <video controls className="w-full h-full">
+                                                                <source src={c.video} type={c.video.toLowerCase().endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+                                                                Votre navigateur ne supporte pas la lecture de vidéos.
+                                                            </video>
+                                                        ) : (
+                                                            <iframe 
+                                                                width="100%" 
+                                                                height="100%" 
+                                                                src={`https://www.youtube.com/embed/${c.video}`} 
+                                                                title="YouTube video player" 
+                                                                frameBorder="0" 
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                                allowFullScreen
+                                                            ></iframe>
+                                                        )}
+                                                    </div>
+                                                )}
+
+                                                {/* VIDÉOS MULTIPLES INTÉGRÉES DANS LA LISTE */}
+                                                {c.videos && c.videos.map((v, vIdx) => (
+                                                    <div key={vIdx} className="mt-4 rounded-2xl overflow-hidden shadow-sm aspect-video bg-black">
+                                                        {isLocalVideo(v) ? (
+                                                            <video controls className="w-full h-full">
+                                                                <source src={v} type={v.toLowerCase().endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+                                                                Votre navigateur ne supporte pas la lecture de vidéos.
+                                                            </video>
+                                                        ) : (
+                                                            <iframe 
+                                                                width="100%" 
+                                                                height="100%" 
+                                                                src={`https://www.youtube.com/embed/${v}`} 
+                                                                title="YouTube video player" 
+                                                                frameBorder="0" 
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                                allowFullScreen
+                                                            ></iframe>
+                                                        )}
+                                                    </div>
+                                                ))}
+
+                                                 {/* IMAGE INTEGREE DANS LA LISTE */}
+                                                {c.image && (
+                                                    <div className="mt-4 rounded-2xl overflow-hidden shadow-sm">
+                                                        <img src={c.image} alt={c.name} className="w-full h-auto object-cover" />
+                                                    </div>
+                                                )}
                                             </li>
                                         ))}
                                     </ul>
                                 )}
 
                                 {content.magicPhrase && (
-                                    <div className="relative p-8 rounded-[2.5rem] bg-slate-900 text-white overflow-hidden shadow-xl">
-                                        <div className="absolute top-0 right-0 p-4 opacity-10"><Sparkles size={60} /></div>
-                                        <h5 className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-500 mb-4">Phrase Magique</h5>
-                                        <p className="text-2xl font-serif-jp italic font-black leading-tight">"{content.magicPhrase}"</p>
+                                    <div className="mt-8 bg-amber-50 border-l-4 border-amber-400 p-6 rounded-r-2xl">
+                                        <div className="flex items-center gap-2 mb-2 text-amber-700 font-bold text-xs uppercase tracking-widest">
+                                            <Sparkles size={16} /> Phrase Magique
+                                        </div>
+                                        <p className="text-amber-900 font-serif-jp text-xl italic font-bold leading-relaxed">
+                                            {content.magicPhrase}
+                                        </p>
                                     </div>
                                 )}
 
                                 {content.senseiMessage && (
-                                    <div className="p-8 rounded-[2.5rem] bg-red-600 text-white shadow-xl flex gap-4 items-start">
-                                        <div className="bg-white/20 p-2 rounded-xl mt-1"><Info size={20} /></div>
-                                        <div>
-                                            <h5 className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-2">Le mot du Sensei</h5>
-                                            <p className="text-lg font-bold leading-tight whitespace-pre-line">"{content.senseiMessage}"</p>
+                                    <div className="mt-8 bg-slate-900 text-white p-8 rounded-[2rem] shadow-xl relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 p-6 opacity-10">
+                                            <User size={80} />
                                         </div>
+                                        <h4 className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-4">Message du Sensei</h4>
+                                        <p className="text-2xl font-bold leading-relaxed font-serif-jp whitespace-pre-line">
+                                            "{content.senseiMessage}"
+                                        </p>
                                     </div>
                                 )}
+                            </div>
+
+                            <div className="mt-12 py-6 border-t-2 border-slate-50 flex justify-center">
+                                <div className="h-1 w-20 bg-slate-200 rounded-full"></div>
                             </div>
                         </main>
                     </div>
