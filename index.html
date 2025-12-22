@@ -28,11 +28,9 @@
         body { font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; background-color: #f8fafc; }
         .font-serif-jp { font-family: 'Noto Serif JP', serif; }
         
-        /* Cacher la scrollbar mais garder le scroll */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Animations */
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-entry { animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     </style>
@@ -52,19 +50,20 @@
             User, Users, Star, BookOpen, GraduationCap, Info, MapPin, Menu, X, 
             ArrowRight, ArrowLeft, Home, Award, Globe, Heart, Zap, Book, 
             ChevronRight, Shield, Smile, DoorOpen, Layout, Volume2, Search, Sparkles,
-            Lock, CheckCircle2, Gavel
+            Lock, CheckCircle2, Gavel, Target
         } from 'lucide-react';
 
         // ==================================================================================
         // 1. DONNÉES (STRUCTURE)
         // ==================================================================================
 
+        // Ajout d'une propriété 'theme' pour coordonner les couleurs dynamiquement
         const levels = [
-            { id: 1, title: "PALIER 1", subtitle: "Entrer dans la voie", belts: "Blanche → Jaune", color: "from-amber-300 to-orange-400", shadow: "shadow-orange-200", icon: <User size={32} /> },
-            { id: 2, title: "PALIER 2", subtitle: "Comprendre", belts: "Jaune → Orange → Verte", color: "from-emerald-400 to-teal-500", shadow: "shadow-emerald-200", icon: <BookOpen size={32} /> },
-            { id: 3, title: "PALIER 3", subtitle: "S’approprier", belts: "Bleue → Marron", color: "from-blue-500 to-indigo-600", shadow: "shadow-blue-200", icon: <User size={32} /> },
-            { id: 4, title: "PALIER 4", subtitle: "Transmettre", belts: "Ceinture Noire", color: "from-slate-700 to-slate-900", shadow: "shadow-slate-300", icon: <Users size={32} /> },
-            { id: 5, title: "PALIER 5", subtitle: "Guider", belts: "Hauts Gradés", color: "from-red-600 to-rose-700", shadow: "shadow-red-200", icon: <Star size={32} /> }
+            { id: 1, title: "PALIER 1", subtitle: "Entrer dans la voie", belts: "Blanche → Jaune", color: "from-amber-300 to-orange-400", theme: "amber", shadow: "shadow-orange-200", icon: <User size={32} /> },
+            { id: 2, title: "PALIER 2", subtitle: "Comprendre", belts: "Jaune → Orange → Verte", color: "from-emerald-400 to-teal-500", theme: "emerald", shadow: "shadow-emerald-200", icon: <BookOpen size={32} /> },
+            { id: 3, title: "PALIER 3", subtitle: "S’approprier", belts: "Bleue → Marron", color: "from-blue-500 to-indigo-600", theme: "blue", shadow: "shadow-blue-200", icon: <User size={32} /> },
+            { id: 4, title: "PALIER 4", subtitle: "Transmettre", belts: "Ceinture Noire", color: "from-slate-700 to-slate-900", theme: "slate", shadow: "shadow-slate-300", icon: <Users size={32} /> },
+            { id: 5, title: "PALIER 5", subtitle: "Guider", belts: "Hauts Gradés", color: "from-red-600 to-rose-700", theme: "red", shadow: "shadow-red-200", icon: <Star size={32} /> }
         ];
 
         const menuSections = [
@@ -72,15 +71,12 @@
                 title: "Mon attitude",
                 color: "text-blue-900",
                 items: [
-                    { id: 'A', title: 'Le Dojo', image: 'images/dojo.jpeg', color: 'text-blue-600', items: [
-                        { id: 'salut', label: 'Le Salut' }, { id: 'professeur', label: 'Le Professeur' }, { id: 'partenaires', label: 'Les Partenaires' }, { id: 'judogi', label: 'Le Judogi' }, { id: 'tatami', label: 'Le Tatami' }
-                    ]},
+                    { id: 'A', title: 'Le Dojo', image: 'images/dojo.jpeg', color: 'text-blue-600', items: [] },
                     { id: 'D', title: 'Code Moral', image: 'images/codemoral.jpeg', color: 'text-rose-600', items: [
                         { id: 'politesse', label: 'La Politesse' }, { id: 'courage', label: 'Le Courage' }, { id: 'sincerite', label: 'La Sincérité' }, { id: 'honneur', label: "L'Honneur" }, { id: 'modestie', label: 'La Modestie' }, { id: 'respect', label: 'Le Respect' }, { id: 'controle', label: 'Le Contrôle de Soi' }, { id: 'amitie', label: "L'Amitié" }
                     ]},
-                    { id: 'B', title: 'Grades', image: 'images/grades.jpeg', color: 'text-amber-600', items: [
-                        { id: 'ceintures', label: 'Les Ceintures' }, { id: 'connaissance', label: 'Requis' }
-                    ]}
+                    { id: 'H', title: "L'hygiène", image: 'images/lexique.jpeg', color: 'text-emerald-600', items: [] },
+                    { id: 'S', title: 'Le salut', image: 'images/salut.jpeg', color: 'text-indigo-600', items: [] }
                 ]
             },
             {
@@ -90,8 +86,11 @@
                     { id: 'E', title: 'Techniques', image: 'images/technique.jpeg', color: 'text-purple-600', items: [
                         { id: 'principes', label: 'Les Principes' }, { id: 'katas', label: 'Les Katas' }, { id: '100tech', label: 'Les 100 Techniques' }
                     ]},
-                    { id: 'C', title: 'Culture', image: 'images/culture.jpeg', color: 'text-emerald-600', items: [
+                    { id: 'C', title: 'Histoire', image: 'images/culture.jpeg', color: 'text-emerald-600', items: [
                         { id: 'fondateur', label: 'Le Fondateur' }, { id: 'france', label: 'Judo en France' }, { id: 'monde', label: 'Judo dans le Monde' }, { id: 'champions_fr', label: 'Champions Français' }, { id: 'champions_etr', label: 'Champions Étrangers' }
+                    ]},
+                    { id: 'B', title: 'Grades', image: 'images/grades.jpeg', color: 'text-amber-600', items: [
+                        { id: 'ceintures', label: 'Les Ceintures' }, { id: 'connaissance', label: 'Requis' }
                     ]},
                     { id: 'F', title: 'Lexique', image: 'images/lexique.jpeg', color: 'text-slate-600', items: [
                         { id: 'lexique_general', label: 'Vocabulaire' }
@@ -168,7 +167,6 @@
         };
 
         const getContent = (levelId, menuId, itemId) => {
-            // --- GESTION DU LEXIQUE PROGRESSIF ---
             if (menuId === 'F') {
                 let fullList = [];
                 for (let i = 1; i <= levelId; i++) {
@@ -184,151 +182,135 @@
                 fullList.sort((a, b) => (a.isNew === b.isNew) ? 0 : a.isNew ? -1 : 1);
                 return {
                     title: `Lexique Palier ${levelId}`,
-                    text: `Voici le vocabulaire que tu dois maîtriser à ce niveau. Les mots en surbrillance sont les nouveaux !`,
+                    text: `Voici le vocabulaire que tu dois maîtriser à ce niveau.`,
                     list: fullList 
                 };
             }
 
-            // --- PALIER 1 ---
             if (levelId === 1) {
-                // Section Mon Attitude
-                if (menuId === 'A') {
-                    if (itemId === 'salut') return { 
-                        title: "Le Salut (Rei)", 
-                        text: "Le salut est la première chose que l'on apprend. C'est la marque de respect indispensable du judoka.",
-                        list: [
-                            { name: "Le Tatami", desc: "On le salue en entrant et en sortant.", image: "images/saluttatami.JPG" },
-                            { name: "Le Professeur", desc: "On le salue au début et à la fin de la séance.", video: "images/salutprofesseur.MP4" },
-                            { name: "Le Partenaire", desc: "On le salue avant et après chaque exercice.", image: "images/saluttatamigroupe.JPG" },
-                            { name: "Les 2 formes", desc: "Debout (Ritsurei) ou à genoux (Zarei).", videos: ["images/salutdebout.mov", "images/salutgenoux.MP4"] }
-                        ],
-                        magicPhrase: "« Je salue avant pour dire bonjour, après pour dire merci. »",
-                        senseiMessage: "Tu peux perdre un combat.\nMais tu ne dois jamais perdre le respect."
-                    };
-                    if (itemId === 'professeur') return { 
-                        title: "Le Sensei (Professeur)", 
-                        text: "Sensei est un mot magique qui veut dire « Celui qui est né avant ». C'est ton guide sur le tatami. Il est là pour te transmettre son savoir.",
-                        list: [
-                            { name: "Le Gardien du Savoir", desc: "Il possède les clés des techniques et son plaisir est de te les donner." },
-                            { name: "Un Guide Positif", desc: "Il ne te piège jamais. S'il te corrige, c'est un cadeau pour que tu deviennes fort." },
-                            { name: "Le Secret", desc: "Quand le Sensei parle, ouvre grand les yeux et les oreilles. C'est le secret des champions !" }
-                        ],
-                        magicPhrase: "« Regarder, c'est déjà apprendre. »",
-                        senseiMessage: "Je suis là pour te montrer le chemin,\nmais c'est toi qui dois marcher."
-                    };
-                    if (itemId === 'partenaires') return { 
-                        title: "Les Copains (Partenaires)", 
-                        text: "Au judo, l'autre n'est pas un encombre. C'est un ami indispensable.",
-                        list: [
-                            { name: "Indispensable", desc: "Le judo ne se joue pas tout seul. Sans copain, impossible d'apprendre." },
-                            { name: "La Confiance", desc: "Il te laisse le projeter. Tu es responsable de lui : aide-le à chuter sans mal." },
-                            { name: "L'Entraide", desc: "Si tu deviens fort, il devient fort pour te résister. On progresse ensemble." }
-                        ],
-                        magicPhrase: "« Tout seul on va plus vite, ensemble on va plus loin. »",
-                        senseiMessage: "Ton partenaire te prête son corps.\nC'est un cadeau précieux, prends-en soin."
-                    };
-                    if (itemId === 'judogi') return { 
-                        title: "Ton Armure (Le Judogi)", 
-                        text: "Ce n'est pas un pyjama ! C'est un vêtement solide fait pour résister aux prises.",
-                        list: [
-                            { name: "Le Nom", desc: "On dit Judogi (vêtement de la voie de la souplesse), pas kimono." },
-                            { name: "L'Hygiène", desc: "Il doit être propre et sentir bon par respect pour les copains." },
-                            { name: "Le Premier Défi", desc: "Savoir faire son nœud de ceinture tout seul est ta première victoire !" }
-                        ],
-                        magicPhrase: "« Je respecte mon armure, je la plie et la range soigneusement. »",
-                        senseiMessage: "Un judogi propre et bien mis,\nc'est montrer que tu es prêt à bien faire."
-                    };
-                    if (itemId === 'tatami') return { 
-                        title: "L'île Sacrée (Le Tatami)", 
-                        text: "C'est notre zone de sécurité. Un tapis spécial qui amortit les chocs.",
-                        list: [
-                            { name: "L'Hygiène", desc: "Interdit aux chaussures ! On marche pieds nus (et propres) sur le tapis." },
-                            { name: "La Sécurité", desc: "Grâce à lui, tu peux tomber mille fois sans te faire mal." },
-                            { name: "Le Respect", desc: "On ne mange pas dessus, on ne court pas. On reste calme." }
-                        ],
-                        magicPhrase: "« Je laisse mes chaussures et mes soucis à l'entrée. »",
-                        senseiMessage: "Le tatami est comme ta deuxième maison.\nAide-nous à le garder propre."
-                    };
-                }
+                if (menuId === 'A') return {
+                    title: "Le Dojo",
+                    text: "Le dojo est un lieu de respect où l'on apprend à se maîtriser.",
+                    list: [
+                        { name: "Tes chaussures", desc: "Je range mes chaussures avant de monter sur le tapis." },
+                        { name: "Ton Judogi", desc: "Je croise bien la veste de mon judogi et je fais bien le nœud de ceinture." },
+                        { name: "Le Silence", desc: "Je parle doucement sur un tapis de judo." }
+                    ],
+                    senseiMessage: "Le calme extérieur amène le calme intérieur."
+                };
+
+                if (menuId === 'H') return {
+                    title: "L’hygiène",
+                    text: "Prendre soin de soi, c'est respecter ses partenaires.",
+                    list: [
+                        { name: "Propreté", desc: "J’ai les pieds et les mains très propres." },
+                        { name: "Sécurité", desc: "J’ai les ongles courts." },
+                        { name: "Prudence", desc: "Je ne porte pas de bijoux (boucle d’oreilles, bracelet...)." }
+                    ]
+                };
+
+                if (menuId === 'S') return {
+                    title: "Le salut",
+                    text: "Le salut marque le début et la fin de chaque échange.",
+                    list: [
+                        { name: "Entrée/Sortie", desc: "Je salue debout en montant sur le tatami." },
+                        { name: "Au Sensei", desc: "Je salue à genoux mon professeur au début du cours." },
+                        { name: "Au Partenaire", desc: "Je salue mon partenaire avant et après avoir travaillé avec lui (debout ou à genoux)." }
+                    ],
+                    magicPhrase: "« Je salue avant pour dire bonjour, après pour dire merci. »"
+                };
 
                 if (menuId === 'D') {
                     const codes = {
-                        politesse: { t: "La Politesse", d: "C'est le respect d'autrui.", l: [{n:"Bonjour", d:"Dire bonjour en arrivant."}, {n:"Silence", d:"Ne pas couper la parole."}, {n:"Propreté", d:"Arriver propre au dojo."}], m: "« La politesse coûte peu et achète tout. »" },
-                        courage: { t: "Le Courage", d: "C'est faire ce qui est juste.", l: [{n:"Essayer", d:"Même si c'est dur."}, {n:"Oser", d:"Combattre contre plus fort que soi."}, {n:"Relever", d:"Se relever après une chute."}], m: "« J'ai peur, mais j'y vais quand même. »" },
-                        sincerite: { t: "La Sincérité", d: "C'est s'exprimer sans déguiser sa pensée.", l: [{n:"Vérité", d:"Ne pas mentir au professeur."}, {n:"Vrai jeu", d:"Ne pas faire semblant de tomber."}, {n:"Honnêteté", d:"Reconnaître ses erreurs."}], m: "« Je ne triche ni avec les autres, ni avec moi-même. »" },
-                        honneur: { t: "L'Honneur", d: "C'est être fidèle à la parole donnée.", l: [{n:"Promesse", d:"Faire ce qu'on a dit."}, {n:"Règles", d:"Respecter les règles du combat."}, {n:"Dignité", d:"Gagner sans se moquer, perdre sans pleurer."}], m: "« Ma parole est aussi solide que ma ceinture. »" },
-                        modestie: { t: "La Modestie", d: "C'est parler de soi-même sans orgueil.", l: [{n:"Simplicité", d:"Ne pas se vanter."}, {n:"Apprendre", d:"Savoir qu'on peut toujours progresser."}, {n:"Écouter", d:"Accepter les conseils."}], m: "« Plus je suis fort, plus je suis gentil. »" },
-                        respect: { t: "Le Respect", d: "Sans respect, aucune confiance ne peut naître.", l: [{n:"Les Autres", d:"Accepter tout le monde."}, {n:"Le Matériel", d:"Prendre soin du dojo."}, {n:"Soi-même", d:"Prendre soin de sa santé."}], m: "« Respecter, c'est grandir ensemble. »" },
-                        controle: { t: "Le Contrôle de Soi", d: "C'est savoir se taire lorsque monte la colère.", l: [{n:"Calme", d:"Rester calme même si on perd."}, {n:"Gestes", d:"Ne jamais taper ou faire mal."}, {n:"Paroles", d:"Ne pas dire de méchancetés."}], m: "« Le plus fort est celui qui maîtrise sa colère. »" },
-                        amitie: { t: "L'Amitié", d: "C'est le plus pur des sentiments humains.", l: [{n:"Entraide", d:"Aider les copains."}, {n:"Plaisir", d:"S'amuser ensemble."}, {n:"Fidélité", d:"Être là pour l'autre."}], m: "« Un ami sur le tatami est un ami pour la vie. »" }
+                        politesse: { t: "La Politesse", d: "C'est le respect d'autrui.", l: [{n:"Bonjour", d:"Dire bonjour en arrivant."}, {n:"Silence", d:"Ne pas couper la parole."}], m: "« La politesse coûte peu et achète tout. »" },
+                        courage: { t: "Le Courage", d: "C'est faire ce qui est juste.", l: [{n:"Essayer", d:"Même si c'est dur."}, {n:"Se relever", d:"Se relever après une chute."}], m: "« J'ai peur, mais j'y vais quand même. »" },
+                        sincerite: { t: "La Sincérité", d: "C'est s'exprimer sans déguiser sa pensée.", l: [{n:"Vérité", d:"Ne pas mentir au professeur."}], m: "« Je ne triche ni avec les autres, ni avec moi-même. »" },
+                        honneur: { t: "L'Honneur", d: "C'est être fidèle à la parole donnée.", l: [{n:"Dignité", d:"Gagner sans se moquer, perdre sans pleurer."}], m: "« Ma parole est aussi solide que ma ceinture. »" },
+                        modestie: { t: "La Modestie", d: "C'est parler de soi-même sans orgueil.", l: [{n:"Simplicité", d:"Ne pas se vanter."}], m: "« Plus je suis fort, plus je suis gentil. »" },
+                        respect: { t: "Le Respect", d: "Sans respect, aucune confiance ne peut naître.", l: [{n:"Les Autres", d:"Accepter tout le monde."}], m: "« Respecter, c'est grandir ensemble. »" },
+                        controle: { t: "Le Contrôle de Soi", d: "C'est savoir se taire quand monte la colère.", l: [{n:"Calme", d:"Rester calme même si on perd."}], m: "« Le plus fort est celui qui maîtrise sa colère. »" },
+                        amitie: { t: "L'Amitié", d: "C'est le plus pur des sentiments humains.", l: [{n:"Entraide", d:"Aider les copains."}], m: "« Un ami sur le tatami est un ami pour la vie. »" }
                     };
                     const c = codes[itemId];
-                    return { 
+                    if (c) return { 
                         title: c.t, 
                         text: c.d, 
                         list: c.l.map(x => ({name: x.n, desc: x.d})),
-                        magicPhrase: c.m,
-                        senseiMessage: "Le code moral est ta force invisible."
+                        magicPhrase: c.m
                     };
                 }
 
-                // Section Ma Pratique (Accès Direct)
                 if (menuId === 'G1') return {
-                    title: "La Sécurité",
-                    text: "Sur le tapis, la sécurité passe par le contrôle et le calme.",
+                    title: "La sécurité",
+                    text: "Je respecte les règles pour que tout le monde soit en sécurité.",
                     list: [
-                        { name: "Contrôler la chute", desc: "Je contrôle la chute de mon partenaire pour qu’il ne se fasse pas mal." },
-                        { name: "Garder son calme", desc: "Je ne m’énerve pas si je ne sais pas bien faire une technique." }
-                    ],
-                    magicPhrase: "« Je protège mon partenaire car il me prête son corps. »",
-                    senseiMessage: "Un grand judoka est celui qui protège l'autre."
+                        { name: "Attention", desc: "Je contrôle la chute de mon partenaire pour qu’il ne se fasse pas mal" },
+                        { name: "Calme", desc: "Je ne m’énerve pas si je ne sais pas bien faire une technique" },
+                        { name: "Interdiction", desc: "Je n’ai pas le droit de frapper" }
+                    ]
                 };
+
                 if (menuId === 'G2') return {
-                    title: "Le Contrôle de soi",
-                    text: "Apprendre à maîtriser ses émotions et respecter les autres.",
+                    title: "Le contrôle de soi",
+                    text: "Maîtriser son corps et son esprit face aux autres.",
                     list: [
-                        { name: "Combattre avec courage", desc: "Je n’ai pas peur de combattre avec un camarade." },
-                        { name: "Respecter les plus faibles", desc: "Je ne me moque pas de ceux qui sont moins forts que moi." },
-                        { name: "Accepter la chute", desc: "Durant les combats, j’accepte de tomber et je m’applique en faisant la chute." }
-                    ],
-                    magicPhrase: "« La victoire sur soi-même est la plus grande des victoires. »"
+                        { name: "Courage", desc: "Je n’ai pas peur de combattre avec un camarade" },
+                        { name: "Respect", desc: "Je ne me moque pas de ceux qui sont moins forts que moi" },
+                        { name: "Acceptation", desc: "Durant les combats, j’accepte de tomber et je m’applique en faisant la chute" }
+                    ]
                 };
+
                 if (menuId === 'G3') return {
-                    title: "L'Arbitrage",
-                    text: "Connaître les règles du jeu pour mieux progresser.",
+                    title: "L'arbitrage",
+                    text: "Je connais les règles de base du combat.",
                     list: [
-                        { name: "Les scores", desc: "Je sais reconnaître un ippon et un waza ari." },
-                        { name: "Les gestes", desc: "Je connais le geste de l’arbitre quand il dit ippon ou waza ari." }
-                    ],
-                    senseiMessage: "L'arbitre est le garant de l'esprit du judo."
+                        { name: "Les scores", desc: "Je sais reconnaître un ippon et un waza ari" },
+                        { name: "Les gestes", desc: "Je connais le geste de l’arbitre quand il dit ippon ou waza ari" },
+                        { name: "Départ", desc: "Hajime" },
+                        { name: "Commandes", desc: "Je sais dire arrête un combat , Matté et je sais dire fin d’un combat , Sore Made" }
+                    ]
                 };
+
                 if (menuId === 'G4') return {
                     title: "Les techniques que je sais faire",
-                    text: "Voici les fondations de mon judo technique.",
+                    text: "Voici les techniques fondamentales que je commence à maîtriser.",
                     list: [
-                        { name: "O soto gari", desc: "Grande fauchage extérieur." },
-                        { name: "Hiza guruma", desc: "Roue autour du genou." },
-                        { name: "Hon gesa gatame", desc: "Contrôle fondamental par le travers." }
-                    ],
-                    magicPhrase: "« Ma tête apprend, mon corps répète. »"
+                        { name: "Debout", desc: "o soto gari" },
+                        { name: "Au sol", desc: "hon gesa gatame" },
+                        { name: "Mouvement", desc: "hiza guruma..." }
+                    ]
                 };
             }
 
             return {
                 title: "En construction",
-                text: `Le contenu pour ce palier sera bientôt disponible.`
+                text: `Le contenu détaillé pour ce niveau est en cours de déploiement.`
             };
         };
 
-        // ==================================================================================
-        // 2. APPLICATION
-        // ==================================================================================
-
         const App = () => {
             const [selectedLevel, setSelectedLevel] = useState(null);
+            const [showObjectives, setShowObjectives] = useState(false); 
             const [selectedMenu, setSelectedMenu] = useState(null);
             const [selectedItem, setSelectedItem] = useState(null);
             const [isSpeaking, setIsSpeaking] = useState(false);
+
+            // Aide visuelle pour mapper les thèmes aux couleurs de texte
+            const themeTextMap = {
+                amber: 'text-amber-600',
+                emerald: 'text-emerald-600',
+                blue: 'text-blue-600',
+                slate: 'text-slate-600',
+                red: 'text-red-600'
+            };
+
+            const themeBgMap = {
+                amber: 'bg-amber-600',
+                emerald: 'bg-emerald-600',
+                blue: 'bg-blue-600',
+                slate: 'bg-slate-700',
+                red: 'bg-red-600'
+            };
 
             const toggleSpeech = (text) => {
                 if (!('speechSynthesis' in window)) return;
@@ -349,45 +331,33 @@
                 window.speechSynthesis.cancel();
                 if (selectedItem) {
                     setSelectedItem(null);
-                    // Si on est dans un menu direct (F ou G1-4), on remonte au menu global
-                    if (selectedMenu && (selectedMenu.id === 'F' || selectedMenu.id.startsWith('G'))) {
+                    if (selectedMenu && (['F', 'A', 'H', 'S'].includes(selectedMenu.id) || selectedMenu.id.startsWith('G'))) {
                         setSelectedMenu(null);
                     }
                 }
                 else if (selectedMenu) setSelectedMenu(null);
+                else if (showObjectives) setShowObjectives(false);
                 else if (selectedLevel) setSelectedLevel(null);
-            };
-
-            const isLocalVideo = (path) => {
-                if (!path) return false;
-                const lower = path.toLowerCase();
-                return lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.mov');
             };
 
             const renderVideoElement = (videoPath) => {
                 if (!videoPath) return null;
+                const isLocal = videoPath.toLowerCase().endsWith('.mp4') || videoPath.toLowerCase().endsWith('.mov');
                 const type = videoPath.toLowerCase().endsWith('.mov') ? 'video/quicktime' : 'video/mp4';
                 return (
                     <div className="mt-4 rounded-2xl overflow-hidden shadow-sm aspect-video bg-black">
-                        {isLocalVideo(videoPath) ? (
+                        {isLocal ? (
                             <video controls className="w-full h-full">
                                 <source src={videoPath} type={type} />
-                                Votre navigateur ne supporte pas la lecture de vidéos.
                             </video>
                         ) : (
-                            <iframe 
-                                width="100%" height="100%" 
-                                src={`https://www.youtube.com/embed/${videoPath}`} 
-                                title="Video player" frameBorder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowFullScreen
-                            ></iframe>
+                            <iframe width="100%" height="100%" src={`https://www.youtube.com/embed/${videoPath}`} title="Video" frameBorder="0" allowFullScreen></iframe>
                         )}
                     </div>
                 );
             };
 
-            // VUE 1 : ACCUEIL PALIERS
+            // VUE 1 : ACCUEIL
             if (!selectedLevel) return (
                 <div className="flex flex-col h-full bg-white animate-entry">
                     <header className="px-6 pt-10 pb-6 flex justify-between items-center bg-white sticky top-0 z-10">
@@ -399,31 +369,59 @@
                             <Menu size={20} />
                         </div>
                     </header>
-                    <main className="flex-1 overflow-y-auto px-6 pb-12 no-scrollbar">
-                        <div className="space-y-6 mt-4">
-                            {levels.map((level, index) => (
-                                <button 
-                                    key={level.id} 
-                                    onClick={() => setSelectedLevel(level)}
-                                    className={`w-full group relative overflow-hidden rounded-[2.5rem] p-6 text-left transition-all duration-300 active:scale-95 animate-entry`}
-                                    style={{ animationDelay: `${index * 100}ms` }}
-                                >
-                                    <div className={`absolute inset-0 bg-gradient-to-br ${level.color} opacity-90 transition-opacity group-hover:opacity-100`}></div>
-                                    <div className="relative z-10 flex justify-between items-center text-white">
-                                        <div>
-                                            <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-widest mb-2 border border-white/10">
-                                                {level.belts}
-                                            </span>
-                                            <h2 className="text-3xl font-black italic uppercase leading-none mb-1">{level.title}</h2>
-                                            <p className="font-medium text-white/90">{level.subtitle}</p>
-                                        </div>
-                                        <div className="bg-white/20 p-3 rounded-2xl backdrop-blur-sm border border-white/10">
-                                            {level.icon}
-                                        </div>
+                    <main className="flex-1 overflow-y-auto px-6 pb-12 no-scrollbar space-y-6 mt-4">
+                        {levels.map((level, index) => (
+                            <button 
+                                key={level.id} 
+                                onClick={() => {
+                                    setSelectedLevel(level);
+                                    if (level.id === 1) setShowObjectives(true);
+                                }} 
+                                className={`w-full group relative overflow-hidden rounded-[2.5rem] p-6 text-left transition-all duration-300 active:scale-95 animate-entry`} 
+                                style={{ animationDelay: `${index * 100}ms` }}
+                            >
+                                <div className={`absolute inset-0 bg-gradient-to-br ${level.color} opacity-90 transition-opacity`}></div>
+                                <div className="relative z-10 flex justify-between items-center text-white">
+                                    <div>
+                                        <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-widest mb-2 border border-white/10">{level.belts}</span>
+                                        <h2 className="text-3xl font-black italic uppercase leading-none mb-1">{level.title}</h2>
+                                        <p className="font-medium text-white/90">{level.subtitle}</p>
                                     </div>
-                                </button>
-                            ))}
+                                    <div className="bg-white/20 p-3 rounded-2xl backdrop-blur-sm border border-white/10">{level.icon}</div>
+                                </div>
+                            </button>
+                        ))}
+                    </main>
+                </div>
+            );
+
+            // VUE 1.5 : ÉCRAN OBJECTIFS (POUR PALIER 1)
+            if (selectedLevel && showObjectives) return (
+                <div className="flex flex-col h-full bg-white animate-entry">
+                    <header className="px-6 pt-10 pb-6 flex justify-between items-center bg-white sticky top-0 z-10">
+                        <button onClick={goBack} className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900">
+                            <ArrowLeft size={20}/>
+                        </button>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Introduction</span>
+                    </header>
+                    <main className="flex-1 px-8 flex flex-col justify-center pb-12">
+                        <div className={`bg-gradient-to-br ${selectedLevel.color} p-10 rounded-[3rem] shadow-xl shadow-${selectedLevel.theme}-100 mb-10 relative overflow-hidden`}>
+                            <div className="absolute -top-6 -right-6 text-white opacity-20">
+                                <Target size={120} />
+                            </div>
+                            <h3 className="text-xs font-black text-white uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+                                <Sparkles size={14} /> Tes Objectifs
+                            </h3>
+                            <p className="text-2xl font-bold text-white leading-snug relative z-10">
+                                « À la fin de ce chapitre, je serai capable de chuter, de projeter, de contrôler au sol ou de combattre sans avoir peur et sans faire mal. Je montrerai du respect à mon partenaire et je me comporterai comme un judoka »
+                            </p>
                         </div>
+                        <button 
+                            onClick={() => setShowObjectives(false)}
+                            className="w-full bg-slate-900 text-white py-6 rounded-full font-black text-xl shadow-xl shadow-slate-200 active:scale-95 transition-transform flex items-center justify-center gap-3"
+                        >
+                            COMMENCER <ArrowRight size={24} />
+                        </button>
                     </main>
                 </div>
             );
@@ -432,7 +430,7 @@
             if (selectedLevel && !selectedMenu) return (
                 <div className="flex flex-col h-full bg-slate-50 animate-entry">
                     <div className="px-6 pt-10 pb-8 bg-white rounded-b-[3rem] shadow-sm z-10">
-                        <button onClick={goBack} className="flex items-center text-slate-400 hover:text-slate-800 transition-colors mb-6 font-bold text-xs uppercase tracking-[0.2em]">
+                        <button onClick={goBack} className="flex items-center text-slate-400 hover:text-slate-800 mb-6 font-bold text-xs uppercase tracking-[0.2em]">
                             <ArrowLeft size={16} className="mr-2"/> Retour
                         </button>
                         <h2 className="text-4xl font-black text-slate-900 leading-none mb-2">{selectedLevel.title}</h2>
@@ -444,25 +442,18 @@
                                 <h3 className={`font-black text-lg mb-4 tracking-tight uppercase ${section.color}`}>{section.title}</h3>
                                 <div className="grid grid-cols-2 gap-4">
                                     {section.items.map((menu, index) => (
-                                        <button 
-                                            key={menu.id}
-                                            onClick={() => {
-                                                setSelectedMenu(menu);
-                                                // Accès direct si pas de sous-menu (Lexique ou Pratique)
-                                                if (menu.id === 'F' || menu.id.startsWith('G')) {
-                                                    setSelectedItem({ id: 'direct_access' });
-                                                }
-                                            }}
-                                            className="bg-white p-5 rounded-[1.5rem] shadow-sm flex flex-col justify-between aspect-square hover:shadow-md transition-all active:scale-95 animate-entry"
-                                            style={{ animationDelay: `${index * 50}ms` }}
-                                        >
+                                        <button key={menu.id} onClick={() => {
+                                            setSelectedMenu(menu);
+                                            if (['F', 'A', 'H', 'S'].includes(menu.id) || menu.id.startsWith('G')) {
+                                                setSelectedItem({ id: 'direct_access' });
+                                            }
+                                        }} className="bg-white p-5 rounded-[1.5rem] shadow-sm flex flex-col justify-between aspect-square hover:shadow-md transition-all active:scale-95 animate-entry" style={{ animationDelay: `${index * 50}ms` }}>
                                             <div className="flex flex-col h-full">
-                                                <div className="flex-1 w-full rounded-xl overflow-hidden mb-3 relative shadow-sm aspect-square">
+                                                <div className="flex-1 w-full rounded-xl overflow-hidden mb-3 relative shadow-sm">
                                                     <img src={menu.image} alt={menu.title} className="w-full h-full object-cover" />
                                                 </div>
                                                 <div className="flex justify-between items-center">
                                                     <span className={`text-lg font-bold ${menu.color} leading-tight text-left`}>{menu.title}</span>
-                                                    <span className="text-slate-200 font-black text-xl">{menu.id}</span>
                                                 </div>
                                             </div>
                                         </button>
@@ -478,102 +469,66 @@
             if (selectedMenu && !selectedItem) return (
                 <div className="flex flex-col h-full bg-white animate-entry">
                     <header className="px-6 pt-10 pb-8 bg-slate-50 rounded-b-[3rem]">
-                        <div className="flex justify-between items-start mb-6">
-                            <button onClick={goBack} className="flex items-center text-slate-400 hover:text-slate-800 transition-colors font-bold text-xs uppercase tracking-widest">
-                                <ArrowLeft size={16} className="mr-2"/> Retour
-                            </button>
-                            <span className="px-3 py-1 bg-white border border-slate-200 rounded-full text-[10px] font-bold text-slate-400 uppercase tracking-widest shadow-sm">
-                                {selectedLevel.title}
-                            </span>
-                        </div>
+                        <button onClick={goBack} className="flex items-center text-slate-400 mb-6 font-bold text-xs uppercase tracking-widest"><ArrowLeft size={16} className="mr-2"/> Retour</button>
                         <h2 className="text-3xl font-black text-slate-900 leading-tight">{selectedMenu.title}</h2>
                     </header>
-                    <main className="flex-1 overflow-y-auto px-6 py-8 no-scrollbar">
-                        <div className="space-y-3">
-                            {selectedMenu.items.map((item, index) => (
-                                <button 
-                                    key={item.id}
-                                    onClick={() => setSelectedItem(item)}
-                                    className="w-full p-6 rounded-[2rem] bg-white border border-slate-100 flex items-center justify-between group active:bg-slate-50 transition-colors animate-entry shadow-sm"
-                                    style={{ animationDelay: `${index * 50}ms` }}
-                                >
-                                    <span className="font-bold text-slate-700 text-lg">{item.label}</span>
-                                    <div className="w-10 h-10 rounded-full bg-slate-50 text-slate-300 flex items-center justify-center group-hover:bg-red-50 group-hover:text-red-500 transition-all">
-                                        <ChevronRight size={20}/>
-                                    </div>
-                                </button>
-                            ))}
-                        </div>
+                    <main className="flex-1 overflow-y-auto px-6 py-8 no-scrollbar space-y-3">
+                        {selectedMenu.items.map((item, index) => (
+                            <button key={item.id} onClick={() => setSelectedItem(item)} className="w-full p-6 rounded-[2rem] bg-white border border-slate-100 flex items-center justify-between group active:bg-slate-50 transition-colors animate-entry shadow-sm" style={{ animationDelay: `${index * 50}ms` }}>
+                                <span className="font-bold text-slate-700 text-lg">{item.label}</span>
+                                <div className={`w-10 h-10 rounded-full bg-slate-50 text-slate-300 flex items-center justify-center group-hover:bg-slate-100 group-hover:${themeTextMap[selectedLevel.theme]} transition-all`}><ChevronRight size={20}/></div>
+                            </button>
+                        ))}
                     </main>
                 </div>
             );
 
-            // VUE 4 : CONTENU FINAL
+            // VUE 4 : CONTENU
             if (selectedItem) {
                 const content = getContent(selectedLevel.id, selectedMenu.id, selectedItem.id);
+                const themeColorClass = themeTextMap[selectedLevel.theme] || 'text-red-600';
+                const themeBgClass = themeBgMap[selectedLevel.theme] || 'bg-red-600';
+
                 return (
                     <div className="flex flex-col h-full bg-white animate-entry">
                         <header className="px-6 pt-10 pb-4 flex justify-between items-center bg-white sticky top-0 z-20">
-                            <button onClick={goBack} className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900">
-                                <ArrowLeft size={20}/>
-                            </button>
-                            <button onClick={() => toggleSpeech(content.text)} className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${isSpeaking ? 'bg-red-600 text-white animate-pulse' : 'bg-slate-50 text-slate-400'}`}>
-                                <Volume2 size={20}/>
-                            </button>
+                            <button onClick={goBack} className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900"><ArrowLeft size={20}/></button>
+                            <button onClick={() => toggleSpeech(content.text)} className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${isSpeaking ? `${themeBgClass} text-white animate-pulse` : 'bg-slate-50 text-slate-400'}`}><Volume2 size={20}/></button>
                         </header>
-                        
                         <main className="flex-1 overflow-y-auto px-8 pb-16 animate-entry no-scrollbar">
                             <div className="flex items-center gap-2 mb-4">
                                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{selectedLevel.title}</span>
                                 <div className="w-1 h-1 bg-slate-300 rounded-full"></div>
-                                <span className="text-[10px] font-bold text-red-600 uppercase tracking-widest">{selectedMenu.title}</span>
+                                <span className={`text-[10px] font-bold ${themeColorClass} uppercase tracking-widest`}>{selectedMenu.title}</span>
                             </div>
-
                             <h2 className="text-4xl font-black text-slate-900 mb-8 leading-tight">{content.title}</h2>
-                            
                             <div className="space-y-8">
                                 {content.text && <p className="text-xl text-slate-600 font-medium leading-relaxed">{content.text}</p>}
-
                                 {content.list && (
                                     <ul className="space-y-4">
                                         {content.list.map((c, i) => (
-                                            <li key={i} className={`p-6 rounded-[2rem] border ${c.isNew ? 'bg-amber-50 border-amber-200' : 'bg-slate-50 border-slate-50'}`}>
-                                                <div className="flex items-center justify-between mb-2">
-                                                    <span className={`font-black text-xl ${c.isNew ? 'text-amber-900' : 'text-slate-900'}`}>{c.name}</span>
-                                                    {c.isNew && <span className="bg-amber-500 text-white text-[8px] font-black px-2 py-1 rounded-full uppercase tracking-widest">Nouveau</span>}
-                                                </div>
-                                                <p className={`${c.isNew ? 'text-amber-700' : 'text-slate-500'} font-medium`}>{c.desc}</p>
-                                                
-                                                <div className="mt-4">
-                                                    {c.video && renderVideoElement(c.video)}
-                                                    {c.videos && c.videos.map((v, idx) => (
-                                                        <div key={idx}>{renderVideoElement(v)}</div>
-                                                    ))}
-                                                    {c.image && (
-                                                        <div className="mt-4 rounded-2xl overflow-hidden shadow-sm">
-                                                            <img src={c.image} alt={c.name} className="w-full h-auto object-cover" />
-                                                        </div>
-                                                    )}
-                                                </div>
+                                            <li key={i} className="p-6 rounded-[2rem] border bg-slate-50 border-slate-50">
+                                                <span className="font-black text-xl text-slate-900 block mb-2">{c.name}</span>
+                                                <p className="text-slate-500 font-medium">{c.desc}</p>
+                                                {c.video && renderVideoElement(c.video)}
+                                                {c.image && <div className="mt-4 rounded-2xl overflow-hidden shadow-sm"><img src={c.image} alt={c.name} className="w-full h-auto object-cover" /></div>}
                                             </li>
                                         ))}
                                     </ul>
                                 )}
-
                                 {content.magicPhrase && (
-                                    <div className="relative p-8 rounded-[2.5rem] bg-slate-900 text-white overflow-hidden shadow-xl">
+                                    <div className="relative p-8 rounded-[2.5rem] bg-slate-900 text-white shadow-xl">
                                         <div className="absolute top-0 right-0 p-4 opacity-10"><Sparkles size={60} /></div>
-                                        <h5 className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-500 mb-4">Phrase Magique</h5>
-                                        <p className="text-2xl font-serif-jp italic font-black leading-tight">"{content.magicPhrase}"</p>
+                                        <h5 className={`text-[10px] font-bold uppercase tracking-[0.3em] ${themeColorClass} mb-4`}>Phrase Magique</h5>
+                                        <p className="text-2xl font-serif-jp italic font-black">"{content.magicPhrase}"</p>
                                     </div>
                                 )}
-
                                 {content.senseiMessage && (
-                                    <div className="p-8 rounded-[2.5rem] bg-red-600 text-white shadow-xl flex gap-4 items-start">
-                                        <div className="bg-white/20 p-2 rounded-xl mt-1"><Info size={20} /></div>
+                                    <div className={`p-8 rounded-[2.5rem] ${themeBgClass} text-white shadow-xl flex gap-4`}>
+                                        <div className="bg-white/20 p-2 rounded-xl h-fit"><Info size={20} /></div>
                                         <div>
                                             <h5 className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-2">Le mot du Sensei</h5>
-                                            <p className="text-lg font-bold leading-tight whitespace-pre-line">"{content.senseiMessage}"</p>
+                                            <p className="text-lg font-bold leading-tight">"{content.senseiMessage}"</p>
                                         </div>
                                     </div>
                                 )}
