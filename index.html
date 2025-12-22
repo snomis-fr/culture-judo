@@ -51,7 +51,8 @@
         import { 
             User, Users, Star, BookOpen, GraduationCap, Info, MapPin, Menu, X, 
             ArrowRight, ArrowLeft, Home, Award, Globe, Heart, Zap, Book, 
-            ChevronRight, Shield, Smile, DoorOpen, Layout, Volume2, Search, Sparkles
+            ChevronRight, Shield, Smile, DoorOpen, Layout, Volume2, Search, Sparkles,
+            Lock, CheckCircle2, Gavel
         } from 'lucide-react';
 
         // ==================================================================================
@@ -66,10 +67,9 @@
             { id: 5, title: "PALIER 5", subtitle: "Guider", belts: "Hauts Gradés", color: "from-red-600 to-rose-700", shadow: "shadow-red-200", icon: <Star size={32} /> }
         ];
 
-        // MENU RÉORGANISÉ EN 2 SECTIONS AVEC IMAGES DE CHAPITRES
         const menuSections = [
             {
-                title: "Mon comportement sur le tapis",
+                title: "Mon attitude",
                 color: "text-blue-900",
                 items: [
                     { id: 'A', title: 'Le Dojo', image: 'images/dojo.jpeg', color: 'text-blue-600', items: [
@@ -96,6 +96,16 @@
                     { id: 'F', title: 'Lexique', image: 'images/lexique.jpeg', color: 'text-slate-600', items: [
                         { id: 'lexique_general', label: 'Vocabulaire' }
                     ]}
+                ]
+            },
+            {
+                title: "Ma pratique",
+                color: "text-amber-900",
+                items: [
+                    { id: 'G1', title: 'La Sécurité', image: 'images/securite.jpeg', color: 'text-orange-600', items: [] },
+                    { id: 'G2', title: 'Contrôle de soi', image: 'images/controle_soi.jpeg', color: 'text-orange-600', items: [] },
+                    { id: 'G3', title: "L'Arbitrage", image: 'images/arbitrage.jpeg', color: 'text-orange-600', items: [] },
+                    { id: 'G4', title: 'Mes Techniques', image: 'images/techniques_perso.jpeg', color: 'text-orange-600', items: [] }
                 ]
             }
         ];
@@ -158,6 +168,7 @@
         };
 
         const getContent = (levelId, menuId, itemId) => {
+            // --- GESTION DU LEXIQUE PROGRESSIF ---
             if (menuId === 'F') {
                 let fullList = [];
                 for (let i = 1; i <= levelId; i++) {
@@ -178,7 +189,9 @@
                 };
             }
 
+            // --- PALIER 1 ---
             if (levelId === 1) {
+                // Section Mon Attitude
                 if (menuId === 'A') {
                     if (itemId === 'salut') return { 
                         title: "Le Salut (Rei)", 
@@ -237,87 +250,7 @@
                         senseiMessage: "Le tatami est comme ta deuxième maison.\nAide-nous à le garder propre."
                     };
                 }
-                if (menuId === 'B') {
-                    if (itemId === 'ceintures') return {
-                        title: "Les Couleurs du Progrès",
-                        text: "Chaque couleur montre que tu as grandi dans le judo.",
-                        list: [
-                            { name: "La Blanche", desc: "C'est la neige, la pureté. Tu es prêt à tout apprendre." },
-                            { name: "Les Barrettes", desc: "Des petits pas vers la suite. Chaque barrette est une récompense." },
-                            { name: "La Jaune", desc: "C'est le soleil qui se lève. Tu commences à comprendre les bases." }
-                        ],
-                        magicPhrase: "« La ceinture ne tient pas que le pantalon, elle tient ta volonté. »",
-                        senseiMessage: "Ne sois pas pressé de changer de couleur.\nSois pressé de devenir bon."
-                    };
-                    if (itemId === 'connaissance') return {
-                        title: "Pour devenir Jaune",
-                        text: "Ce n'est pas que la force qui compte, c'est ce que tu sais faire.",
-                        list: [
-                            { name: "Savoir Tomber", desc: "La chute (Ukemi) est la technique la plus importante." },
-                            { name: "Le Code Moral", desc: "Connaître les valeurs comme le courage et le respect." },
-                            { name: "La Technique", desc: "Savoir faire tomber un copain et le tenir au sol." }
-                        ],
-                        magicPhrase: "« Ma tête apprend, mon corps répète. »",
-                        senseiMessage: "Une ceinture se mérite à chaque entraînement."
-                    };
-                }
-                if (menuId === 'C') {
-                    if (itemId === 'fondateur') return {
-                        title: "Jigoro Kano",
-                        text: "C'est le père du Judo. Il vivait au Japon il y a très longtemps.",
-                        list: [
-                            { name: "Un Enfant Petit", desc: "Il était petit et se faisait embêter. Il voulait devenir fort.", image: "images/jigorokanopalier1.jpg" },
-                            { name: "L'Invention", desc: "Il a créé le Judo en 1882 pour éduquer les jeunes." },
-                            { name: "Son Idée", desc: "Utiliser la force de l'autre plutôt que de s'opposer." }
-                        ],
-                        magicPhrase: "« Entraide et Prospérité Mutuelle. »",
-                        senseiMessage: "Grâce à lui, le monde entier fait du judo."
-                    };
-                    if (itemId === 'france') return {
-                        title: "Le Judo en France",
-                        text: "La France est un des plus grands pays de judo au monde !",
-                        list: [
-                            { name: "Maître Kawaishi", desc: "Un maître japonais venu en France. C'est lui qui a inventé les ceintures de couleurs !" },
-                            { name: "Les Champions", desc: "Nous avons beaucoup de champions olympiques." },
-                            { name: "Partout", desc: "Il y a un club de judo dans presque toutes les villes." }
-                        ],
-                        magicPhrase: "« Bleu, Blanc, Rouge... et Or ! »",
-                        senseiMessage: "Tu fais partie d'une très grande famille."
-                    };
-                    if (itemId === 'monde') return {
-                        title: "Le Judo dans le Monde",
-                        text: "Le Judo est né au Japon, mais aujourd'hui, il est partout !",
-                        list: [
-                            { name: "La Naissance", desc: "Jigoro Kano a créé le Judo à Tokyo en 1882." },
-                            { name: "Le Voyage", desc: "Il a beaucoup voyagé et a envoyé ses meilleurs élèves (les émissaires) dans tous les pays pour montrer son art." },
-                            { name: "Partout !", desc: "Grâce à eux, on fait du judo sur les 5 continents : en Afrique, en Amérique, en Asie, en Europe et en Océanie." }
-                        ],
-                        magicPhrase: "« Le Judo est une grande famille mondiale. »",
-                        senseiMessage: "Peu importe ton pays ou ta langue,\nsur le tatami, on parle tous Judo."
-                    };
-                    if (itemId === 'champions_fr') return {
-                        title: "Les Champions Français",
-                        text: "La France a des héros incroyables qui ont marqué l'histoire. Voici trois légendes :",
-                        list: [
-                            { name: "Teddy Riner : Le Roi", desc: "C'est le plus grand judoka de tous les temps ! Il mesure plus de 2 mètres. Pendant 10 ans, personne n'a réussi à le battre. Il a gagné 3 fois les Jeux Olympiques en individuel. C'est un géant !" },
-                            { name: "Clarisse Agbegnenou : La Lionne", desc: "À sa naissance, elle était très fragile et les médecins étaient inquiets. Elle s'est battue pour vivre. Aujourd'hui, elle se bat sur le tapis et a tout gagné ! Elle prouve que rien n'est impossible." },
-                            { name: "Jean-Luc Rougé : Le Premier", desc: "Avant lui, tout le monde pensait que seuls les Japonais pouvaient gagner. En 1975, il est devenu le tout premier Français champion du monde. Il a montré le chemin à tous les autres." }
-                        ],
-                        magicPhrase: "« Impossible n'est pas français ! »",
-                        senseiMessage: "Ces grands champions ont tous commencé\navec une ceinture blanche, comme toi."
-                    };
-                    if (itemId === 'champions_etr') return {
-                        title: "Uta & Hifumi : Frère et Sœur en Or",
-                        text: "Uta et Hifumi Abe sont frère et sœur. Ils viennent du Japon et ont écrit une histoire incroyable.",
-                        list: [
-                            { name: "Le Jour Magique", desc: "Aux Jeux Olympiques de Tokyo, ils ont tous les deux gagné la médaille d'or le même jour ! C'est unique." },
-                            { name: "Le Grand Frère", desc: "Ils s'entraînent dur ensemble. Quand l'un combat, l'autre tremble d'émotion pour l'encourager." },
-                            { name: "La Force du Cœur", desc: "Sur le tapis comme dans la vie, ils montrent que l'amour de la famille donne des super-pouvoirs." }
-                        ],
-                        magicPhrase: "« On gagne ensemble, on pleure ensemble. »",
-                        senseiMessage: "Le judo est un sport individuel\nqui se vit en famille."
-                    };
-                }
+
                 if (menuId === 'D') {
                     const codes = {
                         politesse: { t: "La Politesse", d: "C'est le respect d'autrui.", l: [{n:"Bonjour", d:"Dire bonjour en arrivant."}, {n:"Silence", d:"Ne pas couper la parole."}, {n:"Propreté", d:"Arriver propre au dojo."}], m: "« La politesse coûte peu et achète tout. »" },
@@ -338,292 +271,52 @@
                         senseiMessage: "Le code moral est ta force invisible."
                     };
                 }
-                if (menuId === 'E') {
-                    if (itemId === 'principes') return {
-                        title: "Les Principes",
-                        text: "Le judo, c'est intelligent. On n'utilise pas la force brute.",
-                        list: [
-                            { name: "Céder", desc: "Si on te pousse, tu tires. Si on te tire, tu pousses." },
-                            { name: "Déséquilibre", desc: "Avant de faire tomber, il faut mettre l'autre sur la pointe des pieds." },
-                            { name: "Sécurité", desc: "Je retiens toujours mon partenaire quand il tombe." }
-                        ],
-                        magicPhrase: "« Le souple vainc le fort. »",
-                        senseiMessage: "Utilise la force de l'autre,\npas seulement la tienne."
-                    };
-                    if (itemId === 'katas') return {
-                        title: "Les Katas",
-                        text: "C'est comme une chorégraphie ou une danse de combat.",
-                        list: [
-                            { name: "Te-Waza", desc: "Série des techniques de bras." },
-                            { name: "Koshi-Waza", desc: "Série des techniques de hanche." },
-                            { name: "Ashi-Waza", desc: "Série des techniques de jambe." }
-                        ],
-                        magicPhrase: "« Répéter pour atteindre la perfection. »",
-                        senseiMessage: "Le Kata est la grammaire du Judo."
-                    };
-                    if (itemId === '100tech') return {
-                        title: "Les Techniques",
-                        text: "Il y a plein de façons de gagner au judo !",
-                        list: [
-                            { name: "Debout", desc: "Faire tomber (Tachi-Waza)." },
-                            { name: "Au Sol", desc: "Immobiliser sur le dos (Osaekomi)." },
-                            { name: "Magique", desc: "Chaque technique a un nom japonais." }
-                        ],
-                        magicPhrase: "« 100 techniques, 1000 façons de gagner. »",
-                        senseiMessage: "Apprends une technique à la fois."
-                    };
-                }
-            }
 
-            if (levelId === 2) {
-                if (menuId === 'A') {
-                    if (itemId === 'salut') return {
-                        title: "Le Sens du Salut",
-                        text: "Le salut n'est pas une simple courbette. C'est un état d'esprit.",
-                        list: [
-                            { name: "Zanshin", desc: "C'est l'esprit de vigilance. Même en saluant, je reste concentré." },
-                            { name: "Respect Mutuel", desc: "Je te respecte, tu me respectes. C'est la base de notre progression commune." },
-                            { name: "Le Calme", desc: "Le salut permet de faire le vide et de laisser ses soucis à l'extérieur." }
-                        ],
-                        magicPhrase: "« Le salut commence avant le mouvement et finit après. »",
-                        senseiMessage: "Un beau salut montre un beau judo."
-                    };
-                    if (itemId === 'professeur') return {
-                        title: "Le Rôle du Sensei",
-                        text: "Le professeur est un miroir technique.",
-                        list: [
-                            { name: "Correction", desc: "Il corrige tes défauts avant qu'ils ne deviennent des habitudes." },
-                            { name: "Exemple", desc: "Il montre la voie par son attitude et sa technique." },
-                            { name: "Sécurité", desc: "Il veille à ce que personne ne se blesse." }
-                        ],
-                        magicPhrase: "« Le Sensei montre la lune, l'élève ne doit pas regarder le doigt. »",
-                        senseiMessage: "Écoute les corrections données aux autres, elles te servent aussi."
-                    };
-                    if (itemId === 'partenaires') return {
-                        title: "Partenaire ou Adversaire ?",
-                        text: "En randori, c'est un partenaire d'opposition.",
-                        list: [
-                            { name: "Jita Kyoei", desc: "Entraide et prospérité mutuelle. On grandit ensemble." },
-                            { name: "Adaptation", desc: "Tu dois t'adapter à son poids, sa taille et sa force." },
-                            { name: "Fair-play", desc: "Accepter la chute, c'est accepter d'apprendre." }
-                        ],
-                        magicPhrase: "« Sans Uke, pas de Tori. »",
-                        senseiMessage: "Sois un bon Uke, et tu deviendras un excellent Tori."
-                    };
-                    if (itemId === 'judogi') return {
-                        title: "Le Judogi : Ton Outil",
-                        text: "Au niveau 2, le judogi n'est plus juste un uniforme, c'est ton outil principal. Tu dois connaître ses parties et savoir l'entretenir.",
-                        list: [
-                            { name: "Composition", desc: "Veste (Uwagi) en grain de riz pour la solidité, Pantalon (Zubon) et Ceinture (Obi)." },
-                            { name: "Le Pliage", desc: "Savoir plier son judogi après le cours est un rituel de retour au calme." },
-                            { name: "Respect", desc: "Un judogi sale est un manque de respect pour ton partenaire. Il doit être lavé après chaque cours." }
-                        ],
-                        magicPhrase: "« Un esprit sain dans un judogi propre. »",
-                        senseiMessage: "Ton judogi est le miroir de ton attitude.\nPrends-en soin."
-                    };
-                    if (itemId === 'tatami') return { title: "Le Tatami", text: "Le lieu de la vérité. Sur le tatami, on ne peut pas mentir. Si tu n'as pas travaillé, ça se voit. C'est un espace sacré de dépassement de soi." };
-                }
-                if (menuId === 'B') {
-                    if (itemId === 'ceintures') return {
-                        title: "Vers la Ceinture Verte",
-                        text: "Les couleurs intermédiaires marquent l'évolution technique.",
-                        list: [
-                            { name: "Orange", desc: "Tu commences à enchaîner les techniques." },
-                            { name: "Verte", desc: "Tu maîtrises mieux ton corps et tes déplacements." },
-                            { name: "Bleue", desc: "Tu commences à avoir tes propres spécialités." }
-                        ],
-                        magicPhrase: "« La couleur change, l'esprit reste. »",
-                        senseiMessage: "La ceinture ne fait pas le judoka, c'est le judoka qui fait la ceinture."
-                    };
-                    if (itemId === 'connaissance') return {
-                        title: "Le Bagage Technique",
-                        text: "Il faut savoir faire plus de choses et mieux.",
-                        list: [
-                            { name: "Mouvements", desc: "Connaître les noms japonais des techniques." },
-                            { name: "Opportunité", desc: "Savoir quand attaquer (le timing)." },
-                            { name: "Combinaisons", desc: "Savoir enchaîner deux techniques différentes." }
-                        ],
-                        magicPhrase: "« La répétition est la mère du succès. »",
-                        senseiMessage: "Ne cherche pas à être fort, cherche à être juste."
-                    };
-                }
-                if (menuId === 'C') {
-                    if (itemId === 'fondateur') return {
-                        title: "Jigoro Kano : L'Intellectuel",
-                        text: "Jigoro Kano n'était pas seulement un combattant, cétait un génie de l'éducation.",
-                        list: [
-                            { name: "La Synthèse", desc: "Il a étudié les anciennes écoles de Jujitsu des Samouraïs. Il a gardé le meilleur et enlevé les coups dangereux." },
-                            { name: "L'Éducation", desc: "Pour lui, le but n'était pas la guerre, mais former des citoyens utiles à la société." },
-                            { name: "Le Voyageur", desc: "Il a été le premier membre asiatique du Comité International Olympique (CIO). Il a parcouru le monde pour faire connaître le Judo." }
-                        ],
-                        magicPhrase: "« Rien n'est plus important que l'éducation. »",
-                        senseiMessage: "Il a transformé un art de guerre en un art de vie."
-                    };
-                    if (itemId === 'france') return {
-                        title: "Une Terre de Judo",
-                        text: "La France a adopté le judo comme une seconde nature.",
-                        list: [
-                            { name: "Les Pionniers", desc: "Après Kawaishi, des Français comme Paul Bonét-Maury ont structuré la Fédération (FFJDA) en 1946." },
-                            { name: "L'Esprit", desc: "Les Français aiment le côté tactique et l'élégance du beau judo." },
-                            { name: "Le Public", desc: "Le tournoi de Paris (Bercy) est le plus grand tournoi du monde, célèbre pour son public incroyable." }
-                        ],
-                        magicPhrase: "« En France, le Judo est roi. »",
-                        senseiMessage: "Tu es l'héritier de cette grande histoire."
-                    };
-                    if (itemId === 'monde') return {
-                        title: "Une Famille Planétaire",
-                        text: "Parti de Tokyo, le Judo est aujourd'hui pratiqué dans plus de 200 pays !",
-                        list: [
-                            { name: "Olympique", desc: "Le Judo est devenu olympique aux JO de Tokyo en 1964. C'était le rêve de Jigoro Kano." },
-                            { name: "L'IJF", desc: "La Fédération Internationale de Judo regroupe des millions de pratiquants sur les 5 continents." },
-                            { name: "Universel", desc: "Que tu sois au Brésil, en Russie ou au Japon, les règles et les valeurs sont les mêmes." }
-                        ],
-                        magicPhrase: "« Le Judo unit les peuples. »",
-                        senseiMessage: "Ton judogi est ton passeport pour le monde."
-                    };
-                    if (itemId === 'champions_fr') return {
-                        title: "Les champions français actuels (2020-2024)",
-                        text: "La France brille au sommet de l'Olympe. Voici nos héros de Tokyo et Paris.",
-                        list: [
-                            { name: "Les Rois de l'Or", desc: "Teddy Riner (x2), Clarisse Agbegnenou, Équipe de France (x2 !)." },
-                            { name: "L'Argent Précieux", desc: "Luka Mkheidze (x2), Joan-Benjamin Gaba, Sarah-Léonie Cysique, Amandine Buchard, Madeleine Malonga." },
-                            { name: "Le Bronze Solide", desc: "Romane Dicko (x2), Shirine Boukli, Maxime-Gaël Ngayap Hambou, Axel Clerget." }
-                        ],
-                        magicPhrase: "« Une équipe en or massif. »",
-                        senseiMessage: "Regarde leurs combats pour t'inspirer."
-                    };
-                    if (itemId === 'champions_etr') return {
-                        title: "Légendes du Japon",
-                        text: "Le Japon est le berceau du Judo. Voici les icônes qui ont marqué l'histoire par leur maîtrise technique et leur esprit.",
-                        list: [
-                            { name: "Ryoko Tani", desc: "Surnommée 'Yawara-chan', elle est 7 fois championne du monde et double championne olympique. Une volonté de fer." },
-                            { name: "Yasuhiro Yamashita", desc: "L'invincible. 203 victoires consécutives ! Il a gagné les JO de 1984 malgré une grave blessure. Un exemple de courage." },
-                            { name: "Tadahiro Nomura", desc: "Le plus grand palmarès olympique : Médaille d'Or en 1996, 2000 et 2004 ! Personne n'a jamais fait mieux à part Teddy Riner." },
-                            { name: "Shohei Ono", desc: "Le style pur. Double champion olympique, il ne cherche pas seulement à gagner, mais à gagner avec la manière (Ippon)." }
-                        ],
-                        magicPhrase: "« Le beau judo est éternel. »",
-                        senseiMessage: "Inspire-toi de leur droiture et de leur technique."
-                    };
-                }
-                if (menuId === 'D') {
-                    const codes = {
-                        politesse: "C'est la première règle de vie en société.",
-                        courage: "C'est surmonter sa peur pour agir.",
-                        sincerite: "C'est être vrai dans ses actes et ses paroles.",
-                        honneur: "C'est vivre selon ses principes.",
-                        modestie: "C'est connaître ses limites et respecter les autres.",
-                        respect: "C'est la base de toute relation humaine.",
-                        controle: "C'est la victoire sur soi-même.",
-                        amitie: "C'est partager des moments forts."
-                    };
-                    return { title: itemId.charAt(0).toUpperCase() + itemId.slice(1), text: codes[itemId], magicPhrase: "« Valeurs pour la vie. »", senseiMessage: "Porte ces valeurs en dehors du dojo." };
-                }
-                if (menuId === 'E') {
-                    if (itemId === 'principes') return {
-                        title: "La Mécanique du Judo",
-                        text: "Pour projeter efficacement, il faut respecter 3 phases.",
-                        list: [
-                            { name: "Kuzushi", desc: "Le déséquilibre. C'est le plus important. Sans lui, rien ne marche." },
-                            { name: "Tsukuri", desc: "Le placement. S'insérer au bon endroit." },
-                            { name: "Kake", desc: "La projection. L'aboutissement du mouvement." }
-                        ],
-                        magicPhrase: "« Déséquilibre, Place, Projette. »",
-                        senseiMessage: "Si tu forces, c'est que tu as raté ton Kuzushi."
-                    };
-                    if (itemId === 'katas') return {
-                        title: "Nage-No-Kata",
-                        text: "Les formes de projection. C'est le premier kata qu'on apprend.",
-                        list: [
-                            { name: "Te-Waza", desc: "Série des techniques de bras." },
-                            { name: "Koshi-Waza", desc: "Série des techniques de hanche." },
-                            { name: "Ashi-Waza", desc: "Série des techniques de jambe." }
-                        ],
-                        magicPhrase: "« La forme juste donne l'efficacité. »",
-                        senseiMessage: "Le Kata t'apprend les principes fondamentaux."
-                    };
-                    if (itemId === '100tech') return {
-                        title: "Les Familles de Techniques",
-                        text: "Le judo est classé en grandes familles.",
-                        list: [
-                            { name: "Tachi-Waza", desc: "Toutes les techniques debout." },
-                            { name: "Ne-Waza", desc: "Toutes les techniques au sol." },
-                            { name: "Sutemi-Waza", desc: "Techniques de sacrifice (on se jette pour projeter)." }
-                        ],
-                        magicPhrase: "« Connaître, c'est pouvoir choisir. »",
-                        senseiMessage: "Cherche ta technique spéciale (Tokui-Waza)."
-                    };
-                }
-            }
-
-            if (levelId === 3) {
-                if (menuId === 'A' && itemId === 'judogi') return {
-                    title: "Le Judogi en Compétition",
-                    text: "À ce niveau, ton judogi doit être conforme aux normes. Il n'est plus seulement un vêtement, c'est ton équipement de performance.",
+                // Section Ma Pratique (Accès Direct)
+                if (menuId === 'G1') return {
+                    title: "La Sécurité",
+                    text: "Sur le tapis, la sécurité passe par le contrôle et le calme.",
                     list: [
-                        { name: "Les Normes (Sokuteiki)", desc: "Manches, pantalon, croisement : tout est mesuré au millimètre près pour l'équité en compétition." },
-                        { name: "Blanc ou Bleu ?", desc: "Le blanc est la tradition (pureté). Le bleu a été introduit pour différencier les combattants à la télévision et par les arbitres." },
-                        { name: "Le Nœud (Musubi)", desc: "Il doit être plat et ne jamais se défaire pendant le combat. C'est le symbole de ta détermination qui ne lâche pas." }
+                        { name: "Contrôler la chute", desc: "Je contrôle la chute de mon partenaire pour qu’il ne se fasse pas mal." },
+                        { name: "Garder son calme", desc: "Je ne m’énerve pas si je ne sais pas bien faire une technique." }
                     ],
-                    magicPhrase: "« Un judogi conforme est la première marque de respect de l'arbitre. »",
-                    senseiMessage: "Si tu dois te rhabiller toutes les 30 secondes,\ntu n'es pas concentré sur ton combat."
+                    magicPhrase: "« Je protège mon partenaire car il me prête son corps. »",
+                    senseiMessage: "Un grand judoka est celui qui protège l'autre."
                 };
-            }
-
-            if (levelId === 4) {
-                if (menuId === 'A' && itemId === 'judogi') return {
-                    title: "Histoire et Exemplarité",
-                    text: "En tant que Ceinture Noire, tu représentes le Judo. Ton judogi porte une histoire technique et culturelle que tu dois transmettre.",
+                if (menuId === 'G2') return {
+                    title: "Le Contrôle de soi",
+                    text: "Apprendre à maîtriser ses émotions et respecter les autres.",
                     list: [
-                        { name: "L'Invention (1907)", desc: "Jigoro Kano a créé cette tenue pour remplacer les armures lourdes et les kimonos fragiles. Il a inventé le tissu 'Grain de riz'." },
-                        { name: "Le Sashiko", desc: "C'est la technique de tissage spécifique (fils de coton croisés) qui rend la veste presque indéchirable tout en restant souple." },
-                        { name: "L'Exemplarité", desc: "Un enseignant ou une ceinture noire doit toujours être impeccable. Les élèves regardent ta tenue avant d'écouter tes paroles." }
+                        { name: "Combattre avec courage", desc: "Je n’ai pas peur de combattre avec un camarade." },
+                        { name: "Respecter les plus faibles", desc: "Je ne me moque pas de ceux qui sont moins forts que moi." },
+                        { name: "Accepter la chute", desc: "Durant les combats, j’accepte de tomber et je m’applique en faisant la chute." }
                     ],
-                    magicPhrase: "« Porter le judogi, c'est endosser l'histoire du Japon. »",
-                    senseiMessage: "Ton grade se voit à ta ceinture,\nmais ta valeur se voit à ton attitude."
+                    magicPhrase: "« La victoire sur soi-même est la plus grande des victoires. »"
                 };
-                if (menuId === 'C' && itemId === 'fondateur') return {
-                    title: "Jigoro Kano : L'Héritage",
-                    text: "Au niveau Ceinture Noire, il est essentiel de comprendre que Kano n'était pas seulement un maître d'arts martiaux, mais un visionnaire de l'éducation. Il a transformé des techniques guerrières en un système d'éducation physique et morale.",
-                    video: "CThBDwxOZgE",
+                if (menuId === 'G3') return {
+                    title: "L'Arbitrage",
+                    text: "Connaître les règles du jeu pour mieux progresser.",
                     list: [
-                        { name: "La Genèse", desc: "Il a synthétisé les écoles de Jujitsu (Tenjin Shin'yō-ryū et Kitō-ryū) pour créer le Kodokan en 1882." },
-                        { name: "L'Internationalisme", desc: "Premier membre asiatique du CIO, il a œuvré toute sa vie pour que le judo devienne un pont entre les nations." },
-                        { name: "La Fin", desc: "Il décède en 1938 sur le bateau Hikawa Maru, rentrant du Caire, après avoir consacré sa vie à l'expansion du judo." }
+                        { name: "Les scores", desc: "Je sais reconnaître un ippon et un waza ari." },
+                        { name: "Les gestes", desc: "Je connais le geste de l’arbitre quand il dit ippon ou waza ari." }
                     ],
-                    magicPhrase: "« Le but ultime du Judo est de se perfectionner pour être utile à la société. »",
-                    senseiMessage: "Tu portes désormais une part de cet héritage.\nÀ toi de le transmettre."
+                    senseiMessage: "L'arbitre est le garant de l'esprit du judo."
                 };
-            }
-
-            if (levelId === 5) {
-                if (menuId === 'A' && itemId === 'judogi') return {
-                    title: "Au-delà du Tissu",
-                    text: "Avec la maîtrise, le judogi prend une dimension symbolique profonde. On revient à l'essentiel et à la simplicité.",
+                if (menuId === 'G4') return {
+                    title: "Les techniques que je sais faire",
+                    text: "Voici les fondations de mon judo technique.",
                     list: [
-                        { name: "Kohaku Obi", desc: "La ceinture Rouge et Blanche (6e à 8e Dan). Elle symbolise l'harmonie du Yin et du Yang, et le sacrifice." },
-                        { name: "Le Retour au Blanc", desc: "La ceinture Rouge (9e/10e Dan) est la plus haute, mais on dit qu'à la fin, on redevient ceinture blanche : le cycle est bouclé." },
-                        { name: "Le Linceul", desc: "Traditionnellement, le blanc évoque la pureté, mais aussi le vêtement mortuaire au Japon. On s'entraîne avec le sérieux de la vie et de la mort." }
+                        { name: "O soto gari", desc: "Grande fauchage extérieur." },
+                        { name: "Hiza guruma", desc: "Roue autour du genou." },
+                        { name: "Hon gesa gatame", desc: "Contrôle fondamental par le travers." }
                     ],
-                    magicPhrase: "« Sous la ceinture rouge, l'esprit doit redevenir blanc. »",
-                    senseiMessage: "Le tissu s'use avec le temps,\nmais l'esprit se renforce."
-                };
-                if (menuId === 'C' && itemId === 'fondateur') return {
-                    title: "Jigoro Kano : L'Héritage Spirituel",
-                    text: "Au sommet de la progression, la figure de Jigoro Kano ne doit plus être vue seulement comme celle de l'inventeur technique, mais comme celle d'un philosophe humaniste. Ses derniers écrits révèlent une vision où le Judo dépasse le cadre du dojo pour devenir un principe de vie universel pour l'amélioration de l'humanité.",
-                    image: "https://upload.wikimedia.org/wikipedia/commons/2/23/Kano_Jigoro_1.jpg",
-                    list: [
-                        { name: "Seiryoku Zenyo", desc: "Ce n'est pas l'économie d'effort, mais l'utilisation la plus efficace de l'énergie physique et mentale pour un but noble." },
-                        { name: "Jita Kyoei", desc: "L'Entraide et la Prospérité Mutuelle. L'expert ne thésaurise pas le savoir, il le diffuse pour élever le niveau collectif." },
-                        { name: "Le Testament", desc: "En 1938, au Caire, il avertissait déjà contre la dérive purement sportive. Le Judo doit rester une méthode d'éducation." }
-                    ],
-                    magicPhrase: "« Être un seul esprit avec l'univers. »",
-                    senseiMessage: "Tu ne transmets plus seulement des techniques,\ntu transmets des valeurs."
+                    magicPhrase: "« Ma tête apprend, mon corps répète. »"
                 };
             }
 
             return {
                 title: "En construction",
-                text: `Le contenu "${itemId}" pour le Palier ${levelId} sera bientôt disponible.`
+                text: `Le contenu pour ce palier sera bientôt disponible.`
             };
         };
 
@@ -656,7 +349,10 @@
                 window.speechSynthesis.cancel();
                 if (selectedItem) {
                     setSelectedItem(null);
-                    if (selectedMenu && selectedMenu.id === 'F') setSelectedMenu(null);
+                    // Si on est dans un menu direct (F ou G1-4), on remonte au menu global
+                    if (selectedMenu && (selectedMenu.id === 'F' || selectedMenu.id.startsWith('G'))) {
+                        setSelectedMenu(null);
+                    }
                 }
                 else if (selectedMenu) setSelectedMenu(null);
                 else if (selectedLevel) setSelectedLevel(null);
@@ -752,7 +448,10 @@
                                             key={menu.id}
                                             onClick={() => {
                                                 setSelectedMenu(menu);
-                                                if (menu.id === 'F') setSelectedItem({ id: 'lexique_direct' });
+                                                // Accès direct si pas de sous-menu (Lexique ou Pratique)
+                                                if (menu.id === 'F' || menu.id.startsWith('G')) {
+                                                    setSelectedItem({ id: 'direct_access' });
+                                                }
                                             }}
                                             className="bg-white p-5 rounded-[1.5rem] shadow-sm flex flex-col justify-between aspect-square hover:shadow-md transition-all active:scale-95 animate-entry"
                                             style={{ animationDelay: `${index * 50}ms` }}
@@ -809,7 +508,7 @@
                 </div>
             );
 
-            // VUE 4 : CONTENU (RESTAURATION MÉDIAS)
+            // VUE 4 : CONTENU FINAL
             if (selectedItem) {
                 const content = getContent(selectedLevel.id, selectedMenu.id, selectedItem.id);
                 return (
@@ -845,7 +544,6 @@
                                                 </div>
                                                 <p className={`${c.isNew ? 'text-amber-700' : 'text-slate-500'} font-medium`}>{c.desc}</p>
                                                 
-                                                {/* MÉDIAS DANS LA LISTE */}
                                                 <div className="mt-4">
                                                     {c.video && renderVideoElement(c.video)}
                                                     {c.videos && c.videos.map((v, idx) => (
