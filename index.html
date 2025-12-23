@@ -28,9 +28,11 @@
         body { font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; background-color: #f8fafc; }
         .font-serif-jp { font-family: 'Noto Serif JP', serif; }
         
+        /* Cacher la scrollbar mais garder le scroll */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
+        /* Animations */
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-entry { animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     </style>
@@ -58,55 +60,125 @@
         // ==================================================================================
 
         const levels = [
-            { id: 1, title: "PALIER 1", subtitle: "Entrer dans la voie", belts: "Blanche → Jaune", color: "from-amber-300 to-orange-400", theme: "amber", shadow: "shadow-orange-200", icon: <User size={32} /> },
-            { id: 2, title: "PALIER 2", subtitle: "Comprendre", belts: "Jaune → Orange → Verte", color: "from-emerald-400 to-teal-500", theme: "emerald", shadow: "shadow-emerald-200", icon: <BookOpen size={32} /> },
-            { id: 3, title: "PALIER 3", subtitle: "S’approprier", belts: "Bleue → Marron", color: "from-blue-500 to-indigo-600", theme: "blue", shadow: "shadow-blue-200", icon: <User size={32} /> },
-            { id: 4, title: "PALIER 4", subtitle: "Transmettre", belts: "Ceinture Noire", color: "from-slate-700 to-slate-900", theme: "slate", shadow: "shadow-slate-300", icon: <Users size={32} /> },
-            { id: 5, title: "PALIER 5", subtitle: "Guider", belts: "Hauts Gradés", color: "from-red-600 to-rose-700", theme: "red", shadow: "shadow-red-200", icon: <Star size={32} /> }
+            { 
+                id: 1, 
+                title: "PALIER 1", 
+                subtitle: "Entrer dans la voie", 
+                belts: "Blanche → Jaune", 
+                color: "from-amber-300 to-orange-400", 
+                theme: "amber", 
+                shadow: "shadow-orange-200", 
+                icon: <User size={32} />,
+                objectives: "« À la fin de ce chapitre, je serai capable de chuter, de projeter, de contrôler au sol ou de combattre sans avoir peur et sans faire mal. Je montrerai du respect à mon partenaire et je me comporterai comme un judoka »"
+            },
+            { 
+                id: 2, 
+                title: "PALIER 2", 
+                subtitle: "Comprendre", 
+                belts: "Jaune → Orange → Verte", 
+                color: "from-emerald-400 to-teal-500", 
+                theme: "emerald", 
+                shadow: "shadow-emerald-200", 
+                icon: <BookOpen size={32} />,
+                objectives: "« J’apprends les techniques du judo et la façon de combattre. Je m’entraîne régulièrement. J’aide mes partenaires. Je respecte les règles du judo et j’améliore mes connaissances »"
+            },
+            { 
+                id: 3, 
+                title: "PALIER 3", 
+                subtitle: "S’approprier", 
+                belts: "Bleue → Marron → Premier Dan", 
+                color: "from-blue-500 to-indigo-600", 
+                theme: "blue", 
+                shadow: "shadow-blue-200", 
+                icon: <User size={32} />,
+                objectives: "« Je m’entraîne régulièrement pour devenir meilleur. Le judo m’apprend à avoir confiance en moi et à gérer les situations d’opposition. Je développe mes connaissances. »"
+            },
+            { 
+                id: 4, 
+                title: "PALIER 4", 
+                subtitle: "Transmettre", 
+                belts: "Ceintures noires 1er à 5e", 
+                color: "from-slate-700 to-slate-900", 
+                theme: "slate", 
+                shadow: "shadow-slate-300", 
+                icon: <Users size={32} />,
+                objectives: "« Je recherche l’efficacité en combat. J’étudie pour améliorer mes techniques et mon savoir-faire. Je partage mon savoir pour mieux progresser et faire progresser ceux qui m’entourent dans le dojo. »"
+            },
+            { 
+                id: 5, 
+                title: "PALIER 5", 
+                subtitle: "Guider", 
+                belts: "Hauts Gradés", 
+                color: "from-red-600 to-rose-700", 
+                theme: "red", 
+                shadow: "shadow-red-200", 
+                icon: <Star size={32} />,
+                objectives: "« Je continue à améliorer mes connaissances et mes compétences en judo. J’aide et je conseille les nouvelles générations de pratiquants »"
+            }
         ];
 
-        const menuSections = [
-            {
-                title: "Mon attitude",
-                color: "text-blue-900",
-                items: [
+        const getMenuSections = (levelId) => {
+            const sections = [
+                {
+                    title: "Mon attitude",
+                    color: "text-blue-900",
+                    items: []
+                },
+                {
+                    title: "Mes connaissances",
+                    color: "text-emerald-900",
+                    items: [
+                        { id: 'E', title: 'Techniques', image: 'images/technique.jpeg', color: 'text-purple-600', items: [
+                            { id: 'principes', label: 'Les Principes' }, { id: 'katas', label: 'Les Katas' }, { id: '100tech', label: 'Les 100 Techniques' }
+                        ]},
+                        { id: 'C', title: 'Histoire', image: 'images/culture.jpeg', color: 'text-emerald-600', items: [
+                            { id: 'fondateur', label: 'Le Fondateur' }, { id: 'france', label: 'Judo en France' }, { id: 'monde', label: 'Judo dans le Monde' }, { id: 'champions_fr', label: 'Champions Français' }, { id: 'champions_etr', label: 'Champions Étrangers' }
+                        ]},
+                        { id: 'B', title: 'Grades', image: 'images/grades.jpeg', color: 'text-amber-600', items: [
+                            { id: 'ceintures', label: 'Les Ceintures' }, { id: 'connaissance', label: 'Requis' }
+                        ]},
+                        { id: 'F', title: 'Lexique', image: 'images/lexique.jpeg', color: 'text-slate-600', items: [
+                            { id: 'lexique_general', label: 'Vocabulaire' }
+                        ]}
+                    ]
+                },
+                {
+                    title: "Ma pratique",
+                    color: "text-amber-900",
+                    items: [
+                        { id: 'G1', title: 'La Sécurité', image: levelId === 1 ? 'images/lasecurite.png' : 'images/securite.jpeg', color: 'text-orange-600', items: [] },
+                        { id: 'G2', title: 'Contrôle de soi', image: levelId === 1 ? 'images/controledesoi.png' : 'images/controle_soi.jpeg', color: 'text-orange-600', items: [] },
+                        { id: 'G3', title: "L'Arbitrage", image: levelId === 1 ? 'images/arbitrage.png' : 'images/arbitrage.jpeg', color: 'text-orange-600', items: [] },
+                        { id: 'G4', title: 'Les techniques', image: levelId === 1 ? 'images/mestechniques.png' : 'images/techniques_perso.jpeg', color: 'text-orange-600', items: [] }
+                    ]
+                }
+            ];
+
+            if (levelId === 1) {
+                sections[0].items = [
                     { id: 'A', title: 'Le Dojo', image: 'images/dojo.jpeg', color: 'text-blue-600', items: [] },
                     { id: 'D', title: 'Code Moral', image: 'images/codemoral.jpeg', color: 'text-rose-600', items: [
                         { id: 'politesse', label: 'La Politesse' }, { id: 'courage', label: 'Le Courage' }, { id: 'sincerite', label: 'La Sincérité' }, { id: 'honneur', label: "L'Honneur" }, { id: 'modestie', label: 'La Modestie' }, { id: 'respect', label: 'Le Respect' }, { id: 'controle', label: 'Le Contrôle de Soi' }, { id: 'amitie', label: "L'Amitié" }
                     ]},
                     { id: 'H', title: "L'hygiène", image: 'images/lexique.jpeg', color: 'text-emerald-600', items: [] },
                     { id: 'S', title: 'Le salut', image: 'images/lesalut.png', color: 'text-indigo-600', items: [] }
-                ]
-            },
-            {
-                title: "Mes connaissances",
-                color: "text-emerald-900",
-                items: [
-                    { id: 'E', title: 'Techniques', image: 'images/technique.jpeg', color: 'text-purple-600', items: [
-                        { id: 'principes', label: 'Les Principes' }, { id: 'katas', label: 'Les Katas' }, { id: '100tech', label: 'Les 100 Techniques' }
-                    ]},
-                    { id: 'C', title: 'Histoire', image: 'images/culture.jpeg', color: 'text-emerald-600', items: [
-                        { id: 'fondateur', label: 'Le Fondateur' }, { id: 'france', label: 'Judo en France' }, { id: 'monde', label: 'Judo dans le Monde' }, { id: 'champions_fr', label: 'Champions Français' }, { id: 'champions_etr', label: 'Champions Étrangers' }
-                    ]},
-                    { id: 'B', title: 'Grades', image: 'images/grades.jpeg', color: 'text-amber-600', items: [
-                        { id: 'ceintures', label: 'Les Ceintures' }, { id: 'connaissance', label: 'Requis' }
-                    ]},
-                    { id: 'F', title: 'Lexique', image: 'images/lexique.jpeg', color: 'text-slate-600', items: [
-                        { id: 'lexique_general', label: 'Vocabulaire' }
-                    ]}
-                ]
-            },
-            {
-                title: "Ma pratique",
-                color: "text-amber-900",
-                items: [
-                    { id: 'G1', title: 'La Sécurité', image: 'images/lasecurite.png', color: 'text-orange-600', items: [] },
-                    { id: 'G2', title: 'Contrôle de soi', image: 'images/controledesoi.png', color: 'text-orange-600', items: [] },
-                    { id: 'G3', title: "L'Arbitrage", image: 'images/arbitrage.png', color: 'text-orange-600', items: [] },
-                    { id: 'G4', title: 'Mes Techniques', image: 'images/mestechniques.png', color: 'text-orange-600', items: [] }
-                ]
+                ];
+            } else if (levelId === 2) {
+                sections[0].items = [
+                    { id: 'A', title: 'Le Dojo', image: 'images/dojo.jpeg', color: 'text-blue-600', items: [] },
+                    { id: 'S', title: 'Le salut', image: 'images/lesalut.png', color: 'text-indigo-600', items: [] },
+                    { id: 'T', title: 'Être attentif', image: 'images/culture.jpeg', color: 'text-amber-600', items: [] },
+                    { id: 'N', title: "L'actualité", image: 'images/codemoral.jpeg', color: 'text-rose-600', items: [] }
+                ];
+            } else {
+                sections[0].items = [
+                    { id: 'A', title: 'Le Dojo', image: 'images/dojo.jpeg', color: 'text-blue-600', items: [] },
+                    { id: 'D', title: 'Code Moral', image: 'images/codemoral.jpeg', color: 'text-rose-600', items: [] }
+                ];
             }
-        ];
+
+            return sections;
+        };
 
         const lexiconDatabase = {
             1: [
@@ -194,10 +266,8 @@
                         { name: "Tes chaussures", desc: "Je range mes chaussures avant de monter sur le tapis." },
                         { name: "Ton Judogi", desc: "Je croise bien la veste de mon judogi et je fais bien le nœud de ceinture." },
                         { name: "Le Silence", desc: "Je parle doucement sur un tapis de judo." }
-                    ],
-                    senseiMessage: "Le calme extérieur amène le calme intérieur."
+                    ]
                 };
-
                 if (menuId === 'H') return {
                     title: "L’hygiène",
                     text: "Prendre soin de soi, c'est respecter ses partenaires.",
@@ -207,7 +277,6 @@
                         { name: "Prudence", desc: "Je ne porte pas de bijoux (boucle d’oreilles, bracelet...)." }
                     ]
                 };
-
                 if (menuId === 'S') return {
                     title: "Le salut",
                     text: "Le salut marque le début et la fin de chaque échange.",
@@ -215,10 +284,8 @@
                         { name: "Entrée/Sortie", desc: "Je salue debout en montant sur le tatami." },
                         { name: "Au Sensei", desc: "Je salue à genoux mon professeur au début du cours." },
                         { name: "Au Partenaire", desc: "Je salue mon partenaire avant et après avoir travaillé avec lui (debout ou à genoux)." }
-                    ],
-                    magicPhrase: "« Je salue avant pour dire bonjour, après pour dire merci. »"
+                    ]
                 };
-
                 if (menuId === 'D') {
                     const codes = {
                         politesse: { t: "La Politesse", d: "C'est le respect d'autrui.", l: [{n:"Bonjour", d:"Dire bonjour en arrivant."}, {n:"Silence", d:"Ne pas couper la parole."}], m: "« La politesse coûte peu et achète tout. »" },
@@ -226,19 +293,13 @@
                         sincerite: { t: "La Sincérité", d: "C'est s'exprimer sans déguiser sa pensée.", l: [{n:"Vérité", d:"Ne pas mentir au professeur."}], m: "« Je ne triche ni avec les autres, ni avec moi-même. »" },
                         honneur: { t: "L'Honneur", d: "C'est être fidèle à la parole donnée.", l: [{n:"Dignité", d:"Gagner sans se moquer, perdre sans pleurer."}], m: "« Ma parole est aussi solide que ma ceinture. »" },
                         modestie: { t: "La Modestie", d: "C'est parler de soi-même sans orgueil.", l: [{n:"Simplicité", d:"Ne pas se vanter."}], m: "« Plus je suis fort, plus je suis gentil. »" },
-                        respect: { t: "Le Respect", d: "Sans respect, aucune confiance ne peut naître.", l: [{n:"Les Autres", d:"Accepter tout le monde."}], m: "« Respecter, c'est grandir ensemble. »" },
+                        respect: { t: "Le Respect", d: "Sans respect, aucune confiance ne peut nître.", l: [{n:"Les Autres", d:"Accepter tout le monde."}], m: "« Respecter, c'est grandir ensemble. »" },
                         controle: { t: "Le Contrôle de Soi", d: "C'est savoir se taire quand monte la colère.", l: [{n:"Calme", d:"Rester calme même si on perd."}], m: "« Le plus fort est celui qui maîtrise sa colère. »" },
                         amitie: { t: "L'Amitié", d: "C'est le plus pur des sentiments humains.", l: [{n:"Entraide", d:"Aider les copains."}], m: "« Un ami sur le tatami est un ami pour la vie. »" }
                     };
                     const c = codes[itemId];
-                    if (c) return { 
-                        title: c.t, 
-                        text: c.d, 
-                        list: c.l.map(x => ({name: x.n, desc: x.d})),
-                        magicPhrase: c.m
-                    };
+                    if (c) return { title: c.t, text: c.d, list: c.l.map(x => ({name: x.n, desc: x.d})), magicPhrase: c.m };
                 }
-
                 if (menuId === 'G1') return {
                     title: "La sécurité",
                     text: "Je respecte les règles pour que tout le monde soit en sécurité.",
@@ -248,7 +309,6 @@
                         { name: "Interdiction", desc: "Je n’ai pas le droit de frapper" }
                     ]
                 };
-
                 if (menuId === 'G2') return {
                     title: "Le contrôle de soi",
                     text: "Maîtriser son corps et son esprit face aux autres.",
@@ -258,7 +318,6 @@
                         { name: "Acceptation", desc: "Durant les combats, j’accepte de tomber et je m’applique en faisant la chute" }
                     ]
                 };
-
                 if (menuId === 'G3') return {
                     title: "L'arbitrage",
                     text: "Je connais les règles de base du combat.",
@@ -269,7 +328,6 @@
                         { name: "Commandes", desc: "Je sais dire arrête un combat , Matté et je sais dire fin d’un combat , Sore Made" }
                     ]
                 };
-
                 if (menuId === 'G4') return {
                     title: "Les techniques que je sais faire",
                     text: "Voici les techniques fondamentales que je commence à maîtriser.",
@@ -281,10 +339,44 @@
                 };
             }
 
-            return {
-                title: "En construction",
-                text: `Le contenu détaillé pour ce niveau est en cours de déploiement.`
-            };
+            if (levelId === 2) {
+                if (menuId === 'A') return {
+                    title: "Le dojo",
+                    text: "Au palier 2, l'autonomie et le respect du lieu s'intensifient.",
+                    list: [
+                        { name: "Pieds nus", desc: "Je ne marche pas pieds nus hors du tapis." },
+                        { name: "Tenue", desc: "Mon judogi est toujours très propre." },
+                        { name: "Ponctualité", desc: "J’arrive à l’heure pour le cours." }
+                    ]
+                };
+                if (menuId === 'S') return {
+                    title: "Le salut",
+                    text: "Comprendre le sens profond du respect japonais.",
+                    list: [
+                        { name: "Signification", desc: "Je connais la signification du salut japonais. C’est une marque de courtoisie. Ce n’est pas un geste religieux." },
+                        { name: "Culture", desc: "Je sais les différentes façons de saluer au Japon." },
+                        { name: "Application", desc: "Je sais comment saluer en compétition." }
+                    ]
+                };
+                if (menuId === 'T') return {
+                    title: "Être attentif",
+                    text: "L'écoute est la clé du progrès technique.",
+                    list: [
+                        { name: "Écoute", desc: "J’écoute les explications de mon professeur." },
+                        { name: "Discrétion", desc: "Je ne parle pas fort durant le cours." },
+                        { name: "Engagement", desc: "Je fais tous les exercices que me demande mon professeur." }
+                    ]
+                };
+                if (menuId === 'N') return {
+                    title: "L’actualité du judo",
+                    text: "S'ouvrir au monde du judo de haut niveau.",
+                    list: [
+                        { name: "Curiosité", desc: "Je regarde les compétitions de judo." }
+                    ]
+                };
+            }
+
+            return { title: "En construction", text: "Contenu bientôt disponible." };
         };
 
         const App = () => {
@@ -329,7 +421,8 @@
                 window.speechSynthesis.cancel();
                 if (selectedItem) {
                     setSelectedItem(null);
-                    if (selectedMenu && (['F', 'A', 'H', 'S'].includes(selectedMenu.id) || selectedMenu.id.startsWith('G'))) {
+                    const directAccessIds = ['F', 'A', 'H', 'S', 'T', 'N'];
+                    if (selectedMenu && (directAccessIds.includes(selectedMenu.id) || selectedMenu.id.startsWith('G'))) {
                         setSelectedMenu(null);
                     }
                 }
@@ -341,13 +434,10 @@
             const renderVideoElement = (videoPath) => {
                 if (!videoPath) return null;
                 const isLocal = videoPath.toLowerCase().endsWith('.mp4') || videoPath.toLowerCase().endsWith('.mov');
-                const type = videoPath.toLowerCase().endsWith('.mov') ? 'video/quicktime' : 'video/mp4';
                 return (
                     <div className="mt-4 rounded-2xl overflow-hidden shadow-sm aspect-video bg-black">
                         {isLocal ? (
-                            <video controls className="w-full h-full">
-                                <source src={videoPath} type={type} />
-                            </video>
+                            <video controls className="w-full h-full"><source src={videoPath} /></video>
                         ) : (
                             <iframe width="100%" height="100%" src={`https://www.youtube.com/embed/${videoPath}`} title="Video" frameBorder="0" allowFullScreen></iframe>
                         )}
@@ -355,7 +445,6 @@
                 );
             };
 
-            // VUE 1 : ACCUEIL
             if (!selectedLevel) return (
                 <div className="flex flex-col h-full bg-white animate-entry">
                     <header className="px-6 pt-10 pb-6 flex justify-between items-center bg-white sticky top-0 z-10">
@@ -363,9 +452,7 @@
                             <h1 className="text-3xl font-black text-slate-900 tracking-tighter">JUDO<span className="text-red-600">CULTURE</span></h1>
                             <p className="text-slate-400 text-sm font-medium uppercase tracking-widest">Guide de Progression</p>
                         </div>
-                        <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-600">
-                            <Menu size={20} />
-                        </div>
+                        <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-600"><Menu size={20} /></div>
                     </header>
                     <main className="flex-1 overflow-y-auto px-6 pb-12 no-scrollbar space-y-6 mt-4">
                         {levels.map((level, index) => (
@@ -373,7 +460,7 @@
                                 key={level.id} 
                                 onClick={() => {
                                     setSelectedLevel(level);
-                                    if (level.id === 1) setShowObjectives(true);
+                                    if (level.objectives) setShowObjectives(true);
                                 }} 
                                 className={`w-full group relative overflow-hidden rounded-[2.5rem] p-6 text-left transition-all duration-300 active:scale-95 animate-entry`} 
                                 style={{ animationDelay: `${index * 100}ms` }}
@@ -393,66 +480,46 @@
                 </div>
             );
 
-            // VUE 1.5 : ÉCRAN OBJECTIFS (POUR PALIER 1)
             if (selectedLevel && showObjectives) return (
                 <div className="flex flex-col h-full bg-white animate-entry">
                     <header className="px-6 pt-10 pb-6 flex justify-between items-center bg-white sticky top-0 z-10">
-                        <button onClick={goBack} className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900">
-                            <ArrowLeft size={20}/>
-                        </button>
+                        <button onClick={goBack} className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900"><ArrowLeft size={20}/></button>
                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Introduction</span>
                     </header>
                     <main className="flex-1 px-8 flex flex-col justify-center pb-12">
                         <div className={`bg-gradient-to-br ${selectedLevel.color} p-10 rounded-[3rem] shadow-xl shadow-${selectedLevel.theme}-100 mb-10 relative overflow-hidden`}>
-                            <div className="absolute -top-6 -right-6 text-white opacity-20">
-                                <Target size={120} />
-                            </div>
-                            <h3 className="text-xs font-black text-white uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-                                <Sparkles size={14} /> Tes Objectifs
-                            </h3>
-                            <p className="text-2xl font-bold text-white leading-snug relative z-10">
-                                « À la fin de ce chapitre, je serai capable de chuter, de projeter, de contrôler au sol ou de combattre sans avoir peur et sans faire mal. Je montrerai du respect à mon partenaire et je me comporterai comme un judoka »
-                            </p>
+                            <div className="absolute -top-6 -right-6 text-white opacity-20"><Target size={120} /></div>
+                            <h3 className="text-xs font-black text-white uppercase tracking-[0.2em] mb-6 flex items-center gap-2"><Sparkles size={14} /> Tes Objectifs</h3>
+                            <p className="text-2xl font-bold text-white leading-snug relative z-10">{selectedLevel.objectives}</p>
                         </div>
-                        <button 
-                            onClick={() => setShowObjectives(false)}
-                            className="w-full bg-slate-900 text-white py-6 rounded-full font-black text-xl shadow-xl shadow-slate-200 active:scale-95 transition-transform flex items-center justify-center gap-3"
-                        >
-                            COMMENCER <ArrowRight size={24} />
-                        </button>
+                        <button onClick={() => setShowObjectives(false)} className="w-full bg-slate-900 text-white py-6 rounded-full font-black text-xl shadow-xl shadow-slate-200 active:scale-95 transition-transform flex items-center justify-center gap-3">COMMENCER <ArrowRight size={24} /></button>
                     </main>
                 </div>
             );
 
-            // VUE 2 : MENU
             if (selectedLevel && !selectedMenu) return (
                 <div className="flex flex-col h-full bg-slate-50 animate-entry">
                     <div className="px-6 pt-10 pb-8 bg-white rounded-b-[3rem] shadow-sm z-10">
-                        <button onClick={goBack} className="flex items-center text-slate-400 hover:text-slate-800 mb-6 font-bold text-xs uppercase tracking-[0.2em]">
-                            <ArrowLeft size={16} className="mr-2"/> Retour
-                        </button>
+                        <button onClick={goBack} className="flex items-center text-slate-400 hover:text-slate-800 mb-6 font-bold text-xs uppercase tracking-[0.2em]"><ArrowLeft size={16} className="mr-2"/> Retour</button>
                         <h2 className="text-4xl font-black text-slate-900 leading-none mb-2">{selectedLevel.title}</h2>
                         <p className="text-slate-500 font-medium">{selectedLevel.subtitle}</p>
                     </div>
                     <main className="flex-1 overflow-y-auto px-6 py-6 no-scrollbar space-y-8">
-                        {menuSections.map((section, idx) => (
+                        {getMenuSections(selectedLevel.id).map((section, idx) => (
                             <div key={idx}>
                                 <h3 className={`font-black text-lg mb-4 tracking-tight uppercase ${section.color}`}>{section.title}</h3>
                                 <div className="grid grid-cols-2 gap-4">
                                     {section.items.map((menu, index) => (
                                         <button key={menu.id} onClick={() => {
                                             setSelectedMenu(menu);
-                                            if (['F', 'A', 'H', 'S'].includes(menu.id) || menu.id.startsWith('G')) {
+                                            const directAccessIds = ['F', 'A', 'H', 'S', 'T', 'N'];
+                                            if (directAccessIds.includes(menu.id) || menu.id.startsWith('G')) {
                                                 setSelectedItem({ id: 'direct_access' });
                                             }
-                                        }} className="bg-white p-5 rounded-[1.5rem] shadow-sm flex flex-col justify-between aspect-square hover:shadow-md transition-all active:scale-95 animate-entry" style={{ animationDelay: `${index * 50}ms` }}>
+                                        }} className="bg-white p-5 rounded-[1.5rem] shadow-sm flex flex-col justify-between aspect-square hover:shadow-md active:scale-95 transition-all animate-entry" style={{ animationDelay: `${index * 50}ms` }}>
                                             <div className="flex flex-col h-full">
-                                                <div className="flex-1 w-full rounded-xl overflow-hidden mb-3 relative shadow-sm">
-                                                    <img src={menu.image} alt={menu.title} className="w-full h-full object-cover" />
-                                                </div>
-                                                <div className="flex justify-between items-center">
-                                                    <span className={`text-lg font-bold ${menu.color} leading-tight text-left`}>{menu.title}</span>
-                                                </div>
+                                                <div className="flex-1 w-full rounded-xl overflow-hidden mb-3 relative shadow-sm"><img src={menu.image} alt={menu.title} className="w-full h-full object-cover" /></div>
+                                                <div className="flex justify-between items-center"><span className={`text-lg font-bold ${menu.color} leading-tight text-left`}>{menu.title}</span></div>
                                             </div>
                                         </button>
                                     ))}
@@ -463,7 +530,6 @@
                 </div>
             );
 
-            // VUE 3 : SOUS-MENU
             if (selectedMenu && !selectedItem) return (
                 <div className="flex flex-col h-full bg-white animate-entry">
                     <header className="px-6 pt-10 pb-8 bg-slate-50 rounded-b-[3rem]">
@@ -481,7 +547,6 @@
                 </div>
             );
 
-            // VUE 4 : CONTENU
             if (selectedItem) {
                 const content = getContent(selectedLevel.id, selectedMenu.id, selectedItem.id);
                 const themeColorClass = themeTextMap[selectedLevel.theme] || 'text-red-600';
@@ -519,15 +584,6 @@
                                         <div className="absolute top-0 right-0 p-4 opacity-10"><Sparkles size={60} /></div>
                                         <h5 className={`text-[10px] font-bold uppercase tracking-[0.3em] ${themeColorClass} mb-4`}>Phrase Magique</h5>
                                         <p className="text-2xl font-serif-jp italic font-black">"{content.magicPhrase}"</p>
-                                    </div>
-                                )}
-                                {content.senseiMessage && (
-                                    <div className={`p-8 rounded-[2.5rem] ${themeBgClass} text-white shadow-xl flex gap-4`}>
-                                        <div className="bg-white/20 p-2 rounded-xl h-fit"><Info size={20} /></div>
-                                        <div>
-                                            <h5 className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-2">Le mot du Sensei</h5>
-                                            <p className="text-lg font-bold leading-tight">"{content.senseiMessage}"</p>
-                                        </div>
                                     </div>
                                 )}
                             </div>
